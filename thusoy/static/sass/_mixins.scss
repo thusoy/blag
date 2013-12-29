@@ -1,0 +1,17 @@
+@mixin logo-size($size) {
+  height: $size;
+  width: $size;
+  top: -($size / 2);
+  margin-bottom: -($size / 2) + 10px;
+}
+
+@mixin container {
+  background-color: #fff;
+  padding: 10px;
+  width: 100%;
+  max-width: $screen-lg;
+
+  @media all and (min-width: $screen-xs) and (max-width: $screen-lg) {
+    width: 95%;
+  }
+}

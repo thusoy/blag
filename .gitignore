@@ -11,6 +11,7 @@ build
 eggs
 parts
 bin
+node_modules
 var
 sdist
 develop-eggs
@@ -19,8 +20,9 @@ lib
 lib64
 __pycache__
 
-# Installer logs
+# logs
 pip-log.txt
+thusoy.log
 
 # Unit test / coverage reports
 .coverage
@@ -37,3 +39,16 @@ nosetests.xml
 
 # local stuff
 venv
+thusoy/static/css
+.sass-cache
+db.sqlite
+images
+
+# libraries
+thusoy/static/libs
+
+# built stuff
+*.min.js
+*.min.css
+.tmp
+thusoy/templates/base.html

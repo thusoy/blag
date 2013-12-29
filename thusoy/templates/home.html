@@ -1,9 +1,11 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8">
-    <title>Blag</title>
-</head>
-<body>
-    <h1>Not much.. yet!</h1>
-</body>
+{% extends 'base.html' %}
+
+{% block content %}
+    {% for entry in entries %}
+        <h1>{{ entry.title }}</h1>
+
+        {{ entry.rendered_content|safe }}
+
+        <span class="byline">{{ entry.datetime_added.strftime('%Y-%m-%d %H:%M') }}</span>
+    {% endfor %}
+{% endblock %}

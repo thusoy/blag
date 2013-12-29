@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+
+{% block styles %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='libs/sir-trevor-js/sir-trevor.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='libs/sir-trevor-js/sir-trevor-icons.css') }}">
+{% endblock %}
+
+
+{% block content %}
+
+    <h1>New blogpost</h1>
+
+    <form method="post" action="/blog">
+        {% for field in form %}
+            {% if field.errors %}
+                {% set css_class = 'has-error' %}
+                {{ field(class=css_class) }}
+                <ul class="errors">{% for error in field.errors %}<li>{{ error|e }}</li>{% endfor %}</ul>
+            {% else %}
+                {{ field.label }}: {{ field() }}
+            {% endif %}
+        {% endfor %}
+        <input type="submit" class="btn btn-primary pull-right">
+    </form>
+{% endblock %}
+
+
+{% block scripts %}
+    {% if not debug %}
+        <script async src="{{ url_for('.static', filename='js/writePost.min.js') }}"></script>
+    {% else %}
+        <!-- build:js js/writePost.min.js -->
+        <script src="/static/libs/underscore/underscore.js"></script>
+        <script src="/static/libs/Eventable/eventable.js"></script>
+        <script src="/static/libs/sir-trevor-js/sir-trevor.js"></script>
+        <script src="/static/js/blocks/sourced-quote.js"></script>
+        <script src="/static/js/writeEntry.js"></script>
+        <!-- endbuild -->
+    {% endif %}
+{% endblock %}

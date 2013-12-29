@@ -1,0 +1,74 @@
+{# Note: This template is processed by grunt into base.html! #}
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Blag</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        {# import thusoy/static/css/core.css #}
+    </style>
+</head>
+<body>
+    <!--[if lt IE 7]>
+        <p class="msg">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+    <![endif]-->
+
+    <header role="navigation">
+        <img class="banner img-responsive" height="315" width="1000" src="{{ url_for('static', filename='img/header.jpg') }}">
+        <img class="logo img-circle" src="{{ url_for('static', filename='img/logo2.jpg') }}">
+    </header>
+
+    {% for category, msg in get_flashed_messages(with_categories=True) %}
+        <div class="alert alert-{{ category }}">
+            {{ msg }}
+        </div>
+    {% endfor %}
+
+    <div class="container">
+
+        {% block content %}
+        {% endblock %}
+
+    </div>
+
+
+    {# The rest of the styles #}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+
+    {% block styles %}
+    {% endblock %}
+
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="{{ url_for('static', filename='libs/jquery/jquery.min.js') }}"><\/script>')</script>
+
+    {% if not debug %}
+        <script async src="{{ url_for('static', filename='js/main.min.js') }}"></script>
+    {% else %}
+        <!-- build:js js/main.min.js -->
+        <script src="static/js/main.js"></script>
+        <!-- endbuild -->
+    {% endif %}
+
+    <script>
+        (function(t,h,u,s,o,y){t.GoogleAnalyticsObject=s;t[s]||(t[s]=
+        function(){(t[s].q=t[s].q||[]).push(arguments)});t[s].s=+new Date;
+        o=h.createElement(u);y=h.getElementsByTagName(u)[0];
+        o.src='//www.google-analytics.com/analytics.js';o.async=true;
+        y.parentNode.insertBefore(o,y)}(window,document,'script','ga'));
+        ga('create','{{ config["GOOGLE_ANALYTICS_ID"] }}');ga('send','pageview');
+    </script>
+
+    {% block scripts %}
+    {% endblock %}
+
+    {% if debug %}
+        <script async src="http://localhost:35729/livereload.js"></script>
+    {% endif %}
+</body>
+</html>

@@ -1,0 +1,13 @@
+.container {
+  @include container;
+}
+
+.byline {
+  float: right;
+  font-size: 0.9em;
+  color: lighten($text-color, 20%);
+}
+
+img {
+  max-width: 100%;
+}

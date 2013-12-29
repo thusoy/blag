@@ -1,0 +1,9 @@
+{
+  "name": "thusoy-blag",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "sass-bootstrap": "~3.0.1",
+    "sir-trevor-js": "0.3.0-rc.5"
+  }
+}
