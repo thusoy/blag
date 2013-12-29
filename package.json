@@ -17,6 +17,10 @@
     "grunt-usemin": "~2.0.0",
     "grunt-contrib-uglify": "~0.2.5",
     "string": "~1.7.0",
-    "grunt-string-replace": "~0.2.7"
+    "grunt-string-replace": "~0.2.7",
+    "grunt-bower-task": "~0.3.4"
+  },
+  "scripts": {
+    "postinstall": "grunt bower"
   }
 }

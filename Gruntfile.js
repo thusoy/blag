@@ -7,6 +7,14 @@ module.exports = function(grunt) {
   // Project configuration.
   grunt.initConfig({
 
+    bower: {
+      install: {
+        options: {
+          targetDir: 'thusoy/static/libs',
+        }
+      }
+    },
+
     clean: {
       dist: [
         '.tmp',
