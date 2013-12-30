@@ -51,4 +51,4 @@ thusoy/static/libs
 *.min.js
 *.min.css
 .tmp
-thusoy/templates/base.html
+thusoy/server-assets

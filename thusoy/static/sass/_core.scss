@@ -1,0 +1,99 @@
+body {
+  background-color: $background-color;
+  color: $text-color;
+  font-size: 17px;
+}
+
+.container {
+  @include container;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: $header-color;
+  font-family: "Helvetica Neue", Helvetica, sans-serif;
+}
+
+header {
+  max-width: $screen-lg;
+  width: 100%;
+  margin: auto auto;
+  line-height: 2em;
+
+  .toggle-button {
+    line-height: 1.5em;
+    margin: 0;
+    background-color: $header-color;
+    color: #fff;
+    float: right;
+
+    &:focus + .toggle {
+      display: block;
+    }
+
+    @media (min-width: $grid-float-breakpoint) {
+      display: none;
+    }
+  }
+
+  .toggle {
+    background-color: darken($background-color, 10%);
+    margin-top: 4px;
+    clear: both;
+    list-style: none;
+    display: none;
+    float: right;
+    padding: 0;
+
+    li {
+      margin: 0 10px;
+      padding: 0;
+    }
+
+    @media (min-width: $grid-float-breakpoint) {
+      display: block;
+      background-color: transparent;
+      margin: 0;
+
+      li {
+        display: inline-block;
+        margin-right: 20px;
+      }
+    }
+
+  }
+
+}
+
+.banner {
+  display: block;
+  margin: auto auto;
+}
+
+.logo {
+  @include logo-size($logo-size-lg);
+  position: relative;
+  border: 3px solid $background-color;
+  display: block;
+  margin-left: 20%;
+
+  @media all and (max-width: $screen-md) {
+    @include logo-size($logo-size-md);
+  }
+
+  @media all and (max-width: $screen-sm) {
+    @include logo-size($logo-size-sm);
+  }
+
+  @media all and (max-width: $screen-xs) {
+    @include logo-size($logo-size-xs);
+  }
+
+  @include transition-property(all);
+  @include transition-duration(1s);
+
+}

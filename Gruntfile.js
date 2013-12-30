@@ -18,8 +18,10 @@ module.exports = function(grunt) {
     clean: {
       dist: [
         '.tmp',
-        'thusoy/static/css',
+        'dist',
         'thusoy/**/*.pyc',
+        'thusoy/server-assets',
+        '*.egg-info',
       ]
     },
 
@@ -27,7 +29,7 @@ module.exports = function(grunt) {
       dist: {
         options: {
           sassDir: '.tmp/static/sass/',
-          cssDir: 'thusoy/static/css/',
+          cssDir: '.tmp/static/css/',
           outputStyle: 'compressed',
         }
       }
@@ -58,6 +60,41 @@ module.exports = function(grunt) {
           src: ['**'],
           dest: '.tmp/static/sass',
         }]
+      },
+      python: {
+        files: [{
+          expand: true,
+          cwd: 'thusoy',
+          src: ['**', '!static/**'],
+          dest: '.tmp/thusoy'
+        },
+        {
+          src: 'setup.py',
+          dest: '.tmp/setup.py'
+        }]
+      },
+      'server-assets-dev': {
+        files: [{
+          src: '.tmp/static/css/core.css',
+          dest: 'thusoy/server-assets/core.css',
+        }]
+      },
+      'server-assets-dist': {
+        files: [{
+          src: '.tmp/static/css/core.css',
+          dest: '.tmp/thusoy/server-assets/core.css',
+        }]
+      },
+    },
+
+    imagemin: {
+      static: {
+        files: [{
+          expand: true,
+          cwd: 'thusoy/static/',
+          src: 'img/*.{png,jpg}',
+          dest: '.tmp/static/',
+        }]
       }
     },
 
@@ -68,24 +105,17 @@ module.exports = function(grunt) {
       },
       server: {
         command: 'python manage.py devserver',
-      }
-
-    },
-
-    'string-replace': {
-      html: {
-        files: {
-          'thusoy/templates/base.html': 'thusoy/templates/_base.html',
-        },
-        options: {
-          replacements: [{
-            pattern: /{# import (.*?) #}/ig,
-            replacement: function (match, p1) {
-              return grunt.file.read(p1);
-            }
-          }]
-        }
       },
+      'build-python': {
+        command: 'python .tmp/setup.py sdist --formats gztar'
+      },
+      'package-static': {
+        command: [
+          'cd .tmp/static',
+          'tar czf ../../dist/static.tar.gz *',
+        ].join('&&')
+      },
+
     },
 
     uglify: {
@@ -95,9 +125,9 @@ module.exports = function(grunt) {
         },
         sourceMapPrefix: 3,
         sourceMappingURL: function (uglifyDest) {
-          // Strip the first 'thusoy' from the destination
-          // replace \ wiht / to work on both windows and *nix
-          return S(uglifyDest.slice(6)).replaceAll('\\', '/').slice(0, -2) + 'map';
+          // Strip the first '.tmp' from the destination
+          // replace \ with / to work on both windows and *nix
+          return S(uglifyDest.slice(4)).replaceAll('\\', '/').slice(0, -2) + 'map';
         },
         //sourceMapRoot: 'thusoy/static',
       }
@@ -105,7 +135,7 @@ module.exports = function(grunt) {
 
     useminPrepare: {
       options: {
-        dest: 'thusoy/static',
+        dest: '.tmp/static',
         root: 'thusoy/',
         flow: {
           html: {
@@ -142,24 +172,30 @@ module.exports = function(grunt) {
   });
 
   grunt.registerTask('default', [
-    'clean',
     'build',
     'concurrent:server',
   ]);
 
-  grunt.registerTask('preprocess-html', [
-    'string-replace:html',
-  ]);
-
   grunt.registerTask('build', [
+    'clean',
     'buildStyles',
     'buildJs',
-    'preprocess-html',
+    'imagemin',
+    'server-assets',
+    'copy:python',
+    'shell:build-python',
+    'shell:package-static',
   ]);
 
   grunt.registerTask('buildStyles', [
-    'copy',
+    'copy:bootstrap',
+    'copy:thusoySass',
     'compass',
+  ]);
+
+  grunt.registerTask('server-assets', [
+    'copy:server-assets-dev',
+    'copy:server-assets-dist',
   ]);
 
   grunt.registerTask('buildJs', [
