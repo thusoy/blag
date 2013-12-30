@@ -27,7 +27,7 @@ env:
   global:
 
     # GitHub access token that grants access to thusoys GitHub account
-    - secure: "coming soon"
+    - secure: "NFbcA+kQb3eQDqnKXGym40PLo1P/6DKpCotWYx/em0dZhbUK29Ylh/x6ZjnvJbgjCMY2EmKlNLMRXN4ELdPMVmbAhAJjpEyWNRnebatckvXjEBe+K3zBq5r03Otlf8iRF5Zv+kwLK4cyB/0c6bJiiP+ICquMCmJxP6Ot50UGWoI="
 
 notifications:
   email: false
