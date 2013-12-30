@@ -1,0 +1,33 @@
+language:
+  - python
+  - node_js
+
+python:
+  - "2.7"
+
+before_install:
+  - ./travis/before_script.sh
+
+install:
+
+  # Python stuff
+  - pip install -r dev-requirements.txt --use-mirrors
+
+  # Install grunt-cli and grunt
+  - npm install -g grunt-cli
+  - npm install
+
+script:
+  - grunt build
+
+after_success:
+  - ./travis/deploy.sh --verbose
+
+env:
+  global:
+
+    # GitHub access token that grants access to thusoys GitHub account
+    - secure: "coming soon"
+
+notifications:
+  email: false
