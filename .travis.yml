@@ -11,7 +11,7 @@ before_install:
 install:
 
   # Python stuff
-  - pip install -r dev-requirements.txt --use-mirrors
+  - sudo pip install -r dev-requirements.txt --use-mirrors
 
   # Install compass
   - gem update --system
