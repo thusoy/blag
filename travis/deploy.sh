@@ -15,7 +15,7 @@ default_email=
 cp .travis.yml /tmp/
 
 #repository to deploy to. must be readable and writable.
-repo=https://$GITHUB_TOKEN@github.com/thusoy/thusoy.git
+repo=https://$GITHUB_TOKEN@github.com/thusoy/blag.git
 
 if [[ $1 = "-v" || $1 = "--verbose" ]]; then
         verbose=true
