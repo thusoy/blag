@@ -1,0 +1,41 @@
+language:
+  - python
+  - node_js
+
+python:
+  - "2.7"
+
+before_install:
+  - ./travis/before_script.sh
+
+install:
+
+  # Python stuff
+  - sudo pip install -r dev-requirements.txt --use-mirrors
+
+  # Install compass
+  - gem update --system
+  - gem install compass
+
+  # Install grunt-cli and grunt
+  - npm install -g grunt-cli
+  - npm install
+
+script:
+  - grunt build
+
+after_success:
+  - ./travis/deploy.sh --verbose
+
+env:
+  global:
+
+    # GitHub access token that grants access to thusoys GitHub account
+    - secure: "NFbcA+kQb3eQDqnKXGym40PLo1P/6DKpCotWYx/em0dZhbUK29Ylh/x6ZjnvJbgjCMY2EmKlNLMRXN4ELdPMVmbAhAJjpEyWNRnebatckvXjEBe+K3zBq5r03Otlf8iRF5Zv+kwLK4cyB/0c6bJiiP+ICquMCmJxP6Ot50UGWoI="
+
+notifications:
+  email: false
+
+branches:
+  exclude:
+    - production
