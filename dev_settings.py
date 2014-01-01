@@ -1,3 +1,12 @@
+"""
+    Secrets that need to be declared in a file secrets.py:
+        * TWITTER_CLIENT_ID
+        * TWITTER_CLIENT_SECRET
+"""
+
+
+from .secrets import *
+
 from os import path
 
 DEBUG = True
@@ -13,9 +22,3 @@ SQLALCHEMY_DATABASE_URI = 'sqlite:///../db.sqlite'
 UPLOAD_FOLDER = path.abspath('images')
 
 STATIC_FILES = path.abspath(path.join('.tmp', 'thusoy', 'static'))
-
-TWITTER_CLIENT_ID = 'XMqPL6EZV2hsmpZycMBf8g'
-
-TWITTER_CLIENT_SECRET = 'A8rMzv7cCajNrAHDSdYQNtMeZtKNGGZwRXhbdIZXZo'
-
-EMBEDLY_API_KEY = 'ab8ac2d9de4b448b950675ab4117471e'

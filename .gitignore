@@ -43,6 +43,7 @@ thusoy/static/css
 .sass-cache
 db.sqlite
 images
+secrets.py
 
 # libraries
 thusoy/static/libs
