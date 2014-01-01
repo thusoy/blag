@@ -21,4 +21,4 @@ SQLALCHEMY_DATABASE_URI = 'sqlite:///../db.sqlite'
 
 UPLOAD_FOLDER = path.abspath('images')
 
-STATIC_FILES = path.abspath(path.join('.tmp', 'thusoy', 'static'))
+STATIC_FILES = path.abspath(path.join('.tmp', 'static'))
