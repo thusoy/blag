@@ -13,6 +13,10 @@ install:
   # Python stuff
   - pip install -r dev-requirements.txt --use-mirrors
 
+  # Install compass
+  - gem update --system
+  - gem install compass
+
   # Install grunt-cli and grunt
   - npm install -g grunt-cli
   - npm install
@@ -31,3 +35,7 @@ env:
 
 notifications:
   email: false
+
+branches:
+  exclude:
+    - production
