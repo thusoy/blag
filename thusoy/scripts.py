@@ -29,3 +29,11 @@ def devserver():
     app.run(extra_files=[
         'dev_settings.py',
     ], host="0.0.0.0")
+
+
+def main(): # pragma: no cover
+    """ Runs the manager.
+
+    Target for setup.py entry point.
+    """
+    manager.run()
