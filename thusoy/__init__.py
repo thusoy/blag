@@ -75,6 +75,6 @@ def create_app(config_file=None, **extra_config):
 
 
 def _init_logging():
-    log_config_dest = path.join(path.dirname(__file__), 'log_conf.yaml')
+    log_config_dest = path.abspath(path.join(path.dirname(__file__), 'log_conf.yaml'))
     with open(log_config_dest) as log_config_file:
         logging.config.dictConfig(yaml.load(log_config_file))
