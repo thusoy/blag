@@ -11,7 +11,7 @@ before_install:
 install:
 
   # Python stuff
-  - sudo pip install -r dev-requirements.txt --use-mirrors
+  - sudo pip install -r dev-requirements.txt --allow-external guess-language-spirit --allow-unverified guess-language-spirit
 
   # Install compass
   - gem update --system
