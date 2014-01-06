@@ -9,6 +9,7 @@ import logging.config
 import os
 import sqlalchemy
 import textwrap
+import ujson as json
 import yaml
 
 
@@ -46,6 +47,7 @@ def create_app(**extra_config):
 
     app.context_processor(context_processors.default)
     app.context_processor(context_processors.config)
+    app.context_processor(context_processors.revved_url_for)
 
     @app.errorhandler(500)
     def server_error(error):
@@ -78,6 +80,10 @@ def _configure_app(app, **extra_config):
 
     # Override the config with anything set directly in the creation call:
     app.config.update(extra_config)
+    with app.open_resource(path.join('server-assets', 'filerevs.json')) as filerevs_fh:
+        filerevs = json.load(filerevs_fh)
+        app.config.setdefault('filerevs', {}).update(filerevs)
+
 
 
 def _init_logging(app):

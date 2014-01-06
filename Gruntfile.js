@@ -4,6 +4,12 @@ module.exports = function(grunt) {
   require('load-grunt-tasks')(grunt);
   var S = require('string');
 
+  function items(obj, callback){
+    Object.keys(obj).forEach(function(key, i){
+      callback(key, obj[key], i);
+    });
+  }
+
   // Project configuration.
   grunt.initConfig({
 
@@ -61,30 +67,28 @@ module.exports = function(grunt) {
           dest: '.tmp/static/sass',
         }]
       },
-      python: {
-        files: [{
-          expand: true,
-          cwd: 'thusoy',
-          src: ['**', '!static/**'],
-          dest: '.tmp/thusoy'
-        },
-        {
-          src: 'setup.py',
-          dest: '.tmp/setup.py'
-        }]
-      },
-      'server-assets-dev': {
+      'fetch-server-assets': {
         files: [{
           src: '.tmp/static/css/core.css',
           dest: 'thusoy/server-assets/core.css',
         }]
       },
-      'server-assets-dist': {
-        files: [{
-          src: '.tmp/static/css/core.css',
-          dest: '.tmp/thusoy/server-assets/core.css',
-        }]
+    },
+
+    filerev: {
+      options: {
+        algorithm: 'md5',
+        length: 8,
       },
+      images: {
+        src: '.tmp/static/img/*.jpg',
+      },
+      styles: {
+        src: '.tmp/static/css/*.css',
+      },
+      js: {
+        src: '.tmp/static/js/*.js',
+      }
     },
 
     imagemin: {
@@ -107,7 +111,7 @@ module.exports = function(grunt) {
         command: 'python manage.py devserver',
       },
       'build-python': {
-        command: 'python .tmp/setup.py sdist --formats gztar'
+        command: 'python setup.py sdist --formats gztar'
       },
       'package-static': {
         command: [
@@ -144,7 +148,7 @@ module.exports = function(grunt) {
           }
         }
       },
-      html: 'thusoy/**/templates/**/*.html',
+      html: 'thusoy/templates/**/*.html',
     },
 
     watch: {
@@ -171,6 +175,17 @@ module.exports = function(grunt) {
 
   });
 
+  grunt.registerTask('dump-revs', 'Dump the changes by filerev to a json file', function(){
+    var revs = {};
+    items(grunt.filerev.summary, function(key, val){
+      var stripLeadingDirs = function (path) {
+        return S(path.substring('.tmp/static/'.length)).replaceAll('\\', '/').toString();
+      };
+      revs[stripLeadingDirs(key)] = stripLeadingDirs(val);
+    });
+    grunt.file.write('thusoy/server-assets/filerevs.json', JSON.stringify(revs));
+  });
+
   grunt.registerTask('default', [
     'build',
     'concurrent:server',
@@ -182,9 +197,14 @@ module.exports = function(grunt) {
     'buildJs',
     'imagemin',
     'server-assets',
-    'copy:python',
+    'rev-static',
     'shell:build-python',
     'shell:package-static',
+  ]);
+
+  grunt.registerTask('rev-static', [
+    'filerev',
+    'dump-revs',
   ]);
 
   grunt.registerTask('buildStyles', [
@@ -194,8 +214,7 @@ module.exports = function(grunt) {
   ]);
 
   grunt.registerTask('server-assets', [
-    'copy:server-assets-dev',
-    'copy:server-assets-dist',
+    'copy:fetch-server-assets',
   ]);
 
   grunt.registerTask('buildJs', [

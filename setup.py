@@ -16,8 +16,7 @@ setup(
         '': [
             path.join('templates', '*.html'),
             path.join('templates', '*', '*.html'),
-            path.join('server-assets', '*.css'),
-            'log_conf.yaml',
+            path.join('server-assets', '*'),
         ],
     },
     zip_safe=False,
