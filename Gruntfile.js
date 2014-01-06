@@ -73,6 +73,14 @@ module.exports = function(grunt) {
           dest: 'thusoy/server-assets/core.css',
         }]
       },
+      'js-sources': {
+        files: [{
+          expand: true,
+          cwd: 'thusoy/static/js',
+          src: '**/*.js',
+          dest: '.tmp/static/js/',
+        }]
+      }
     },
 
     filerev: {
@@ -198,6 +206,7 @@ module.exports = function(grunt) {
     'imagemin',
     'server-assets',
     'rev-static',
+    'copy:js-sources',
     'shell:build-python',
     'shell:package-static',
   ]);
