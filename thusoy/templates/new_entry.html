@@ -28,7 +28,7 @@
 
 {% block scripts %}
     {% if not debug %}
-        <script async src="{{ url_for('.static', filename='js/writePost.min.js') }}"></script>
+        <script async src="{{ url_for('static', filename='js/writePost.min.js') }}"></script>
     {% else %}
         <!-- build:js js/writePost.min.js -->
         <script src="/static/libs/underscore/underscore.js"></script>
