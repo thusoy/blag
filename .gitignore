@@ -22,7 +22,6 @@ __pycache__
 
 # logs
 pip-log.txt
-thusoy.log
 
 # Unit test / coverage reports
 .coverage
@@ -43,7 +42,8 @@ thusoy/static/css
 .sass-cache
 db.sqlite
 images
-secrets.py
+env.cmd
+env.sh
 
 # libraries
 thusoy/static/libs

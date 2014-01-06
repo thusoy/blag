@@ -8,16 +8,11 @@ handlers:
     level: DEBUG
     formatter: simple
     stream: ext://sys.stdout
-  file:
-    class: logging.FileHandler
-    level: DEBUG
-    formatter: simple
-    filename: thusoy.log
 loggers:
-  thusoy:
+  blag:
     level: DEBUG
-    handlers: [console, file]
-    propagate: yes
+    handlers: [console]
+    propagate: no
 root:
   level: DEBUG
   handlers: []

@@ -1,13 +1,8 @@
 """
-    Secrets that need to be declared in a file secrets.py:
-        * TWITTER_CLIENT_ID
-        * TWITTER_CLIENT_SECRET
+    Configuration of the devserver.
 """
 
-
-from .secrets import *
-
-from os import path
+from os import path, environ
 
 DEBUG = True
 
@@ -22,3 +17,9 @@ SQLALCHEMY_DATABASE_URI = 'sqlite:///../db.sqlite'
 UPLOAD_FOLDER = path.abspath('images')
 
 STATIC_FILES = path.abspath(path.join('.tmp', 'static'))
+
+LOG_CONF_PATH = path.abspath('dev_log_conf.yaml')
+
+TWITTER_CLIENT_ID = environ['THUSOY_TWITTER_CLIENT_ID']
+
+TWITTER_CLIENT_SECRET = environ['THUSOY_TWITTER_CLIENT_SECRET']
