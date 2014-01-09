@@ -2,8 +2,14 @@
 
 
 {% block styles %}
-    <link rel="stylesheet" href="{{ url_for('static', filename='libs/sir-trevor-js/sir-trevor.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='libs/sir-trevor-js/sir-trevor-icons.css') }}">
+    {%- if not debug -%}
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/writePost.min.css') }}">
+    {%- else %}
+        <!-- build:css css/writePost.min.css -->
+        <link rel="stylesheet" href="/static/libs/sir-trevor-js/sir-trevor.css">
+        <link rel="stylesheet" href="/static/libs/sir-trevor-js/sir-trevor-icons.css">
+        <!-- endbuild -->
+    {% endif -%}
 {% endblock %}
 
 

@@ -81,14 +81,6 @@ module.exports = function(grunt) {
           dest: '.tmp/static/js/',
         }]
       },
-      'js-libs': {
-        files: [{
-          expand: true,
-          cwd: 'thusoy/static',
-          src: 'libs/**/*',
-          dest: '.tmp/static/',
-        }]
-      }
     },
 
     filerev: {
@@ -159,7 +151,10 @@ module.exports = function(grunt) {
         root: 'thusoy/',
         flow: {
           html: {
-            steps: {'js': ['uglifyjs']},
+            steps: {
+              'js': ['uglifyjs'],
+              'css': ['cssmin'],
+            },
             post: {}
           }
         }
@@ -209,6 +204,7 @@ module.exports = function(grunt) {
 
   grunt.registerTask('build', [
     'clean',
+    'useminPrepare',
     'buildStyles',
     'buildJs',
     'imagemin',
@@ -228,6 +224,7 @@ module.exports = function(grunt) {
     'copy:bootstrap',
     'copy:thusoySass',
     'compass',
+    'cssmin',
   ]);
 
   grunt.registerTask('server-assets', [
@@ -235,8 +232,6 @@ module.exports = function(grunt) {
   ]);
 
   grunt.registerTask('buildJs', [
-    'useminPrepare',
     'uglify',
-    'copy:js-libs',
   ]);
 };
