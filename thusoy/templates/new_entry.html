@@ -33,9 +33,9 @@
 
 
 {% block scripts %}
-    {% if not debug %}
+    {%- if not debug -%}
         <script async src="{{ url_for('static', filename='js/writePost.min.js') }}"></script>
-    {% else %}
+    {%- else %}
         <!-- build:js js/writePost.min.js -->
         <script src="/static/libs/underscore/underscore.js"></script>
         <script src="/static/libs/Eventable/eventable.js"></script>
@@ -43,5 +43,5 @@
         <script src="/static/js/blocks/sourced-quote.js"></script>
         <script src="/static/js/writeEntry.js"></script>
         <!-- endbuild -->
-    {% endif %}
+    {%- endif -%}
 {% endblock %}
