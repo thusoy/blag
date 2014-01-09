@@ -80,6 +80,14 @@ module.exports = function(grunt) {
           src: '**/*.js',
           dest: '.tmp/static/js/',
         }]
+      },
+      'js-libs': {
+        files: [{
+          expand: true,
+          cwd: 'thusoy/static',
+          src: 'libs/**/*',
+          dest: '.tmp/static/',
+        }]
       }
     },
 
@@ -229,5 +237,6 @@ module.exports = function(grunt) {
   grunt.registerTask('buildJs', [
     'useminPrepare',
     'uglify',
+    'copy:js-libs',
   ]);
 };
