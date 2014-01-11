@@ -81,6 +81,14 @@ module.exports = function(grunt) {
           dest: '.tmp/static/js/',
         }]
       },
+      'misc-static': {
+        files: [{
+          expand: true,
+          cwd: 'thusoy/static',
+          src: ['img/favicon.ico'],
+          dest: '.tmp/static/',
+        }]
+      },
     },
 
     filerev: {
@@ -96,7 +104,12 @@ module.exports = function(grunt) {
       },
       js: {
         src: '.tmp/static/js/*.js',
-      }
+      },
+      misc: {
+        src: [
+          '.tmp/static/img/favicon.ico',
+        ]
+      },
     },
 
     imagemin: {
@@ -198,21 +211,26 @@ module.exports = function(grunt) {
   });
 
   grunt.registerTask('default', [
-    'build',
+    'prep',
     'concurrent:server',
   ]);
 
   grunt.registerTask('build', [
+    'prep',
+    'shell:build-python',
+    'shell:package-static',
+  ]);
+
+  grunt.registerTask('prep', [
     'clean',
     'useminPrepare',
     'buildStyles',
     'buildJs',
     'imagemin',
+    'copy:misc-static',
     'server-assets',
     'rev-static',
     'copy:js-sources',
-    'shell:build-python',
-    'shell:package-static',
   ]);
 
   grunt.registerTask('rev-static', [
