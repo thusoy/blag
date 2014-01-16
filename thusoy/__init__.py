@@ -26,6 +26,7 @@ def create_app(**extra_config):
     # register extensions
     db.init_app(app)
 
+
     jinja_loader = FileSystemLoader(path.join(path.dirname(__file__), loader_path) for loader_path in [
         'templates',
         'server-assets',
@@ -62,6 +63,9 @@ def create_app(**extra_config):
         # remove the default static url mapping
         for rule in app.url_map.iter_rules(endpoint='static'):
             del app.url_map._rules[app.url_map._rules.index(rule)]
+        @app.route('/static/libs/<path:filename>')
+        def libstatic(filename):
+            return send_from_directory(path.join(path.dirname(__file__), 'static', 'libs'), filename)
         @app.route('/static/<path:filename>')
         def devstatic(filename):
             return send_from_directory(app.config['STATIC_FILES'], filename)
@@ -80,6 +84,8 @@ def _configure_app(app, **extra_config):
 
     # Override the config with anything set directly in the creation call:
     app.config.update(extra_config)
+
+    # Set filerevisions
     with app.open_resource(path.join('server-assets', 'filerevs.json')) as filerevs_fh:
         filerevs = json.load(filerevs_fh)
         app.config.setdefault('filerevs', {}).update(filerevs)
