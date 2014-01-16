@@ -12,6 +12,7 @@ import textwrap
 import ujson as json
 import yaml
 
+make_lazy_configured(sqlalchemy.orm.mapper)
 
 db = SQLAlchemy()
 _logger = getLogger('blag')
@@ -38,7 +39,6 @@ def create_app(**extra_config):
     app.register_blueprint(blog.mod)
     app.register_blueprint(apis.mod)
 
-    make_lazy_configured(sqlalchemy.orm.mapper)
 
     with app.test_request_context():
         db.create_all()
