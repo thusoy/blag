@@ -34,6 +34,10 @@ env:
     # GitHub access token that grants access to thusoys GitHub account
     - secure: "NFbcA+kQb3eQDqnKXGym40PLo1P/6DKpCotWYx/em0dZhbUK29Ylh/x6ZjnvJbgjCMY2EmKlNLMRXN4ELdPMVmbAhAJjpEyWNRnebatckvXjEBe+K3zBq5r03Otlf8iRF5Zv+kwLK4cyB/0c6bJiiP+ICquMCmJxP6Ot50UGWoI="
 
+    # IAM role with write access to S3 bucket, TRAVIS_IAM_ACCESS_ID and TRAVIS_IAM_ACCESS_KEY
+    - secure: "pPWCfyFjGhXvkLPtabaGNFBswsHWWfVOBr0+UmNH2dn38CjiOarw2JIycFgRtWhefUV1p27S0KJwqjfWmzr6Z4glaGamo+hrPn6qG/44uv619xO6k2XqlMFlxt2E+3h1eTdP0JnRjd79WLtEHzpYOonH/J70QzJ04VXvkdMkqBo="
+    - secure: "i79F23ig/ObjAD4RqEmqixbU+eTXzJmiq5TzkCC4C3NCa+/okQ7a+gbeU/3ufXYkytpJce/W5nOcyKYqgbCjkFbk3FLraS946mPacNfM9h/p6RD8Y5f0KBA7vNSeGejIJAgGE1kM7cJxa0MapxZ+qTXjezx215ks0WC2oejKg4g="
+
 notifications:
   email: false
 
