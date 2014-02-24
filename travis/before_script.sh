@@ -9,9 +9,8 @@ git config --global user.name "Tarjei Husøy (via Travis CI)"
 pip install awscli
 
 mkdir ~/.aws
-echo > ~/.aws/config <<aws-iam-config
-[default]
-aws_access_key_id = $S3_ACCESS_ID
-aws_secret_access_key = $S3_ACCESS_KEY
+echo "[default]
+aws_access_key_id = $TRAVIS_IAM_ACCESS_ID
+aws_secret_access_key = $TRAVIS_IAM_ACCESS_KEY
 region = eu-west-1
-aws-iam-config
+" > ~/.aws/config
