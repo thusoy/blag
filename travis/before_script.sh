@@ -7,6 +7,8 @@ git config --global user.name "Tarjei Husøy (via Travis CI)"
 
 # Install aws cli and configure
 pip install awscli
+
+mkdir ~/.aws
 echo > ~/.aws/config <<aws-iam-config
 [default]
 aws_access_key_id = $S3_ACCESS_ID
