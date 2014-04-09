@@ -5,7 +5,6 @@ flask-script
 flask-sqlalchemy
 flask-wtf
 markdown
-mdx_smartypants
 pyyaml
 sqlalchemy-defaults
 ujson

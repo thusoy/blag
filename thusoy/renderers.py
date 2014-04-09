@@ -9,7 +9,7 @@ _logger = getLogger('thusoy.renderers')
 class BaseRenderer(object):
 
     markdown_extensions = [
-        'smartypants(entities=named)',
+        'smarty',
     ]
 
     prettify = True
