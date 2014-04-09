@@ -11,7 +11,7 @@ before_install:
 install:
 
   # Python stuff
-  - sudo pip install -r dev-requirements.txt --allow-external guess-language-spirit --allow-unverified guess-language-spirit
+  - sudo pip install -r dev-requirements.txt
 
   # Install compass
   - gem update --system
@@ -26,7 +26,7 @@ script:
   - grunt build
 
 after_success:
-  - ./travis/deploy.sh --verbose
+  - ./travis/deploy.sh
 
 env:
   global:
@@ -34,9 +34,9 @@ env:
     # GitHub access token that grants access to thusoys GitHub account
     - secure: "NFbcA+kQb3eQDqnKXGym40PLo1P/6DKpCotWYx/em0dZhbUK29Ylh/x6ZjnvJbgjCMY2EmKlNLMRXN4ELdPMVmbAhAJjpEyWNRnebatckvXjEBe+K3zBq5r03Otlf8iRF5Zv+kwLK4cyB/0c6bJiiP+ICquMCmJxP6Ot50UGWoI="
 
-    # IAM role with write access to S3 bucket, TRAVIS_IAM_ACCESS_ID and TRAVIS_IAM_ACCESS_KEY
-    - secure: "pPWCfyFjGhXvkLPtabaGNFBswsHWWfVOBr0+UmNH2dn38CjiOarw2JIycFgRtWhefUV1p27S0KJwqjfWmzr6Z4glaGamo+hrPn6qG/44uv619xO6k2XqlMFlxt2E+3h1eTdP0JnRjd79WLtEHzpYOonH/J70QzJ04VXvkdMkqBo="
-    - secure: "i79F23ig/ObjAD4RqEmqixbU+eTXzJmiq5TzkCC4C3NCa+/okQ7a+gbeU/3ufXYkytpJce/W5nOcyKYqgbCjkFbk3FLraS946mPacNfM9h/p6RD8Y5f0KBA7vNSeGejIJAgGE1kM7cJxa0MapxZ+qTXjezx215ks0WC2oejKg4g="
+    # IAM role with write access to S3 deploy bucket, TRAVIS_IAM_ACCESS_ID and TRAVIS_IAM_ACCESS_KEY
+    - secure: "whD64wtcy6JNMZUPm4laC/0IS8LD+MUJRbaOADJlUGDA9I1eTYCyQZa9nxhWm68ZgOvpX0EKpm4EnZ5M29yRyxmkL//O2fmCr/PWysWPoG4R9XrxBb8qdABa7E79V03D5ZLHzYnH4bX0R57NM8gVD1z2qYQKdmZk3s9ARb79874="
+    - secure: "TDGo9xO7PE7vVbR/AXvUQn3IcNldki9LET/PhVBPeKcIjy4H87guoQobZUUaQdCZ+8/dr2YYnIktTGDH+4IqTciWvII1gda568E9dOnvYjUxW3YSCU6BNERU5PD3hcBBjGgw/U058weCS4UxfG3udBeSOIQADeKcHUAv4/KpnsQ="
 
 notifications:
   email: false
