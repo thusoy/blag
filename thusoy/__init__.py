@@ -86,16 +86,17 @@ def _configure_app(app, **extra_config):
     app.config.update(extra_config)
 
     # Set filerevisions
-    with app.open_resource(path.join('server-assets', 'filerevs.json')) as filerevs_fh:
+    filerevs_path = path.join('server-assets', 'filerevs.json')
+    with app.open_resource(filerevs_path) as filerevs_fh:
         filerevs = json.load(filerevs_fh)
         app.config.setdefault('filerevs', {}).update(filerevs)
 
 
-
 def _init_logging(app):
-    log_config_dest = app.config['LOG_CONF_PATH']
-    with open(log_config_dest) as log_config_file:
-        logging.config.dictConfig(yaml.load(log_config_file))
+    log_config_dest = app.config.get('LOG_CONF_PATH')
+    if log_config_dest:
+        with open(log_config_dest) as log_config_file:
+            logging.config.dictConfig(yaml.load(log_config_file))
 
 
 def generic_error_handler(exception):
