@@ -12,7 +12,7 @@ before_install:
 install:
 
   # Python stuff
-  - sudo pip install -r dev-requirements.txt
+  - pip install -r dev-requirements.txt
 
   # Install compass
   - gem update --system
