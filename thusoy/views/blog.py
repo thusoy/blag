@@ -22,9 +22,6 @@ def main():
 def new_post():
     _logger.debug(request.form)
     form = BlogPostForm()
-    for field in form:
-        print field.type
-        print vars(field)
     if form.validate_on_submit():
         post = BlogPost()
         form.populate_obj(post)
@@ -32,7 +29,7 @@ def new_post():
         db.session.add(post)
         flash("New entry saved!", 'success')
         return redirect(url_for('.main'))
-    return render_template('new_entry.html', form=form)
+    return render_template('new_entry.html', form=form), 400
 
 
 @mod.route('/images', methods=['POST'])
