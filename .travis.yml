@@ -24,6 +24,7 @@ install:
 
 script:
   - grunt build
+  - nosetests
 
 after_success:
   - ./travis/deploy.sh
