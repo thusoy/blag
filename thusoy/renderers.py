@@ -4,7 +4,7 @@ from jinja2 import Template
 from markdown import markdown
 from logging import getLogger
 
-_logger = getLogger('thusoy.renderers')
+_logger = getLogger('blag.renderers')
 
 class BaseRenderer(object):
 

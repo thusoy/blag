@@ -10,7 +10,7 @@ import ujson as json
 
 mod = Blueprint(__file__, 'blog')
 
-_logger = getLogger('thusoy.blog')
+_logger = getLogger('blag.blog')
 
 @mod.route('/')
 def main():

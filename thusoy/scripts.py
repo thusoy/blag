@@ -8,7 +8,7 @@ from logging import getLogger
 app = create_app()
 manager = Manager(app)
 
-_logger = getLogger('thusoy.utils')
+_logger = getLogger('blag.utils')
 
 @manager.command
 def rerender_blogposts(id=None):
