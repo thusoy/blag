@@ -134,13 +134,6 @@ module.exports = function(grunt) {
       'build-python': {
         command: 'python setup.py sdist --formats gztar'
       },
-      'package-static': {
-        command: [
-          'cd .tmp/static',
-          'tar czf ../../dist/static.tar.gz *',
-        ].join('&&')
-      },
-
     },
 
     uglify: {
@@ -155,6 +148,17 @@ module.exports = function(grunt) {
           return S(uglifyDest.slice(4)).replaceAll('\\', '/').slice(0, -2) + 'map';
         },
         //sourceMapRoot: 'thusoy/static',
+      }
+    },
+
+    compress: {
+      static: {
+        options: {
+          archive: 'dist/static.tar.gz',
+        },
+        files: [
+          {expand: true, src: ['**'], cwd: '.tmp/static'},
+        ],
       }
     },
 
@@ -218,7 +222,7 @@ module.exports = function(grunt) {
   grunt.registerTask('build', [
     'prep',
     'shell:build-python',
-    'shell:package-static',
+    'compress:static',
   ]);
 
   grunt.registerTask('prep', [
