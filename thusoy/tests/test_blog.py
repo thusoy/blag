@@ -8,14 +8,26 @@ import unittest
 class BlogTest(unittest.TestCase):
 
     def setUp(self):
-        self.app = create_app()
+        self.test_db = tempfile.NamedTemporaryFile(delete=False)
+        self.test_db.close()
+        self.app = create_app(SQLALCHEMY_DATABASE_URI='sqlite:///' + self.test_db.name,
+            WTF_CSRF_ENABLED=False, SECRET_KEY='bogus')
         self.client = self.app.test_client()
         with self.app.app_context():
             db.session.add(BlogPost(title='Test article', rendered_content='Snip', raw_content='Snip'))
+            db.session.commit()
+            self.post_id = BlogPost.query.first().id
 
 
     def test_main_page(self):
         response = self.client.get('/')
+        self.assertEqual(response.status_code, 200)
+        self.assertTrue('Test article' in response.data)
+        self.assertTrue('Snip' in response.data)
+
+
+    def test_post_details(self):
+        response = self.client.get('/blag/%d' % self.post_id)
         self.assertEqual(response.status_code, 200)
         self.assertTrue('Test article' in response.data)
         self.assertTrue('Snip' in response.data)

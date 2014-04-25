@@ -32,6 +32,12 @@ def new_post():
     return render_template('new_entry.html', form=form), 400
 
 
+@mod.route('/blag/<int:post_id>')
+def post_details(post_id):
+    post = BlogPost.query.get_or_404(post_id)
+    return render_template('post_details.html', post=post)
+
+
 @mod.route('/images', methods=['POST'])
 def image_upload():
     _logger.info(request.data)
