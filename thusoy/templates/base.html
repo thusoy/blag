@@ -53,15 +53,6 @@
         <!-- endbuild -->
     {% endif %}
 
-    <script>
-        (function(t,h,u,s,o,y){t.GoogleAnalyticsObject=s;t[s]||(t[s]=
-        function(){(t[s].q=t[s].q||[]).push(arguments)});t[s].s=+new Date;
-        o=h.createElement(u);y=h.getElementsByTagName(u)[0];
-        o.src='//www.google-analytics.com/analytics.js';o.async=true;
-        y.parentNode.insertBefore(o,y)}(window,document,'script','ga'));
-        ga('create','{{ config["GOOGLE_ANALYTICS_ID"] }}');ga('send','pageview');
-    </script>
-
     {% block scripts %}
     {% endblock %}
 

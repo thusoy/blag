@@ -8,9 +8,7 @@ def default():
 
 def config():
     return {
-        'config': {
-            'GOOGLE_ANALYTICS_ID': current_app.config['GOOGLE_ANALYTICS_ID'],
-        }
+        'config': {}
     }
 
 
