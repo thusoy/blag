@@ -4,6 +4,7 @@ language:
 
 python:
   - "2.7"
+  - "3.3"
 
 before_install:
   - ./travis/before_script.sh
@@ -11,7 +12,7 @@ before_install:
 install:
 
   # Python stuff
-  - sudo pip install -r dev-requirements.txt --allow-external guess-language-spirit --allow-unverified guess-language-spirit
+  - pip install -r dev-requirements.txt
 
   # Install compass
   - gem update --system
@@ -24,9 +25,10 @@ install:
 
 script:
   - grunt build
+  - nosetests
 
 after_success:
-  - ./travis/deploy.sh --verbose
+  - ./travis/deploy.sh
 
 env:
   global:
