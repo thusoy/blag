@@ -1,7 +1,9 @@
 from .. import db
 from ..models import BlogPost, BlogPostForm, TagForm
+from ..auth import admin_permission
 
 from flask import Blueprint, render_template, request, flash, redirect, url_for, current_app, Response
+from flask.ext.login import login_required
 from logging import getLogger
 from os import path
 from werkzeug import secure_filename
@@ -19,6 +21,8 @@ def main():
 
 
 @mod.route('/blog', methods=['GET', 'POST'])
+@login_required
+@admin_permission.require(403)
 def new_post():
     _logger.debug(request.form)
     form = BlogPostForm()
@@ -38,7 +42,32 @@ def post_details(post_id):
     return render_template('post_details.html', post=post)
 
 
+@mod.route('/blag/<int:post_id>/edit', methods=('GET', 'POST'))
+@login_required
+@admin_permission.require(403)
+def edit_post(post_id):
+    post = BlogPost.query.get_or_404(post_id)
+    form = BlogPostForm(obj=post)
+    if form.validate_on_submit():
+        form.populate_obj(post)
+        db.session.add(post)
+        flash('Post modified successfully', 'success')
+        return redirect(url_for('.post_details', post_id=post.id))
+    return render_template('edit_entry.html', form=form, post=post)
+
+
+@mod.route('/blag/<int:post_id>', methods=['DELETE'])
+@login_required
+@admin_permission.require(403)
+def delete_post(post_id):
+    post = BlogPost.query.get_or_404(post_id)
+    db.session.delete(post)
+    return 'Post deleted', 200
+
+
 @mod.route('/images', methods=['POST'])
+@login_required
+@admin_permission.require(403)
 def image_upload():
     _logger.info(request.data)
     _logger.info(request.files)
