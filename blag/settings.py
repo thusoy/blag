@@ -1,5 +1,5 @@
 """
-    thusoy.settings
+    blag.settings
     ~~~~~~~~~~~~~~~
 
     These are the core settings, which should not depend on the specific platform where the app is deployed.

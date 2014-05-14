@@ -16,7 +16,7 @@ module.exports = function(grunt) {
     bower: {
       install: {
         options: {
-          targetDir: 'thusoy/static/libs',
+          targetDir: 'blag/static/libs',
         }
       }
     },
@@ -25,8 +25,9 @@ module.exports = function(grunt) {
       dist: [
         '.tmp',
         'dist',
-        'thusoy/**/*.pyc',
-        'thusoy/server-assets',
+        'blag/**/*.pyc',
+        'blag/server-assets',
+        'thusoy-blag-0.1.0',
         '*.egg-info',
       ]
     },
@@ -54,15 +55,15 @@ module.exports = function(grunt) {
       bootstrap: {
         files: [{
           expand: true,
-          cwd: 'thusoy/static/libs/sass-bootstrap/lib',
+          cwd: 'blag/static/libs/sass-bootstrap/lib',
           src: ['_*'],
           dest: '.tmp/static/sass/bootstrap',
         }]
       },
-      thusoySass: {
+      blagSass: {
         files: [{
           expand: true,
-          cwd: 'thusoy/static/sass',
+          cwd: 'blag/static/sass',
           src: ['**'],
           dest: '.tmp/static/sass',
         }]
@@ -70,13 +71,13 @@ module.exports = function(grunt) {
       'fetch-server-assets': {
         files: [{
           src: '.tmp/static/css/core.css',
-          dest: 'thusoy/server-assets/core.css',
+          dest: 'blag/server-assets/core.css',
         }]
       },
       'js-sources': {
         files: [{
           expand: true,
-          cwd: 'thusoy/static/js',
+          cwd: 'blag/static/js',
           src: '**/*.js',
           dest: '.tmp/static/js/',
         }]
@@ -84,7 +85,7 @@ module.exports = function(grunt) {
       'misc-static': {
         files: [{
           expand: true,
-          cwd: 'thusoy/static',
+          cwd: 'blag/static',
           src: ['img/favicon.ico'],
           dest: '.tmp/static/',
         }]
@@ -116,7 +117,7 @@ module.exports = function(grunt) {
       static: {
         files: [{
           expand: true,
-          cwd: 'thusoy/static/',
+          cwd: 'blag/static/',
           src: 'img/*.{png,jpg}',
           dest: '.tmp/static/',
         }]
@@ -147,7 +148,7 @@ module.exports = function(grunt) {
           // replace \ with / to work on both windows and *nix
           return S(uglifyDest.slice(4)).replaceAll('\\', '/').slice(0, -2) + 'map';
         },
-        //sourceMapRoot: 'thusoy/static',
+        //sourceMapRoot: 'blag/static',
       }
     },
 
@@ -165,7 +166,7 @@ module.exports = function(grunt) {
     useminPrepare: {
       options: {
         dest: '.tmp/static',
-        root: 'thusoy/',
+        root: 'blag/',
         flow: {
           html: {
             steps: {
@@ -176,7 +177,7 @@ module.exports = function(grunt) {
           }
         }
       },
-      html: 'thusoy/templates/**/*.html',
+      html: 'blag/templates/**/*.html',
     },
 
     watch: {
@@ -184,19 +185,19 @@ module.exports = function(grunt) {
         livereload: true,
       },
       python: {
-        files: ['thusoy/**/*.py'],
+        files: ['blag/**/*.py'],
         tasks: []
       },
       sass: {
-        files: ['thusoy/static/sass/*.scss'],
+        files: ['blag/static/sass/*.scss'],
         tasks: ['buildStyles', 'preprocess-html'],
       },
       js: {
-        files: ['thusoy/static/js/*.js', '!**/*.min.js'],
+        files: ['blag/static/js/*.js', '!**/*.min.js'],
         tasks: ['buildJs']
       },
       templates: {
-        files: ['thusoy/templates/*.html', '!thusoy/templates/base.html'],
+        files: ['blag/templates/*.html', '!blag/templates/base.html'],
         tasks: ['preprocess-html'],
       },
     },
@@ -211,7 +212,7 @@ module.exports = function(grunt) {
       };
       revs[stripLeadingDirs(key)] = stripLeadingDirs(val);
     });
-    grunt.file.write('thusoy/server-assets/filerevs.json', JSON.stringify(revs));
+    grunt.file.write('blag/server-assets/filerevs.json', JSON.stringify(revs));
   });
 
   grunt.registerTask('default', [
@@ -244,7 +245,7 @@ module.exports = function(grunt) {
 
   grunt.registerTask('buildStyles', [
     'copy:bootstrap',
-    'copy:thusoySass',
+    'copy:blagSass',
     'compass',
     'cssmin',
   ]);

@@ -4,7 +4,7 @@ from flask import Blueprint, current_app, Response, request
 import requests
 import ujson as json
 
-mod = Blueprint(__name__, 'thusoy.apis')
+mod = Blueprint('blag_apis', __name__)
 
 @mod.route('/tweets/<tweet_id>')
 def tweet(tweet_id):

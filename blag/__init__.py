@@ -19,7 +19,7 @@ _logger = getLogger('blag')
 
 
 def create_app(**extra_config):
-    app = Flask('thusoy')
+    app = Flask('blag')
     _configure_app(app, **extra_config)
     _init_logging(app)
 
@@ -78,7 +78,7 @@ def _configure_app(app, **extra_config):
     app.config.from_pyfile(core_settings)
 
     # Load stuff from local config:
-    config_from_environ = os.environ.get('THUSOY_CONFIG_FILE')
+    config_from_environ = os.environ.get('BLAG_CONFIG_FILE')
     if config_from_environ:
         app.config.from_pyfile(config_from_environ)
 

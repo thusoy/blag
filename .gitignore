@@ -38,7 +38,7 @@ nosetests.xml
 
 # local stuff
 venv
-thusoy/static/css
+blag/static/css
 .sass-cache
 db.sqlite
 images
@@ -46,10 +46,10 @@ env.cmd
 env.sh
 
 # libraries
-thusoy/static/libs
+blag/static/libs
 
 # built stuff
 *.min.js
 *.min.css
 .tmp
-thusoy/server-assets
+blag/server-assets
