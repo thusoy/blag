@@ -1,4 +1,7 @@
-from flask import Flask, send_from_directory, request
+from flask import Flask, send_from_directory, request, g, current_app
+from flask.ext.oauthlib.client import OAuth
+from flask.ext.login import LoginManager, current_user
+from flask.ext.principal import Principal, identity_changed, Identity
 from flask.ext.sqlalchemy import SQLAlchemy
 from jinja2 import FileSystemLoader
 from logging import getLogger
@@ -15,8 +18,11 @@ import yaml
 make_lazy_configured(sqlalchemy.orm.mapper)
 
 db = SQLAlchemy()
-_logger = getLogger('blag')
+login_manager = LoginManager()
+oauth = OAuth()
+principal = Principal()
 
+_logger = getLogger('blag')
 
 def create_app(**extra_config):
     app = Flask('blag')
@@ -25,21 +31,36 @@ def create_app(**extra_config):
 
     # register extensions
     db.init_app(app)
+    login_manager.init_app(app)
+    principal.init_app(app)
+    oauth.init_app(app)
 
+    # Set up login stuff
+    from .auth import load_user
+    login_manager.user_loader(load_user)
 
+    # Include server-assets in the jinja loader
     jinja_loader = FileSystemLoader(path.join(path.dirname(__file__), loader_path) for loader_path in [
         'templates',
         'server-assets',
     ])
     app.jinja_loader = jinja_loader
 
+
     from .views import blog
     from .views import apis
+    from .auth.views import mod as auth_mod
 
     # Register blueprints
     app.register_blueprint(blog.mod)
     app.register_blueprint(apis.mod)
+    app.register_blueprint(auth_mod)
 
+    @app.before_request
+    def add_user():
+        g.user = current_user
+        if current_user.is_authenticated():
+            identity_changed.send(current_app._get_current_object(), identity=Identity(current_user.id))
 
     with app.test_request_context():
         db.create_all()
@@ -54,6 +75,10 @@ def create_app(**extra_config):
     def server_error(error):
         generic_error_handler(error)
         return 'Oops', 500
+
+    @app.errorhandler(403)
+    def forbidden(error):
+        return "Your kung-foo is insufficient to do this.", 403
 
     @app.route('/images/<filename>')
     def images(filename):
@@ -80,6 +105,7 @@ def _configure_app(app, **extra_config):
     # Load stuff from local config:
     config_from_environ = os.environ.get('BLAG_CONFIG_FILE')
     if config_from_environ:
+        print 'Loading config from %s' % config_from_environ
         app.config.from_pyfile(config_from_environ)
 
     # Override the config with anything set directly in the creation call:

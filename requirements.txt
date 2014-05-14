@@ -1,6 +1,9 @@
 beautifulsoup4
 birdy
 flask
+flask-login
+flask-oauthlib
+flask-principal
 flask-script
 flask-sqlalchemy
 flask-wtf
