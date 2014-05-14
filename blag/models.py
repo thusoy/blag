@@ -1,18 +1,15 @@
 from . import db, renderers
 
+from flask import Markup
 from flask.ext.wtf import Form
 from sqlalchemy_defaults import Column
 from wtforms_alchemy import model_form_factory, ModelFieldList
-from wtforms.fields import FormField
+from wtforms.fields import FormField, HiddenField
 
 import ujson as json
 
 class ModelForm(model_form_factory(Form)):
     pass
-    # def __iter__(self):
-    #     """ Override iter to make sure we iterate in the order specified by the `only` field. """
-    #     for field in self.Meta.only:
-    #         yield self._fields[field]
 
 
 tags = db.Table('tags',
@@ -91,7 +88,23 @@ class BlogPost(db.Model):
         self.rendered_content = ''.join(html_parts)
 
 
-class BlogPostForm(ModelForm):
+class _PrintableForm(model_form_factory(Form)):
+
+    def render(self):
+        fields = []
+        for f in self:
+            if isinstance(f, HiddenField):
+                fields.append('<input type="hidden" name="%(name)s" value="%(value)s">' % {
+                    'name': f.name,
+                    'value': f._value(),
+                })
+            else:
+                fields.append('%s: %s' % (f.label, f()))
+        return Markup('\n'.join(fields))
+
+
+
+class BlogPostForm(_PrintableForm):
     class Meta(object):
         model = BlogPost
         only = [
