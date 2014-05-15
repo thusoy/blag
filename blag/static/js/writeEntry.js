@@ -1,15 +1,30 @@
-SirTrevor.setBlockOptions("Tweet", {
-    fetchUrl: function (tweetId) {
-        return '/tweets/' + tweetId;
-    },
-});
+(function ($, SirTrevor) {
+    'use strict';
 
-new SirTrevor.Editor({
-    el: $('[name="raw_content"]'),
-    uploadUrl: "/images",
+    SirTrevor.setBlockOptions("Tweet", {
+        fetchUrl: function (tweetId) {
+            return '/tweets/' + tweetId;
+        },
+    });
 
-    blockTypes: [
-        "Text",
-        "Sourcedquote",
-    ],
-});
+    SirTrevor.setDefaults({
+        uploadUrl: '/images',
+    });
+
+    new SirTrevor.Editor({
+        el: $('[name="raw_content"]'),
+
+        blockTypes: [
+            "Code",
+            "Heading",
+            "Text",
+            "Image",
+            "Tweet",
+            "List",
+            "Sourcedquote",
+            "Video",
+        ],
+
+        defaultType: "Text",
+    });
+})(jQuery, SirTrevor);
