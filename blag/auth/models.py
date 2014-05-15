@@ -10,3 +10,6 @@ class User(db.Model, UserMixin):
     is_admin = db.Column(db.Boolean(), default=False)
     first_name = db.Column(db.String(50))
     last_name = db.Column(db.String(50))
+
+    def __str__(self):
+        return 'User(%s %s, is_admin=%s)' % (self.first_name, self.last_name, self.is_admin)
