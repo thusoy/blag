@@ -22,7 +22,7 @@ facebook = oauth.remote_app('facebook',
 @mod.route('/login')
 def login():
     return facebook.authorize(callback=url_for('.facebook_authorized',
-        next='/blog',
+        next='/',
         _external=True))
 
 
