@@ -105,7 +105,7 @@ def _configure_app(app, **extra_config):
     # Load stuff from local config:
     config_from_environ = os.environ.get('BLAG_CONFIG_FILE')
     if config_from_environ:
-        print 'Loading config from %s' % config_from_environ
+        print('Loading config from %s' % config_from_environ)
         app.config.from_pyfile(config_from_environ)
 
     # Override the config with anything set directly in the creation call:

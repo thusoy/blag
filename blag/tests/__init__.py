@@ -6,7 +6,10 @@ from flask.ext.login import login_user
 from functools import wraps
 import unittest
 import os
+import sys
 import tempfile
+
+PY3 = sys.version_info > (3, 0, 0)
 
 
 def ignore(*exceptions):
@@ -36,6 +39,11 @@ class HTTPTestHelper(unittest.TestCase):
     def _assert_response_factory(self, status_code):
         def _assert_response(response):
             self.assertEqual(response.status_code, status_code)
+            data = response.data
+            if PY3:
+                return data.decode('utf-8')
+            else:
+                return data
         return _assert_response
 
 

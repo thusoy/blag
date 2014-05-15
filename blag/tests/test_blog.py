@@ -16,16 +16,16 @@ class BlogTest(UserTestCase):
 
     def test_main_page(self):
         response = self.anon_user.get('/')
-        self.assert200(response)
-        self.assertTrue('Test article' in response.data)
-        self.assertTrue('Snip' in response.data)
+        data = self.assert200(response)
+        self.assertTrue('Test article' in data)
+        self.assertTrue('Snip' in data)
 
 
     def test_post_details(self):
         response = self.anon_user.get('/blag/%d' % self.post_id)
-        self.assert200(response)
-        self.assertTrue('Test article' in response.data)
-        self.assertTrue('Snip' in response.data)
+        data = self.assert200(response)
+        self.assertTrue('Test article' in data)
+        self.assertTrue('Snip' in data)
 
 
 class WritePostTest(UserTestCase):
