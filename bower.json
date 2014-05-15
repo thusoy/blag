@@ -4,6 +4,6 @@
   "private": true,
   "dependencies": {
     "sass-bootstrap": "~3.0.1",
-    "sir-trevor-js": "0.3.0-rc.5"
+    "sir-trevor-js": "0.3.2"
   }
 }
