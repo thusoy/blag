@@ -2,14 +2,7 @@
 
 
 {% block styles %}
-    {%- if not debug -%}
-        <link rel="stylesheet" href="{{ url_for('static', filename='css/writePost.min.css') }}">
-    {%- else %}
-        <!-- build:css css/writePost.min.css -->
-        <link rel="stylesheet" href="/static/libs/sir-trevor-js/sir-trevor.css">
-        <link rel="stylesheet" href="/static/libs/sir-trevor-js/sir-trevor-icons.css">
-        <!-- endbuild -->
-    {% endif -%}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/writePost.min.css') }}">
 {% endblock %}
 
 
@@ -27,15 +20,5 @@
 
 
 {% block scripts %}
-    {%- if not debug -%}
-        <script async src="{{ url_for('static', filename='js/writePost.min.js') }}"></script>
-    {%- else %}
-        <!-- build:js js/writePost.min.js -->
-        <script src="/static/libs/underscore/underscore.js"></script>
-        <script src="/static/libs/Eventable/eventable.js"></script>
-        <script src="/static/libs/sir-trevor-js/sir-trevor.js"></script>
-        <script src="/static/js/blocks/sourced-quote.js"></script>
-        <script src="/static/js/writeEntry.js"></script>
-        <!-- endbuild -->
-    {%- endif -%}
+    <script async src="{{ url_for('static', filename='js/writePost.min.js') }}"></script>
 {% endblock %}

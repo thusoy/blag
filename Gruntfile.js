@@ -149,6 +149,32 @@ module.exports = function(grunt) {
           return S(uglifyDest.slice(4)).replaceAll('\\', '/').slice(0, -2) + 'map';
         },
         //sourceMapRoot: 'blag/static',
+      },
+      static: {
+        files: {
+          '.tmp/static/js/main.min.js': [
+            'blag/static/js/main.js',
+          ],
+          '.tmp/static/js/writePost.min.js': [
+            'blag/static/libs/underscore/underscore.js',
+            'blag/static/libs/Eventable/eventable.js',
+            'blag/static/libs/sir-trevor-js/sir-trevor.js',
+            'blag/static/js/blocks/code.js',
+            'blag/static/js/blocks/sourced-quote.js',
+            'blag/static/js/writeEntry.js',
+          ],
+        }
+      },
+    },
+
+    cssmin: {
+      static: {
+        files: {
+          '.tmp/static/css/writePost.min.css': [
+            'blag/static/libs/sir-trevor-js/sir-trevor.css',
+            'blag/static/libs/sir-trevor-js/sir-trevor-icons.css',
+          ],
+        }
       }
     },
 
@@ -161,23 +187,6 @@ module.exports = function(grunt) {
           {expand: true, src: ['**'], cwd: '.tmp/static'},
         ],
       }
-    },
-
-    useminPrepare: {
-      options: {
-        dest: '.tmp/static',
-        root: 'blag/',
-        flow: {
-          html: {
-            steps: {
-              'js': ['uglifyjs'],
-              'css': ['cssmin'],
-            },
-            post: {}
-          }
-        }
-      },
-      html: 'blag/templates/**/*.html',
     },
 
     watch: {
@@ -228,7 +237,6 @@ module.exports = function(grunt) {
 
   grunt.registerTask('prep', [
     'clean',
-    'useminPrepare',
     'buildStyles',
     'buildJs',
     'imagemin',
