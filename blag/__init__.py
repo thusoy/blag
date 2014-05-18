@@ -88,9 +88,6 @@ def create_app(**extra_config):
         # remove the default static url mapping
         for rule in app.url_map.iter_rules(endpoint='static'):
             del app.url_map._rules[app.url_map._rules.index(rule)]
-        @app.route('/static/libs/<path:filename>')
-        def libstatic(filename):
-            return send_from_directory(path.join(path.dirname(__file__), 'static', 'libs'), filename)
         @app.route('/static/<path:filename>')
         def devstatic(filename):
             return send_from_directory(app.config['STATIC_FILES'], filename)
@@ -113,9 +110,13 @@ def _configure_app(app, **extra_config):
 
     # Set filerevisions
     filerevs_path = path.join('server-assets', 'filerevs.json')
-    with app.open_resource(filerevs_path) as filerevs_fh:
-        filerevs = json.load(filerevs_fh)
-        app.config.setdefault('filerevs', {}).update(filerevs)
+    try:
+        with app.open_resource(filerevs_path) as filerevs_fh:
+            filerevs = json.load(filerevs_fh)
+            app.config['FILEREVS'] = filerevs
+    except IOError:
+        print('No filerevs found, continuing without')
+        app.config['FILEREVS'] = {}
 
 
 def _init_logging(app):
