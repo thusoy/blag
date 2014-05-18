@@ -30,6 +30,10 @@ class BlogTest(UserTestCase):
 
 class WritePostTest(UserTestCase):
 
+    def test_get_write_form(self):
+        self.assert200(self.admin_user.get('/blog'))
+
+
     def test_write_post(self):
         contents = {
             'title': 'Test article',
