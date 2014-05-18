@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>Styleguide</h1>
+
+    <p>
+        A look at how different block types in posts are defined, rendered, and displayed.
+    </p>
+
+    <p>
+        Jump to block:
+    </p>
+    {% for block in blocks %}
+        <a href="#{{ block.type }}">{{ block.type }}</a>
+    {% endfor %}
+
+    {% for block in blocks %}
+        <h2 id="{{ block.type }}">{{ block.type }}</h2>
+
+        <strong>JSON</strong>
+        <pre>
+{
+  "type": "{{ block.type }}",
+  "data": {{ pprint(block.data) }},
+}</pre>
+
+    <strong>HTML</strong>
+    <pre>
+{{ render_block(block) }}
+    </pre>
+
+    <strong>Display</strong>
+    {{ render_block(block)|safe }}
+    {% endfor %}
+
+{% endblock %}

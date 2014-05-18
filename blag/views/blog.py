@@ -1,4 +1,9 @@
+# -*- coding: utf-8 -*-
+
+from __future__ import unicode_literals
+
 from .. import db
+from ..blocks import render_block
 from ..models import BlogPost, BlogPostForm, TagForm
 from ..auth import admin_permission
 
@@ -9,6 +14,8 @@ from os import path
 from werkzeug import secure_filename
 
 import ujson as json
+import json as _slow_json
+import datetime
 
 mod = Blueprint(__file__, 'blog')
 
@@ -82,27 +89,18 @@ def image_upload():
 
 @mod.route('/styleguide')
 def styleguide():
-    post = BlogPost()
-    post.title = 'Styleguide'
-    post.raw_content = u'''{
-    "data": [
+    blocks = [
         {
             "type": "text",
             "data": {
-                "text": "# This is the first header\\n\\nThis is a normal text block.\\n\\n\\n\\nIt might contain several paragraphs, and should in general contain lots of markdown-formatted text.\\n\\n"
+                "text": "# This is the first header\n\nThis is a normal text block.\n\n\n\nIt might contain several paragraphs, and should in general contain lots of markdown-formatted text.\n\n"
             }
         },
         {
             "type": "quote",
             "data": {
                 "text": "> This is a short quote.",
-                "cite": "Tarjei Hus\xf8y"
-            }
-        },
-        {
-            "type": "text",
-            "data": {
-                "text": "This is some more text after the quote."
+                "cite": "Tarjei Husøy"
             }
         },
         {
@@ -129,26 +127,20 @@ def styleguide():
         {
             "type": "quote",
             "data": {
-                "text": "> This is a quote consisting of several paragraphs.\\n\\n> \\n\\n> Just because some people saylots of sensible things.\\n\\n",
+                "text": "> This is a quote consisting of several paragraphs.\n> \n> Just because some people saylots of sensible things.\n",
                 "cite": "Everyone"
             }
         },
         {
             "type": "ul",
             "data": {
-                "text":" - Bulletpoint 1\\n - Bulletpoint 2\\n - List are effing awesome\\n"
+                "text":" - Bulletpoint 1\n - Bulletpoint 2\n - List are effing awesome\n"
             }
         },
         {
-            "type": "text",
+            "type": "code",
             "data": {
-                "text": "This is a code example:\\n\\n\\n\\n    #/usr/bin/python\\n\\n    app = Flask(__name__)\\n\\n\\n\\n    @app.route(\'/\')\\n\\n    def home():\\n\\n        return render_template(\'home.html\')\\n\\n    \\n\\n"
-            }
-        },
-        {
-            "type": "text",
-            "data": {
-                "text": "This is vimeo video!"
+                "text": "This is a code example:\n    #/usr/bin/python\n    app = Flask(__name__)\n    @app.route(\'/\')\n    def home():\n        return render_template(\'home.html\')\n    \n"
             }
         },
         {
@@ -170,7 +162,7 @@ def styleguide():
             "data": {
                 "text": "Today has been crazy.",
                 "author": "Markus",
-                "source": "Markus.fi"
+                "source": "https://suonto.com/"
             }
         },
         {
@@ -207,7 +199,7 @@ def styleguide():
             ]
         }
 
-    ]}
-    '''
-    post.render()
-    return render_template('home.html', entry=post)
+    ]
+    def pprint(block):
+        return _slow_json.dumps(block, indent=4)
+    return render_template('styleguide.html', blocks=blocks, pprint=pprint, render_block=render_block)
