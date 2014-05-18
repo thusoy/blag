@@ -4,31 +4,26 @@
 *
 */
 
-SirTrevor.Blocks.Sourcedquote = (function(){
+SirTrevor.Blocks.SourcedQuote = SirTrevor.Block.extend({
 
-  var template = _.template([
+  type: 'sourced_quote',
+
+  title: 'Quote with source',
+
+  icon_name: 'quote',
+
+  editorHTML: [
     '<blockquote class="st-required st-text-block" contenteditable="true"></blockquote>',
     '<label class="st-input-label">Credit</label>',
-    '<input maxlength="140" name="author" placeholder="Credit" class="st-input-string st-required js-cite-input" type="text">',
+    '<input maxlength="140" name="author" placeholder="Credit" class="st-input-string st-required js-author-input" type="text">',
     '<label class="st-input-label">Source</label>',
-    '<input name="source" placeholder="Source" class"st-input-string st-required js-cite-input" type="text">',
-  ].join("\n"));
+    '<input name="source" placeholder="Source" class"st-input-string st-required js-source-input" type="url">',
+  ].join("\n"),
 
-  return SirTrevor.Block.extend({
+  loadData: function (data) {
+    this.getTextBlock().html(SirTrevor.toHTML(data.text, this.type));
+    this.$('.js-author-input').val(data.author);
+    this.$('.js-source-input').val(data.source);
+  },
 
-    type: 'sourced_quote',
-
-    icon_name: 'quote',
-
-    editorHTML: function() {
-      return template(this);
-    },
-
-    loadData: function(data){
-      this.getTextBlock().html(SirTrevor.toHTML(data.text, this.type));
-      this.$('.js-cite-input').val(data.cite);
-    },
-
-  });
-
-})();
+});
