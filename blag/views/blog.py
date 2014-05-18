@@ -140,7 +140,8 @@ def styleguide():
         {
             "type": "code",
             "data": {
-                "text": "This is a code example:\n    #/usr/bin/python\n    app = Flask(__name__)\n    @app.route(\'/\')\n    def home():\n        return render_template(\'home.html\')\n    \n"
+                "language": "python",
+                "text": "# This is a code example:\n#!/usr/bin/env python\napp = Flask(__name__)\n\n@app.route(\'/\')\ndef home():\n    return render_template(\'home.html\')\n"
             }
         },
         {

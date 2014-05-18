@@ -3,6 +3,9 @@ from flask import url_for
 from jinja2 import Template
 from markdown import markdown
 from logging import getLogger
+from pygments.lexers import get_lexer_by_name
+from pygments.formatters import get_formatter_by_name
+import pygments
 
 _logger = getLogger('blag.renderers')
 
@@ -17,6 +20,8 @@ class BaseRenderer(object):
     If full control of the rendering is required, override `render_html` and return the finished
     html.
     """
+
+    template = Template('{{ text }}')
 
     def render_md(self, md):
         return markdown(md, ['smarty'])
@@ -196,6 +201,14 @@ class SourcedQuoteRenderer(BaseRenderer):
     """)
 
 
+class CodeRenderer(BaseRenderer):
+
+    def parse_data(self, data):
+        lexer = get_lexer_by_name(data.get('language', 'bash'))
+        formatter = get_formatter_by_name('html')
+        return dict(text=pygments.highlight(data['text'], lexer, formatter))
+
+
 def render_blocks(blocks):
     html_parts = []
     for block in blocks:
@@ -205,6 +218,7 @@ def render_blocks(blocks):
 
 def render_block(block):
     renderer_map = {
+        'code': CodeRenderer,
         'text': TextRenderer,
         'quote': QuoteRenderer,
         'image': ImageRenderer,
