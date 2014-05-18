@@ -23,7 +23,7 @@ SirTrevor.Blocks.Code = SirTrevor.Block.extend({
   },
 
   loadData: function (data) {
-    this.getTextBlock().html(SirTrevor.toHTML(data.text, this.type));
+    this.getTextBlock().val(data.text);
     this.$('.js-language-input').val(data.language);
   }
 });
