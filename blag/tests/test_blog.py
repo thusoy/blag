@@ -28,6 +28,11 @@ class BlogTest(UserTestCase):
         self.assertTrue('Snip' in data)
 
 
+    def test_styleguide(self):
+        response = self.anon_user.get('/styleguide')
+        self.assert200(response)
+
+
 class WritePostTest(UserTestCase):
 
     def test_get_write_form(self):
