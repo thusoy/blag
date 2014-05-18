@@ -12,10 +12,16 @@ module.exports = function (grunt) {
   grunt.initConfig({
 
     bower: {
-      install: {
-        options: {
-          targetDir: 'blag/static/libs',
-        }
+      install: {}
+    },
+
+    /* Needed since sass/compass doesn't have any decent way to include plain CSS files yet */
+    rename: {
+      sirTrevor: {
+        files: [
+          {src: 'bower_components/sir-trevor-js/sir-trevor.css', dest: 'bower_components/sir-trevor-js/_sir-trevor.scss'},
+          {src: 'bower_components/sir-trevor-js/sir-trevor-icons.css', dest: 'bower_components/sir-trevor-js/_sir-trevor-icons.scss'}
+        ]
       }
     },
 
@@ -35,9 +41,10 @@ module.exports = function (grunt) {
     compass: {
       dist: {
         options: {
-          sassDir: '.tmp/static/sass/',
+          sassDir: 'blag/static/sass/',
           cssDir: '.tmp/static/css/',
           outputStyle: 'compressed',
+          importPath: ["bower_components"],
         }
       }
     },
@@ -52,22 +59,6 @@ module.exports = function (grunt) {
     },
 
     copy: {
-      bootstrap: {
-        files: [{
-          expand: true,
-          cwd: 'blag/static/libs/sass-bootstrap/lib',
-          src: ['_*'],
-          dest: '.tmp/static/sass/bootstrap',
-        }]
-      },
-      blagSass: {
-        files: [{
-          expand: true,
-          cwd: 'blag/static/sass',
-          src: ['**'],
-          dest: '.tmp/static/sass',
-        }]
-      },
       'fetch-server-assets': {
         files: [{
           src: '.tmp/static/css/core.css',
@@ -147,30 +138,19 @@ module.exports = function (grunt) {
       static: {
         files: {
           '.tmp/static/js/main.min.js': [
-            'blag/static/libs/jquery/dist/jquery.js',
+            'bower_components/jquery/dist/jquery.js',
             'blag/static/js/main.js',
           ],
           '.tmp/static/js/writePost.min.js': [
-            'blag/static/libs/underscore/underscore.js',
-            'blag/static/libs/Eventable/eventable.js',
-            'blag/static/libs/sir-trevor-js/sir-trevor.js',
+            'bower_components/underscore/underscore.js',
+            'bower_components/Eventable/eventable.js',
+            'bower_components/sir-trevor-js/sir-trevor.js',
             'blag/static/js/blocks/code.js',
             'blag/static/js/blocks/sourced-quote.js',
             'blag/static/js/writeEntry.js',
           ],
         }
       },
-    },
-
-    cssmin: {
-      static: {
-        files: {
-          '.tmp/static/css/writePost.min.css': [
-            'blag/static/libs/sir-trevor-js/sir-trevor.css',
-            'blag/static/libs/sir-trevor-js/sir-trevor-icons.css',
-          ],
-        }
-      }
     },
 
     compress: {
@@ -194,11 +174,11 @@ module.exports = function (grunt) {
       },
       sass: {
         files: ['blag/static/sass/*.scss'],
-        tasks: ['copy:blagSass', 'compass'],
+        tasks: ['buildStyles'],
       },
       js: {
         files: ['blag/static/js/**/*.js'],
-        tasks: ['buildJs']
+        tasks: ['uglify']
       },
       templates: {
         files: ['blag/templates/*.html'],
@@ -213,6 +193,7 @@ module.exports = function (grunt) {
   ]);
 
   grunt.registerTask('build', [
+    'clean',
     'prep',
     'rev-static',
     'shell:build-python',
@@ -222,10 +203,9 @@ module.exports = function (grunt) {
   grunt.registerTask('prep', [
     'clean',
     'buildStyles',
-    'buildJs',
+    'uglify',
     'imagemin',
     'copy:misc-static',
-    'server-assets',
   ]);
 
   grunt.registerTask('rev-static', [
@@ -233,18 +213,13 @@ module.exports = function (grunt) {
     'filerev_assets',
   ]);
 
+  grunt.registerTask('init-deps', [
+    'bower',
+    'rename:sirTrevor',
+  ]);
+
   grunt.registerTask('buildStyles', [
-    'copy:bootstrap',
-    'copy:blagSass',
     'compass',
-    'cssmin',
-  ]);
-
-  grunt.registerTask('server-assets', [
     'copy:fetch-server-assets',
-  ]);
-
-  grunt.registerTask('buildJs', [
-    'uglify',
   ]);
 };

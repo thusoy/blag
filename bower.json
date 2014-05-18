@@ -6,5 +6,8 @@
     "sass-bootstrap": "~3.0.1",
     "sir-trevor-js": "0.3.2",
     "jquery": "~2.1.1"
+  },
+  "resolutions": {
+    "jquery": "~2.1.1"
   }
 }

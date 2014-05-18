@@ -39,7 +39,6 @@ nosetests.xml
 
 # local stuff
 venv
-blag/static/css
 .sass-cache
 db.sqlite
 images
@@ -47,10 +46,8 @@ env.cmd
 env.sh
 
 # libraries
-blag/static/libs
+bower_components
 
 # built stuff
-*.min.js
-*.min.css
 .tmp
 blag/server-assets
