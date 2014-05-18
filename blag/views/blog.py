@@ -33,7 +33,7 @@ def new_post():
         db.session.add(post)
         flash("New entry saved!", 'success')
         return redirect(url_for('.main'))
-    return render_template('new_entry.html', form=form), 400
+    return render_template('new_entry.html', form=form), 200 if request.method == 'GET' else 400
 
 
 @mod.route('/blag/<int:post_id>')
