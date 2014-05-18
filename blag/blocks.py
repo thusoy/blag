@@ -6,25 +6,16 @@ from logging import getLogger
 
 _logger = getLogger('blag.renderers')
 
+
 class BaseRenderer(object):
 
-    markdown_extensions = [
-        'smarty',
-    ]
-
-    prettify = True
-
-    def __init__(self, data):
-        self.data = data
-
-
     def render_md(self, md):
-        return markdown(md, self.markdown_extensions)
+        return markdown(md, ['smarty'])
 
 
-    def render(self):
-        raw_html = self.render_html()
-        if self.prettify:
+    def render(self, data, prettify=True):
+        raw_html = self.render_html(data)
+        if prettify:
             pretty_html = BeautifulSoup(raw_html).prettify()
             return pretty_html
         return raw_html
@@ -32,9 +23,9 @@ class BaseRenderer(object):
 
 class TextRenderer(BaseRenderer):
 
-    def render_html(self):
-        _logger.info("Self data: %s", self.data)
-        return self.render_md(self.data['text'])
+    def render_html(self, data):
+        _logger.info("Self data: %s", data)
+        return self.render_md(data['text'])
 
 
 class QuoteRenderer(BaseRenderer):
@@ -47,12 +38,12 @@ class QuoteRenderer(BaseRenderer):
             </footer>
     """
 
-    def render_html(self):
-        quote_lines = self.data['text'].split('\n')
+    def render_html(self, data):
+        quote_lines = data['text'].split('\n')
         quote_lines = [line.lstrip('> ') for line in quote_lines]
         quotation_md = self.render_md('\n'.join(quote_lines))
         template = Template(self.quote_template)
-        quote = template.render(cite=self.data['cite'], quote=quotation_md)
+        quote = template.render(cite=data['cite'], quote=quotation_md)
         return quote
 
 
@@ -64,9 +55,9 @@ class ImageRenderer(BaseRenderer):
         </a>
     """
 
-    def render_html(self):
+    def render_html(self, data):
         template = Template(self.image_template)
-        return template.render(img_url=url_for('images', filename=self.data['imageUrl']))
+        return template.render(img_url=url_for('images', filename=data['imageUrl']))
 
 
 class VideoRenderer(BaseRenderer):
@@ -103,13 +94,13 @@ class VideoRenderer(BaseRenderer):
         />
     """
 
-    def render_html(self):
+    def render_html(self, data):
         properties = {name: getattr(self, name) for name in dir(self) if not name.startswith('__')}
-        if self.data['source'] == 'vimeo':
+        if data['source'] == 'vimeo':
             template = Template(self.vimeo_embed_code)
-        elif self.data['source'] == 'youtube':
+        elif data['source'] == 'youtube':
             template = Template(self.youtube_embed_code)
-        return template.render(video_id=self.data['remote_id'], **properties)
+        return template.render(video_id=data['remote_id'], **properties)
 
 
 class GalleryRenderer(BaseRenderer):
@@ -122,9 +113,9 @@ class GalleryRenderer(BaseRenderer):
         {% endfor %}
     """
 
-    def render_html(self):
+    def render_html(self, data):
         template = Template(self.gallery_template)
-        images = [image['data'] for image in self.data]
+        images = [image['data'] for image in data]
         return template.render(gallery=images, url_for=url_for)
 
 
@@ -151,10 +142,10 @@ class TweetRenderer(BaseRenderer):
         </script>
     """
 
-    def render_html(self):
-        _logger.info(self.data)
+    def render_html(self, data):
+        _logger.info(data)
         template = Template(self.embed_code)
-        return template.render(tweet_id=self.data['id'])
+        return template.render(tweet_id=data['id'])
 
 
 class HeadingRenderer(BaseRenderer):
@@ -169,12 +160,12 @@ class HeadingRenderer(BaseRenderer):
         </{{ heading_tag }}>
     """
 
-    def render_html(self):
+    def render_html(self, data):
         template = Template(self.template)
         return template.render(
             heading_class=self.heading_class,
             heading_tag=self.heading_tag,
-            heading=self.data['text']
+            heading=data['text']
         )
 
 
@@ -190,11 +181,35 @@ class SourcedQuoteRenderer(BaseRenderer):
         </blockquote>
     """
 
-    def render_html(self):
+    def render_html(self, data):
         template = Template(self.sourced_quote_template)
         context = {
-            'author': self.data['author'],
-            'source': self.data['source'],
-            'quote': self.data['text'],
+            'author': data['author'],
+            'source': data['source'],
+            'quote': data['text'],
         }
         return template.render(**context)
+
+
+def render_blocks(blocks):
+    html_parts = []
+    for block in blocks:
+        html_parts.append(render_block(block))
+    return '\n'.join(html_parts)
+
+
+def render_block(block):
+    print 'Rendering block: %s' % block
+    renderer_map = {
+        'text': TextRenderer,
+        'quote': QuoteRenderer,
+        'image': ImageRenderer,
+        'video': VideoRenderer,
+        'gallery': GalleryRenderer,
+        'tweet': TweetRenderer,
+        'heading': HeadingRenderer,
+        'sourced_quote': SourcedQuoteRenderer,
+    }
+    renderer_class = renderer_map.get(block['type'], TextRenderer)
+    renderer = renderer_class()
+    return renderer.render(block['data'])

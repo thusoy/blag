@@ -1,4 +1,5 @@
-from . import db, renderers
+from . import db
+from .blocks import render_blocks
 
 from flask import Markup
 from flask.ext.wtf import Form
@@ -69,23 +70,7 @@ class BlogPost(db.Model):
     tags = db.relationship('Tag', secondary=tags, backref=db.backref('posts', lazy='dynamic'))
 
     def render(self):
-        raw_data = json.loads(self.raw_content)
-        html_parts = []
-        render_mapping = {
-            'text': renderers.TextRenderer,
-            'quote': renderers.QuoteRenderer,
-            'image': renderers.ImageRenderer,
-            'video': renderers.VideoRenderer,
-            'gallery': renderers.GalleryRenderer,
-            'tweet': renderers.TweetRenderer,
-            'heading': renderers.HeadingRenderer,
-            'sourced_quote': renderers.SourcedQuoteRenderer,
-        }
-        for part in raw_data['data']:
-            renderer_class = render_mapping.get(part['type'], renderers.TextRenderer)
-            renderer = renderer_class(part['data'])
-            html_parts.append(renderer.render())
-        self.rendered_content = ''.join(html_parts)
+        self.rendered_content = render_blocks(json.loads(self.raw_content)['data'])
 
 
 class _PrintableForm(model_form_factory(Form)):
