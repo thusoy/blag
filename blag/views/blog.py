@@ -57,7 +57,7 @@ def edit_post(post_id):
     form = BlogPostForm(obj=post)
     if form.validate_on_submit():
         form.populate_obj(post)
-        db.session.add(post)
+        post.render()
         flash('Post modified successfully', 'success')
         return redirect(url_for('.post_details', post_id=post.id))
     return render_template('edit_entry.html', form=form, post=post)
