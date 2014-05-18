@@ -27,6 +27,8 @@ module.exports = function (grunt) {
         'blag/server-assets',
         'thusoy-blag-0.1.0',
         '*.egg-info',
+        'cover',
+        '.coverage',
       ]
     },
 
