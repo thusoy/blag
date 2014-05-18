@@ -1,14 +1,12 @@
-module.exports = function(grunt) {
+/* global module, require */
+
+module.exports = function (grunt) {
+  'use strict';
+  /* jshint maxstatements: false */
+  /* jshint camelcase: false */
 
   // load grunt tasks from package.json
   require('load-grunt-tasks')(grunt);
-  var S = require('string');
-
-  function items(obj, callback){
-    Object.keys(obj).forEach(function(key, i){
-      callback(key, obj[key], i);
-    });
-  }
 
   // Project configuration.
   grunt.initConfig({
@@ -74,14 +72,6 @@ module.exports = function(grunt) {
           dest: 'blag/server-assets/core.css',
         }]
       },
-      'js-sources': {
-        files: [{
-          expand: true,
-          cwd: 'blag/static/js',
-          src: '**/*.js',
-          dest: '.tmp/static/js/',
-        }]
-      },
       'misc-static': {
         files: [{
           expand: true,
@@ -113,6 +103,16 @@ module.exports = function(grunt) {
       },
     },
 
+    filerev_assets: {
+      dist: {
+        options: {
+          cwd: '.tmp/static/',
+          dest: 'blag/server-assets/filerevs.json',
+          prettyPrint: true,
+        }
+      }
+    },
+
     imagemin: {
       static: {
         files: [{
@@ -139,20 +139,13 @@ module.exports = function(grunt) {
 
     uglify: {
       options: {
-        sourceMap: function (uglifyDest) {
-          return uglifyDest.slice(0, -3) + '.map';
-        },
-        sourceMapPrefix: 3,
-        sourceMappingURL: function (uglifyDest) {
-          // Strip the first '.tmp' from the destination
-          // replace \ with / to work on both windows and *nix
-          return S(uglifyDest.slice(4)).replaceAll('\\', '/').slice(0, -2) + 'map';
-        },
-        //sourceMapRoot: 'blag/static',
+        sourceMap: true,
+        sourceMapIncludeSources: true,
       },
       static: {
         files: {
           '.tmp/static/js/main.min.js': [
+            'blag/static/libs/jquery/dist/jquery.js',
             'blag/static/js/main.js',
           ],
           '.tmp/static/js/writePost.min.js': [
@@ -199,29 +192,17 @@ module.exports = function(grunt) {
       },
       sass: {
         files: ['blag/static/sass/*.scss'],
-        tasks: ['buildStyles', 'preprocess-html'],
+        tasks: ['copy:blagSass', 'compass'],
       },
       js: {
-        files: ['blag/static/js/*.js', '!**/*.min.js'],
+        files: ['blag/static/js/**/*.js'],
         tasks: ['buildJs']
       },
       templates: {
-        files: ['blag/templates/*.html', '!blag/templates/base.html'],
-        tasks: ['preprocess-html'],
+        files: ['blag/templates/*.html'],
+        tasks: [],
       },
     },
-
-  });
-
-  grunt.registerTask('dump-revs', 'Dump the changes by filerev to a json file', function(){
-    var revs = {};
-    items(grunt.filerev.summary, function(key, val){
-      var stripLeadingDirs = function (path) {
-        return S(path.substring('.tmp/static/'.length)).replaceAll('\\', '/').toString();
-      };
-      revs[stripLeadingDirs(key)] = stripLeadingDirs(val);
-    });
-    grunt.file.write('blag/server-assets/filerevs.json', JSON.stringify(revs));
   });
 
   grunt.registerTask('default', [
@@ -231,6 +212,7 @@ module.exports = function(grunt) {
 
   grunt.registerTask('build', [
     'prep',
+    'rev-static',
     'shell:build-python',
     'compress:static',
   ]);
@@ -242,13 +224,11 @@ module.exports = function(grunt) {
     'imagemin',
     'copy:misc-static',
     'server-assets',
-    'rev-static',
-    'copy:js-sources',
   ]);
 
   grunt.registerTask('rev-static', [
     'filerev',
-    'dump-revs',
+    'filerev_assets',
   ]);
 
   grunt.registerTask('buildStyles', [
