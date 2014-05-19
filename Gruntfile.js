@@ -12,7 +12,11 @@ module.exports = function (grunt) {
   grunt.initConfig({
 
     bower: {
-      install: {}
+      install: {
+        options: {
+          copy: false,
+        }
+      }
     },
 
     /* Needed since sass/compass doesn't have any decent way to include plain CSS files yet */
