@@ -47,7 +47,8 @@ def new_post():
 def post_details(post_id):
     post = BlogPost.query.get_or_404(post_id)
     description = do_truncate(do_striptags(post.rendered_content))
-    return render_template('post_details.html', post=post, description=description)
+    title = post.title
+    return render_template('post_details.html', post=post, description=description, title=title)
 
 
 @mod.route('/blag/<int:post_id>/edit', methods=('GET', 'POST'))
