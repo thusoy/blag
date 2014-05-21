@@ -150,6 +150,7 @@ module.exports = function (grunt) {
             'bower_components/Eventable/eventable.js',
             'bower_components/sir-trevor-js/sir-trevor.js',
             'blag/static/js/blocks/code.js',
+            'blag/static/js/blocks/markdown.js',
             'blag/static/js/blocks/sourced-quote.js',
             'blag/static/js/writeEntry.js',
           ],

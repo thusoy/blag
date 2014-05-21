@@ -17,7 +17,7 @@
         blockTypes: [
             "Code",
             "Heading",
-            "Text",
+            "Markdown",
             "Image",
             "Tweet",
             "List",

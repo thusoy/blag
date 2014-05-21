@@ -220,6 +220,7 @@ def render_block(block):
     renderer_map = {
         'code': CodeRenderer,
         'text': TextRenderer,
+        'markdown': TextRenderer,
         'quote': QuoteRenderer,
         'image': ImageRenderer,
         'video': VideoRenderer,
