@@ -24,6 +24,7 @@ class BaseRenderer(object):
     template = Template('{{ text }}')
 
     def render_md(self, md):
+        md = md.replace('(tm)', '&trade;')
         return markdown(md, ['smarty'])
 
 
