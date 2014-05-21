@@ -1,8 +1,14 @@
+# -*- coding: utf-8 -*-
+
+from __future__ import unicode_literals
+
 from flask import current_app, url_for
 
 def default():
     return {
         'debug': current_app.config.get('DEBUG', False),
+        'description': "Home of Tarjei Husøy, photographer, climber, skier, web developer, " +
+            "infosec student, philomath and gentleman of leisure.",
     }
 
 

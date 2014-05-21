@@ -9,13 +9,13 @@ from ..auth import admin_permission
 
 from flask import Blueprint, render_template, request, flash, redirect, url_for, current_app, Response
 from flask.ext.login import login_required
+from jinja2.filters import do_striptags, do_truncate
 from logging import getLogger
 from os import path
 from werkzeug import secure_filename
 
 import ujson as json
 import json as _slow_json
-import datetime
 
 mod = Blueprint(__file__, 'blog')
 
@@ -46,7 +46,8 @@ def new_post():
 @mod.route('/blag/<int:post_id>')
 def post_details(post_id):
     post = BlogPost.query.get_or_404(post_id)
-    return render_template('post_details.html', post=post)
+    description = do_truncate(do_striptags(post.rendered_content))
+    return render_template('post_details.html', post=post, description=description)
 
 
 @mod.route('/blag/<int:post_id>/edit', methods=('GET', 'POST'))
