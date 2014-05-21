@@ -11,6 +11,7 @@
     </style>
     <link rel="shortcut icon" href="{{ url_for('static', filename='img/favicon.ico') }}">
     <link rel="source" href="https://github.com/thusoy/blag">
+    <link rel="alternate" href="{{ url_for('.blag_feed') }}" title="Recent blag posts" type="application/atom+xml">
     {% block open_graph %}
         <meta property="og:title" content="thusoy.com">
         <meta property="og:description" content="{{ description }}">

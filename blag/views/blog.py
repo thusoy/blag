@@ -13,6 +13,7 @@ from jinja2.filters import do_striptags, do_truncate
 from logging import getLogger
 from os import path
 from werkzeug import secure_filename
+from werkzeug.contrib.atom import AtomFeed
 
 import ujson as json
 import json as _slow_json
@@ -206,3 +207,19 @@ def styleguide():
     def pprint(block):
         return _slow_json.dumps(block, indent=4)
     return render_template('styleguide.html', blocks=blocks, pprint=pprint, render_block=render_block)
+
+
+@mod.route('/blag.atom')
+def blag_feed():
+    feed = AtomFeed('Tarjei Husøy’s blag',
+                    feed_url=request.url, url=request.url_root, author='Tarjei Husøy',
+                    icon=url_for('static', filename='img/atom_icon.jpg', _external=True),
+                    logo=url_for('static', filename='img/atom_logo.jpg', _external=True))
+    articles = BlogPost.query.order_by(BlogPost.datetime_added.desc()).limit(15).all()
+    for article in articles:
+        feed.add(article.title, unicode(article.rendered_content),
+                 content_type='html',
+                 url=url_for('.post_details', post_id=article.id, _external=True),
+                 updated=article.datetime_added,
+                 published=article.datetime_added)
+    return feed.get_response()
