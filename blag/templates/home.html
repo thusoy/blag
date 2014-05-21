@@ -2,10 +2,14 @@
 
 {% block content %}
     {%- for entry in entries %}
-        <a href="{{ url_for('.post_details', post_id=entry.id) }}"><h1>{{ entry.title }}</h1></a>
+        <article>
+            <span class="byline">{{ entry.datetime_added.strftime('%Y-%m-%d %H:%M') }}</span>
 
-        {{ entry.rendered_content|safe }}
+            <a href="{{ url_for('.post_details', post_id=entry.id) }}"><h1>{{ entry.title }}</h1></a>
 
-        <span class="byline">{{ entry.datetime_added.strftime('%Y-%m-%d %H:%M') }}</span>
+
+            {{ entry.rendered_content|safe }}
+
+        </article>
     {% endfor %}
 {% endblock %}

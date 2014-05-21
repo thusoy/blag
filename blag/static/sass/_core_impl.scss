@@ -97,3 +97,9 @@ header {
   @include transition-duration(1s);
 
 }
+
+article {
+  padding: 10px;
+  margin-bottom: 10px;
+  background-color: #fff;
+}

@@ -6,8 +6,7 @@
 }
 
 @mixin container {
-  background-color: #fff;
-  padding: 10px;
+  padding: 0;
   width: 100%;
   max-width: $screen-lg;
 
