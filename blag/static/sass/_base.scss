@@ -11,3 +11,8 @@
 img {
   max-width: 100%;
 }
+
+.alert {
+  max-width: $screen-lg;
+  margin: 20px auto;
+}
