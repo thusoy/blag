@@ -3,14 +3,27 @@ from .blocks import render_blocks
 
 from flask import Markup
 from flask.ext.wtf import Form
+from wtforms.ext.sqlalchemy.fields import QuerySelectMultipleField
 from sqlalchemy_defaults import Column
 from wtforms_alchemy import model_form_factory, ModelFieldList
 from wtforms.fields import FormField, HiddenField
 
 import ujson as json
 
-class ModelForm(model_form_factory(Form)):
-    pass
+
+class _PrintableForm(model_form_factory(Form)):
+
+    def render(self):
+        fields = []
+        for f in self:
+            if isinstance(f, HiddenField):
+                fields.append('<input type="hidden" name="%(name)s" value="%(value)s">' % {
+                    'name': f.name,
+                    'value': f._value(),
+                })
+            else:
+                fields.append('%s: %s' % (f.label, f()))
+        return Markup('\n'.join(fields))
 
 
 tags = db.Table('tags',
@@ -31,8 +44,11 @@ class Tag(db.Model):
         info={'label': 'Name'}
     )
 
+    def __str__(self):
+        return self.name
 
-class TagForm(ModelForm):
+
+class TagForm(_PrintableForm):
     class Meta(object):
         model = Tag
         only = [
@@ -73,21 +89,6 @@ class BlogPost(db.Model):
         self.rendered_content = render_blocks(json.loads(self.raw_content)['data'])
 
 
-class _PrintableForm(model_form_factory(Form)):
-
-    def render(self):
-        fields = []
-        for f in self:
-            if isinstance(f, HiddenField):
-                fields.append('<input type="hidden" name="%(name)s" value="%(value)s">' % {
-                    'name': f.name,
-                    'value': f._value(),
-                })
-            else:
-                fields.append('%s: %s' % (f.label, f()))
-        return Markup('\n'.join(fields))
-
-
 
 class BlogPostForm(_PrintableForm):
     class Meta(object):
@@ -99,5 +100,5 @@ class BlogPostForm(_PrintableForm):
     def get_categories_query():
         return Tag.query.all()
 
-    #tags = QuerySelectMultipleField(query_factory=get_categories_query)
-    tags = ModelFieldList(FormField(TagForm))
+    tags = QuerySelectMultipleField(query_factory=get_categories_query)
+    # tags = ModelFieldList(FormField(TagForm))
