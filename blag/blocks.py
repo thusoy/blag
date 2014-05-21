@@ -27,7 +27,7 @@ class BaseRenderer(object):
         return markdown(md, ['smarty'])
 
 
-    def render(self, data, prettify=True):
+    def render(self, data, prettify=False):
         raw_html = self.render_html(data)
         if prettify:
             pretty_html = BeautifulSoup(raw_html).prettify()
