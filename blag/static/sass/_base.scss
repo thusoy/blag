@@ -26,3 +26,7 @@ pre {
   white-space: pre;
   overflow-x: auto;
 }
+
+.img-responsive {
+  @include img-responsive;
+}

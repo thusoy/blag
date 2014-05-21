@@ -103,3 +103,7 @@ article {
   margin-bottom: 10px;
   background-color: #fff;
 }
+
+.img-responsive {
+  @include img-responsive;
+}

@@ -9,8 +9,15 @@
   padding: 0;
   width: 100%;
   max-width: $screen-lg;
+  margin: auto auto;
 
   @media all and (min-width: $screen-xs) and (max-width: $screen-lg) {
     width: 95%;
   }
+}
+
+@mixin img-responsive($display: block) {
+  display: $display;
+  max-width: 100%; // Part 1: Set a maximum relative to the parent
+//  height: auto; // Part 2: Scale the height according to the width, otherwise you get stretching
 }
