@@ -9,6 +9,7 @@
   padding: 0;
   width: 100%;
   max-width: $screen-lg;
+  margin: auto auto;
 
   @media all and (min-width: $screen-xs) and (max-width: $screen-lg) {
     width: 95%;
