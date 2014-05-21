@@ -1,9 +1,15 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <h1>{{ post.title }}</h1>
 
-    {{ post.rendered_content|safe }}
+    <article>
 
-    <span class="byline">{{ post.datetime_added.strftime('%Y-%m-%d %H:%M') }}</span>
+        <span class="byline">{{ post.datetime_added.strftime('%Y-%m-%d %H:%M') }}</span>
+
+        <h1>{{ post.title }}</h1>
+
+        {{ post.rendered_content|safe }}
+
+    </article>
+
 {% endblock %}
