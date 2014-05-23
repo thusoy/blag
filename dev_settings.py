@@ -20,10 +20,6 @@ STATIC_FILES = path.abspath(path.join('.tmp', 'static'))
 
 LOG_CONF_PATH = path.abspath('dev_log_conf.yaml')
 
-TWITTER_CLIENT_ID = environ['BLAG_TWITTER_CLIENT_ID']
-
 TWITTER_CLIENT_SECRET = environ['BLAG_TWITTER_CLIENT_SECRET']
-
-FACEBOOK_CONSUMER_ID = environ['FACEBOOK_ID']
 
 FACEBOOK_CONSUMER_SECRET = environ['FACEBOOK_SECRET']
