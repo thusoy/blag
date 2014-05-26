@@ -7,14 +7,16 @@
 
 
 {% block content %}
-    <h1>Edit post</h1>
+    <section>
+        <h1>Edit post</h1>
 
-    <form method="post" action="{{ url_for('.edit_post', post_id=post.id) }}">
+        <form method="post" action="{{ url_for('.edit_post', post_id=post.id) }}">
 
-        {{ form.render() }}
+            {{ form.render() }}
 
-        <input type="submit" class="btn btn-primary pull-right">
-    </form>
+            <input type="submit" class="btn btn-primary pull-right">
+        </form>
+    </section>
 {% endblock %}
 
 

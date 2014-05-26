@@ -7,14 +7,17 @@
 
 
 {% block content %}
-    <h1>New blogpost</h1>
+    <section>
 
-    <form method="post" action="/blog">
+        <h1>New blogpost</h1>
 
-        {{ form.render() }}
+        <form method="post" action="/blog">
 
-        <input type="submit" class="btn btn-primary pull-right">
-    </form>
+            {{ form.render() }}
+
+            <input type="submit" class="btn btn-primary pull-right">
+        </form>
+    </section>
 {% endblock %}
 
 
