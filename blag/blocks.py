@@ -63,6 +63,7 @@ class QuoteRenderer(BaseRenderer):
             <footer>
             &mdash; {{ cite }}
             </footer>
+        </blockquote>
     """)
 
     def parse_data(self, data):
