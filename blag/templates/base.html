@@ -46,12 +46,6 @@
         {% endblock %}
     </div>
 
-    {# The rest of the styles #}
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
-
-    {% block styles %}
-    {% endblock %}
-
     <script src="{{ url_for('static', filename='js/main.min.js') }}"></script>
 
     {% block scripts %}
@@ -62,3 +56,9 @@
     {% endif -%}
 </body>
 </html>
+
+{# The rest of the styles #}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+
+{% block styles %}
+{% endblock %}
