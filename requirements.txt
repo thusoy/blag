@@ -1,15 +1,66 @@
-beautifulsoup4
-birdy
-flask
-flask-login
-flask-oauthlib
-flask-principal
-flask-script
-flask-sqlalchemy
-flask-wtf
-markdown
-pygments
-pyyaml
-sqlalchemy-defaults
-ujson
-wtforms-alchemy
+beautifulsoup4==4.3.2
+birdy==0.2
+celery==3.1.11
+# Recent version needed for the new config.get_namespace introduced in 1.0
+git+https://github.com/mitsuhiko/flask.git@76456dc3b29ee816fac2bf937d973cb978336ed1
+flask-login==0.2.11
+flask-oauthlib==0.5.0
+flask-principal==0.4.0
+flask-script==2.0.5
+flask-sqlalchemy==1.0
+flask-wtf==0.9.5
+markdown==2.4.1
+pygments==1.6
+pyyaml==3.11
+sqlalchemy-defaults==0.4.0
+ujson==1.33
+wtforms-alchemy==0.12.5
+
+# birdy deps:
+requests==2.3.0
+
+# flask deps:
+click==1.1
+jinja2==2.7.2
+werkzeug==0.9.4
+itsdangerous==0.24
+
+# jinja2 deps:
+markupsafe==0.23
+
+# flask-oauthlib deps:
+oauthlib==0.6.1
+requests-oauthlib==0.4.0
+
+# flask-principal deps:
+blinker==1.3
+
+# flask-sqlalchemy deps:
+sqlalchemy==0.9.4
+
+# flask-wtf deps:
+wtforms==1.0.5
+
+# celery deps:
+amqp==1.4.5
+anyjson==0.3.3
+billiard==3.3.0.17
+kombu==3.0.18
+pytz==2014.4
+
+# sqlalchemy-defaults deps:
+six==1.6.1
+
+# wtforms-alchemy deps:
+wtforms-components==0.9.3
+sqlalchemy-utils==0.26.2
+
+# wtforms-components deps:
+validators==0.5.0
+intervals==0.3.0
+
+# validators deps:
+decorator==3.4.0
+
+# intervals deps:
+infinity==1.3
