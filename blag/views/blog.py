@@ -18,7 +18,7 @@ from werkzeug.contrib.atom import AtomFeed
 import ujson as json
 import json as _slow_json
 
-mod = Blueprint(__file__, 'blog')
+mod = Blueprint('blag', __name__)
 
 _logger = getLogger('blag.blog')
 
