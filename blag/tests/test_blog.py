@@ -1,11 +1,11 @@
-from . import UserTestCase
+from . import UserTestCase, HTTPTestMixin
 from .. import db
 from ..models import BlogPost
 
 import json
 
 
-class BlogTest(UserTestCase):
+class BlogTest(UserTestCase, HTTPTestMixin):
 
     def setUp(self):
         with self.app.app_context():
@@ -33,7 +33,7 @@ class BlogTest(UserTestCase):
         self.assert200(response)
 
 
-class WritePostTest(UserTestCase):
+class WritePostTest(UserTestCase, HTTPTestMixin):
 
     def test_get_write_form(self):
         self.assert200(self.admin_user.get('/blog'))
