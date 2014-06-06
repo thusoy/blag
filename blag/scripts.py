@@ -3,10 +3,13 @@ from .models import BlogPost
 
 from flask.ext.debugtoolbar import DebugToolbarExtension
 from flask.ext.script import Manager
+from flask.ext.migrate import Migrate, MigrateCommand
 from logging import getLogger
 
 app = create_app()
+Migrate(app, db)
 manager = Manager(app)
+manager.add_command('db', MigrateCommand)
 
 _logger = getLogger('blag.utils')
 
@@ -29,6 +32,12 @@ def devserver():
     app.run(extra_files=[
         'dev_settings.py',
     ], host="0.0.0.0", port=80)
+
+
+@manager.command
+def init_db():
+    with app.app_context():
+        db.create_all()
 
 
 def main(): # pragma: no cover

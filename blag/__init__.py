@@ -62,9 +62,6 @@ def create_app(**extra_config):
         if current_user.is_authenticated():
             identity_changed.send(current_app._get_current_object(), identity=Identity(current_user.id))
 
-    with app.test_request_context():
-        db.create_all()
-
     from . import context_processors
 
     app.context_processor(context_processors.default)

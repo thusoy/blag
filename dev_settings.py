@@ -12,7 +12,9 @@ DEBUG_TB_ENABLED = False
 
 DEBUG_TB_PROFILER_ENABLED = True
 
+# Don't use sqlite for migration, rely on postgres instead
 SQLALCHEMY_DATABASE_URI = 'sqlite:///../db.sqlite'
+#SQLALCHEMY_DATABASE_URI = 'postgresql://postgres@localhost/blag'
 
 UPLOAD_FOLDER = path.abspath('images')
 

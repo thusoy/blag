@@ -4,6 +4,7 @@ celery==3.1.11
 # Recent version needed for the new config.get_namespace introduced in 1.0
 git+https://github.com/mitsuhiko/flask.git@76456dc3b29ee816fac2bf937d973cb978336ed1
 flask-login==0.2.11
+flask-migrate==1.2.0
 flask-oauthlib==0.5.0
 flask-principal==0.4.0
 flask-script==2.0.5
@@ -24,6 +25,10 @@ click==1.1
 jinja2==2.7.2
 werkzeug==0.9.4
 itsdangerous==0.24
+
+# flask-migrate deps:
+alembic==0.6.5
+mako==0.9.1
 
 # jinja2 deps:
 markupsafe==0.23
