@@ -18,6 +18,10 @@ h6 {
   font-family: "Helvetica Neue", Helvetica, sans-serif;
 }
 
+h1 {
+  margin-top: 5px;
+}
+
 header {
   max-width: $screen-lg;
   width: 100%;
@@ -80,6 +84,7 @@ header {
   border: 3px solid $background-color;
   display: block;
   margin-left: 20%;
+  float: left;
 
   @media all and (max-width: $screen-md) {
     @include logo-size($logo-size-md);
@@ -102,4 +107,12 @@ section {
   background-color: #fff;
   padding: 10px;
   margin-bottom: 10px;
+}
+
+.breaker {
+  margin-bottom: 8%;
+}
+
+.nav-page {
+  margin-left: 15px;
 }

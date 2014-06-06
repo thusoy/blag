@@ -49,11 +49,13 @@ def create_app(**extra_config):
 
     from .views import blog
     from .views import apis
+    from .views import pages
     from .auth.views import mod as auth_mod
 
     # Register blueprints
     app.register_blueprint(blog.mod)
     app.register_blueprint(apis.mod)
+    app.register_blueprint(pages.mod)
     app.register_blueprint(auth_mod)
 
     @app.before_request

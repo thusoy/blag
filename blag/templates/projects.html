@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <section>
+
+        <h1>Projects</h1>
+
+        <p>
+            Some stuff I've done previously and some I'm still doing:
+        </p>
+
+
+        <h2>Robert Paulson: Lego mindstorms robot and website</h2>
+
+        <a href="http://bob.thusoy.com">
+            <img src="{{ url_for('static', filename='img/robert-paulson.jpg') }}" alt="Robert Paulson">
+        </a>
+
+        <p>
+            A Lego Mindstorms robot I built with <a href="https://github.com/afflux">@afflux</a> and <a href="https://www.facebook.com/damien.roeder">@damien.roeder</a>. The intention was to win a tennis-like robot tournament. Design and strategy felt solid, but when tournament day came we were haunted by previously unseen bugs and erratic behavior, and finished somewhere in the middle.
+        </p>
+
+        <p>
+            The blog was based on a home-rolled static blog generator, based on frozen-flask, hosted on GitHub Pages.
+        </p>
+
+        <h2>Website for NTNUI Telemark/Alpint: ntnuita.no</h2>
+
+        <a href="http://ntnuita.no">
+            <img src="{{ url_for('static', filename='img/ntnuita.jpg') }}" alt="ntnuita.no">
+        </a>
+
+        <p>
+            Started tinkering with new websites for my sports crew in Trondheim back in 2011, then running on Google App Engine. We've since migrated to AWS, but still running much of the same Django codebase as back then. Still in development.
+        </p>
+
+        <h2>Eurecom Movie Club</h2>
+
+        <img src=""
+    </section>
+
+{% endblock %}
