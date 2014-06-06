@@ -96,14 +96,14 @@ def create_app(**extra_config):
 
 def _configure_app(app, **extra_config):
     # Load the core settings:
-    core_settings = path.join(path.dirname(__file__), 'settings.py')
+    core_settings = path.join(path.abspath(path.dirname(__file__)), 'settings.py')
     app.config.from_pyfile(core_settings)
 
     # Load stuff from local config:
     config_from_environ = os.environ.get('BLAG_CONFIG_FILE')
     if config_from_environ:
         print('Loading config from %s' % config_from_environ)
-        app.config.from_pyfile(config_from_environ)
+        app.config.from_pyfile(path.join(os.getcwd(), config_from_environ))
 
     # Override the config with anything set directly in the creation call:
     app.config.update(extra_config)
