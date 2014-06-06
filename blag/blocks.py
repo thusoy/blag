@@ -7,7 +7,8 @@ from pygments.lexers import get_lexer_by_name
 from pygments.formatters import get_formatter_by_name
 import pygments
 
-_logger = getLogger('blag.renderers')
+
+_logger = getLogger('blag.blocks')
 
 
 class BaseRenderer(object):
@@ -40,6 +41,7 @@ class BaseRenderer(object):
         """ Renders the template with the data, after first parsing the data using the renderers
         `parse_data` implementation.
         """
+        _logger.debug('Rendering block with data: %s', data)
         parsed_data = self.parse_data(data)
         return self.template.render(parsed_data)
 
@@ -77,12 +79,12 @@ class ImageRenderer(BaseRenderer):
 
     template = Template("""
         <a href="{{ img_url }}">
-            <img src="{{ img_url }}">
+            <img src="{{ img_url|safe }}" alt="{{ alt_text }}">
         </a>
     """)
 
     def parse_data(self, data):
-        return dict(img_url=url_for('images', filename=data['imageUrl']))
+        return dict(img_url=data['imageUrl'], alt_text=data.get('altText', ''))
 
 
 class VideoRenderer(BaseRenderer):
@@ -224,6 +226,7 @@ def render_block(block):
         'text': TextRenderer,
         'markdown': TextRenderer,
         'quote': QuoteRenderer,
+        'alt_image': ImageRenderer,
         'image': ImageRenderer,
         'video': VideoRenderer,
         'gallery': GalleryRenderer,

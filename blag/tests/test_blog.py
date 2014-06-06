@@ -1,8 +1,13 @@
+# -*- coding: utf-8 -*-
+
+from __future__ import unicode_literals
+
 from . import UserTestCase, HTTPTestMixin
 from .. import db
-from ..models import BlogPost
+from ..models import BlogPost, slugify
 
 import json
+import unittest
 
 
 class BlogTest(UserTestCase, HTTPTestMixin):
@@ -17,15 +22,15 @@ class BlogTest(UserTestCase, HTTPTestMixin):
     def test_main_page(self):
         response = self.anon_user.get('/')
         data = self.assert200(response)
-        self.assertTrue('Test article' in data)
-        self.assertTrue('Snip' in data)
+        self.assertTrue('Test article' in data.decode('utf-8'))
+        self.assertTrue('Snip' in data.decode('utf-8'))
 
 
     def test_post_details(self):
         response = self.anon_user.get('/blag/%d' % self.post_id)
         data = self.assert200(response)
-        self.assertTrue('Test article' in data)
-        self.assertTrue('Snip' in data)
+        self.assertTrue('Test article' in data.decode('utf-8'))
+        self.assertTrue('Snip' in data.decode('utf-8'))
 
 
     def test_styleguide(self):
@@ -54,3 +59,15 @@ class WritePostTest(UserTestCase, HTTPTestMixin):
     def test_write_restricted(self):
         self.assert401(self.anon_user.post('/blog'))
         self.assert403(self.auth_user.post('/blog'))
+
+
+class UtilTest(unittest.TestCase):
+
+    def test_slugify(self):
+        tests = (
+            ("Picture of John Lennon rockin'", 'picture-of-john-lennon-rockin'),
+            ("J'ai parlée français, un peu", 'jai-parlee-francais-un-peu'),
+            ("I'm Tarjei Husøy, gentleman of leisure", 'im-tarjei-husoy-gentleman-of-leisure'),
+        )
+        for value, expected in tests:
+            self.assertEqual(slugify(value), expected)

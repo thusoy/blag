@@ -18,7 +18,7 @@
             "Code",
             "Heading",
             "Markdown",
-            "Image",
+            "AltImage",
             "Tweet",
             "List",
             "Sourcedquote",

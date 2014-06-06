@@ -1,3 +1,4 @@
+from celery import Celery
 from flask import Flask, send_from_directory, request, g, current_app
 from flask.ext.oauthlib.client import OAuth
 from flask.ext.login import LoginManager, current_user
@@ -77,9 +78,9 @@ def create_app(**extra_config):
     def forbidden(error):
         return "Your kung-foo is insufficient to do this.", 403
 
-    @app.route('/images/<filename>')
+    @app.route('/images/<path:filename>')
     def images(filename):
-        return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
+        return send_from_directory(app.config['LOCAL_UPLOAD_DIR'], filename)
 
     if app.config['DEBUG']:
         # remove the default static url mapping
@@ -150,3 +151,25 @@ def generic_error_handler(exception):
         )
     )
     _logger.exception(log_msg)
+
+
+def make_celery():
+    """ Creates a celery object.
+
+    Requires that create_app() can be called without arguments, so BLAG_CONFIG_FILE should
+    point to the config file you want to use.
+    """
+    app = create_app()
+    celery = Celery(app.import_name, broker=app.config['CELERY_BROKER_URL'])
+    celery.conf.update(app.config)
+    TaskBase = celery.Task
+    class ContextTask(TaskBase):
+        """ Wraps the base task to make sure it's run in an app context. """
+
+        abstract = True
+
+        def __call__(self, *args, **kwargs):
+            with app.app_context():
+                return TaskBase.__call__(self, *args, **kwargs)
+    celery.Task = ContextTask
+    return celery

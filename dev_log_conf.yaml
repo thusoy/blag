@@ -8,10 +8,27 @@ handlers:
     level: DEBUG
     formatter: simple
     stream: ext://sys.stdout
+  file:
+    class: logging.FileHandler
+    level: DEBUG
+    formatter: simple
+    filename: log.log
 loggers:
   blag:
     level: DEBUG
+    handlers: [console, file]
+    propagate: no
+  flask_oauthlib:
+    level: INFO
     handlers: [console]
+    propagate: no
+  paramiko:
+    level: DEBUG
+    handlers: [console, file]
+    propagate: no
+  amqp:
+    level: INFO
+    handlers: [console, file]
     propagate: no
 root:
   level: DEBUG

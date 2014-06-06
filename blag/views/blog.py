@@ -3,16 +3,15 @@
 from __future__ import unicode_literals
 
 from .. import db
-from ..blocks import render_block
-from ..models import BlogPost, BlogPostForm, TagForm
 from ..auth import admin_permission
+from ..blocks import render_block
+from ..models import BlogPost, BlogPostForm, TagForm, BlogImage
 
 from flask import Blueprint, render_template, request, flash, redirect, url_for, current_app, Response
 from flask.ext.login import login_required
 from jinja2.filters import do_striptags, do_truncate
 from logging import getLogger
-from os import path
-from werkzeug import secure_filename
+from os import path, mkdir
 from werkzeug.contrib.atom import AtomFeed
 
 import ujson as json
@@ -79,14 +78,24 @@ def delete_post(post_id):
 @login_required
 @admin_permission.require(403)
 def image_upload():
-    _logger.info(request.data)
-    _logger.info(request.files)
+    from ..tasks import upload_image_to_fileserver # avoids circular import issues
+    _logger.info('Uploading image locally')
+    data = json.loads(request.form.get('data'))
     file = request.files['attachment[file]']
-    filename = secure_filename(file.filename)
-    file.save(path.join(current_app.config['UPLOAD_FOLDER'], filename))
+    upload_dir = current_app.config['LOCAL_UPLOAD_DIR']
+    image = BlogImage(alt_text=data.get('altText'), extension=path.splitext(file.filename)[1])
+    db.session.add(image)
+    db.session.commit()
+    if not path.exists(upload_dir):
+        mkdir(upload_dir)
+    filename = '%d.%s' % (image.id, file.filename.split('.')[-1])
+    file.save(path.join(upload_dir, filename))
+    _logger.info('Image saved, spawning upload task')
+    upload_image_to_fileserver.delay(image.id)
+    _logger.info('Task spawned')
     return Response(json.dumps({
         'msg': 'Image upload OK',
-        'imageUrl': filename,
+        'imageUrl': image.orig_url,
     }), mimetype='application/json')
 
 

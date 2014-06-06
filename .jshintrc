@@ -23,6 +23,7 @@
     "white": true,
     "globals": {
        "jQuery": false,
+       "_": false,
        "moment": false,
        "SirTrevor": false
     }

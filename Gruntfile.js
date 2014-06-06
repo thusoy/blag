@@ -39,6 +39,7 @@ module.exports = function (grunt) {
         '*.egg-info',
         'cover',
         '.coverage',
+        'fileserver_key.key',
       ]
     },
 
@@ -149,6 +150,7 @@ module.exports = function (grunt) {
             'bower_components/underscore/underscore.js',
             'bower_components/Eventable/eventable.js',
             'bower_components/sir-trevor-js/sir-trevor.js',
+            'blag/static/js/blocks/altimage.js',
             'blag/static/js/blocks/code.js',
             'blag/static/js/blocks/markdown.js',
             'blag/static/js/blocks/sourced-quote.js',
@@ -182,7 +184,7 @@ module.exports = function (grunt) {
         tasks: ['buildStyles'],
       },
       js: {
-        files: ['blag/static/js/**/*.js'],
+        files: ['blag/static/js/**/*.js', 'Gruntfile.js'],
         tasks: ['uglify']
       },
       templates: {

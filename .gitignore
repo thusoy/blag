@@ -44,10 +44,12 @@ db.sqlite
 images
 env.cmd
 env.sh
+*.key
 
 # libraries
 bower_components
 
 # built stuff
 .tmp
-blag/server-assets
+blag/server-assets/core.css
+blag/server-assets/filerevs.json
