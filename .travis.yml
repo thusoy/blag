@@ -4,7 +4,8 @@ language:
 
 python:
   - "2.7"
-  - "3.3"
+  - "3.4"
+  - "pypy"
 
 before_install:
   - ./travis/before_script.sh
