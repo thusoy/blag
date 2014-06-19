@@ -6,7 +6,6 @@ from flask import current_app
 from functools import partial, wraps
 from logging import getLogger
 from paramiko import SSHClient
-from scp import SCPClient
 import os
 
 celery = make_celery()
@@ -69,8 +68,8 @@ def upload_to_fileserver(src, dest):
     with fileserver_ssh_client() as ssh:
         _ensure_parent_directory_exists(target_path, ssh)
         _logger.info('Uploading %s to %s', src, target_path)
-        scp = SCPClient(ssh.get_transport())
-        scp.put(src, target_path)
+        sftp = ssh.open_sftp()
+        sftp.put(src, target_path)
     _logger.info('File upload completed')
 
 
