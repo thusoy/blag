@@ -80,10 +80,14 @@ def delete_post(post_id):
 def image_upload():
     from ..tasks import upload_image_to_fileserver # avoids circular import issues
     _logger.info('Uploading image locally')
+    _logger.info('Data is: %s', repr(request.form.get('data')))
     data = json.loads(request.form.get('data'))
     file = request.files['attachment[file]']
     upload_dir = current_app.config['LOCAL_UPLOAD_DIR']
-    image = BlogImage(alt_text=data.get('altText'), extension=path.splitext(file.filename)[1])
+    # full slug will be set when the article is posted
+    slug = ''
+    image = BlogImage(alt_text=data.get('altText'), extension=path.splitext(file.filename)[1],
+        slug=slug)
     db.session.add(image)
     db.session.commit()
     if not path.exists(upload_dir):
