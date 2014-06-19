@@ -5,6 +5,7 @@ from flask.ext.debugtoolbar import DebugToolbarExtension
 from flask.ext.script import Manager
 from flask.ext.migrate import Migrate, MigrateCommand
 from logging import getLogger
+import os
 
 app = create_app()
 Migrate(app, db)
@@ -31,6 +32,7 @@ def devserver():
     DebugToolbarExtension(app)
     app.run(extra_files=[
         'dev_settings.py',
+        os.path.join('blag', 'settings.py'),
     ], host="0.0.0.0", port=80)
 
 
