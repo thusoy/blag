@@ -11,6 +11,7 @@ flask-script==2.0.5
 flask-sqlalchemy==1.0
 flask-wtf==0.9.5
 markdown==2.4.1
+paramiko==1.14.0
 pygments==1.6
 pyyaml==3.11
 sqlalchemy-defaults==0.4.0
@@ -52,6 +53,10 @@ anyjson==0.3.3
 billiard==3.3.0.17
 kombu==3.0.18
 pytz==2014.4
+
+# paramiko deps:
+pycrypto==2.6.1
+ecdsa==0.11
 
 # sqlalchemy-defaults deps:
 six==1.6.1
