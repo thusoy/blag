@@ -5,7 +5,8 @@ from contextlib import contextmanager
 from flask import current_app
 from functools import partial, wraps
 from logging import getLogger
-from paramiko import SSHClient
+from paramiko import SSHClient, DSSKey
+import base64
 import os
 
 celery = make_celery()
@@ -34,11 +35,11 @@ def fileserver_ssh_client():
     """ Context-manager to get ssh connection to the fileserver. """
     fileserver = current_app.config.get_namespace('FILESERVER_')
     ssh = SSHClient()
-    host_keys = os.path.join(os.path.dirname(__file__), 'server-assets', 'host_keys')
-    ssh.load_host_keys(host_keys)
+    fileserver_pubkey = DSSKey(data=base64.b64decode(fileserver['pub_key'][1]))
+    ssh.get_host_keys().add(fileserver['url'], fileserver['pub_key'][0], fileserver_pubkey)
     try:
-        ssh.connect(fileserver['URL'], username=fileserver['USERNAME'],
-            key_filename=fileserver['key_file'])
+        ssh.connect(fileserver['url'], username=fileserver['username'],
+            key_filename=fileserver['key_file'], look_for_keys=False, allow_agent=False)
         _logger.info('SSH connection to fileserver established')
         yield ssh
     finally:
