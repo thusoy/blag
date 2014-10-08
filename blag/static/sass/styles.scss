@@ -16,7 +16,7 @@
 
 // Core CSS
 //@import "sass-bootstrap/lib/scaffolding"; // Included in core
-//@import "sass-bootstrap/lib/type";
+@import "sass-bootstrap/lib/type";
 //@import "sass-bootstrap/lib/code";
 @import "sass-bootstrap/lib/grid";
 //@import "sass-bootstrap/lib/tables";
@@ -53,7 +53,7 @@
 //@import "sass-bootstrap/lib/carousel";
 
 // Utility classes
-//@import "sass-bootstrap/lib/utilities";
+@import "sass-bootstrap/lib/utilities";
 //@import "sass-bootstrap/lib/responsive-utilities";
 
 // ====================================
