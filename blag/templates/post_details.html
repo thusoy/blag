@@ -11,15 +11,16 @@
 {% endblock %}
 
 {% block content %}
+    <section>
+        <article>
 
-    <article>
+            <span class="byline">{{ post.datetime_added.strftime('%Y-%m-%d %H:%M') }}</span>
 
-        <span class="byline">{{ post.datetime_added.strftime('%Y-%m-%d %H:%M') }}</span>
+            <h1>{{ post.title }}</h1>
 
-        <h1>{{ post.title }}</h1>
+            {{ post.rendered_content|safe }}
 
-        {{ post.rendered_content|safe }}
-
-    </article>
+        </article>
+    </section>
 
 {% endblock %}
