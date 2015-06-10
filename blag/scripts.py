@@ -1,7 +1,12 @@
 from . import db, create_app
 from .models import BlogPost
 
-from flask.ext.debugtoolbar import DebugToolbarExtension
+HAS_DEBUGTOOLBAR = False
+try:
+    from flask.ext.debugtoolbar import DebugToolbarExtension
+    HAS_DEBUGTOOLBAR = True
+except ImportError:
+    pass
 from flask.ext.script import Manager
 from flask.ext.migrate import Migrate, MigrateCommand
 from logging import getLogger
@@ -29,7 +34,8 @@ def rerender_blogposts(id=None):
 
 @manager.command
 def devserver():
-    DebugToolbarExtension(app)
+    if HAS_DEBUGTOOLBAR:
+        DebugToolbarExtension(app)
     app.run(extra_files=[
         'dev_settings.py',
         os.path.join('blag', 'settings.py'),
