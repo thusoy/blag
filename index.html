@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+
+<style>
+body {
+  font: 12px sans-serif;
+}
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+.dot {
+  stroke: #000;
+}
+
+.tooltip {
+  position: absolute;
+  width: 200px;
+  height: 28px;
+  pointer-events: none;
+}
+</style>
+<link rel="stylesheet" href="nv.d3.css">
+<body>
+
+<script src="d3.v3.min.js"></script>
+<script src="nv.d3.min.js"></script>
+
+<div id="chart" style="height: 250px">
+</div>
+
+<button id="compress" disabled>Compression</button>
+<button id="decompress">Decompression</button>
+
+<script>
+
+
+d3.csv("compression-comparison.csv", function(error, data) {
+    var nvdata = [];
+    var algoValues = {};
+
+    data.forEach(function(d) {
+        if (!algoValues[d.Algorithm]) {
+            algoValues[d.Algorithm] = {
+                key: d.Algorithm,
+                type: d.Setting,
+                values: [],
+                compress_values: [],
+                decompress_values: [],
+            };
+        }
+        var compress = parseFloat(d['Compression speed']);
+        var decompress = parseFloat(d['Decompression speed']);
+        algoValues[d.Algorithm].compress_values.push({
+            x: compress,
+            y: parseFloat(d['Compression ratio']),
+        });
+
+        algoValues[d.Algorithm].decompress_values.push({
+            x: decompress,
+            y: parseFloat(d['Compression ratio']),
+        });
+        algoValues[d.Algorithm].values = algoValues[d.Algorithm].compress_values;
+    });
+
+
+    for (var algo in algoValues) {
+        if (!algoValues.hasOwnProperty(algo)) {
+            continue;
+        }
+        var algoData = algoValues[algo];
+        nvdata.push({
+            key: algo,
+            type: algoData.type,
+            values: algoData.values,
+        });
+    }
+
+    nv.addGraph(function() {
+      var chart = nv.models.scatterChart()
+                    .pointSize(15)
+                    .pointDomain([1,15])
+                    .color(d3.scale.category10().range());
+
+      //Configure how the tooltip looks.
+      chart.tooltip.contentGenerator(function(key) {
+          var datum = key.point;
+          var algo = key.series[0];
+          var label = '<h3>' + algo.key + ':' + algo.type + '<br>(' +
+            datum.x + 'MB/s' + ', ' + datum.y + ')</h3>';
+          return label;
+      });
+
+      //Axis settings
+      chart.xAxis.tickFormat(d3.format('.01f'));
+      chart.yAxis.tickFormat(d3.format('.02f'));
+
+      var chartData = d3.select('#chart').append('svg')
+        .datum(nvdata)
+        .call(chart);
+
+      d3.select('#compress').on('click', function (){
+          console.log("clicked");
+      });
+
+      d3.select('#decompress').on('click', function () {
+        var nvdata = [];
+        for (var algo in algoValues) {
+            if (!algoValues.hasOwnProperty(algo)) {
+                continue;
+            }
+            var algoData = algoValues[algo];
+            nvdata.push({
+                key: algo,
+                type: algoData.type,
+                values: algoData.decompress_values,
+            });
+          }
+
+          chartData.datum(nvdata).transition().duration(300).call(chart);
+      });
+      nv.utils.windowResize(chart.update);
+
+      return chart;
+    });
+
+});
+
+</script>
+</body>
+</html>
