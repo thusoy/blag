@@ -84,6 +84,8 @@ class _PrintableForm(model_form_factory(Form)):
                     'value': f._value(),
                 })
             else:
+                if not f.label.text:
+                    f.label.text = f.name.title()
                 fields.append('%s: %s' % (f.label, f()))
         return Markup('\n'.join(fields))
 
