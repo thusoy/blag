@@ -31,7 +31,7 @@ def devserver():
     DebugToolbarExtension(app)
     app.run(extra_files=[
         'dev_settings.py',
-    ], host="0.0.0.0", port=80)
+    ], host="0.0.0.0", port=8000)
 
 
 @manager.command
