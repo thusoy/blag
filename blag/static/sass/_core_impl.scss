@@ -82,7 +82,6 @@ header {
   @include logo-size($logo-size-lg);
   position: relative;
   border: 3px solid $background-color;
-  display: block;
   margin-left: 20%;
   float: left;
 

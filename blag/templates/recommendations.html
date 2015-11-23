@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+Stuff I love.
+
+{% for recommendation in recommendations %}
+
+    <h2>
+        <a href="{{ recommendation.href }}">
+            {{ recommendation.title }}
+        </a>
+    </h2>
+
+    <span class="about-recommendation">
+        {{ recommendation.medium }} by {{ recommendation.credits }}.
+    </span>
+
+
+
+{% endfor %}
+
+{% endblock %}

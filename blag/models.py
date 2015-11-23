@@ -90,6 +90,28 @@ class _PrintableForm(model_form_factory(Form)):
         return Markup('<br>'.join(fields))
 
 
+class MediaRecommendation(db.Model):
+    id = Column(db.Integer, primary_key=True)
+    title = Column(db.String(255))
+    credits = Column(db.String(255))
+    medium = Column(db.String(255))
+    href = Column(db.String(255), info={'label': 'Link'})
+    description = Column(db.Text, default='')
+    datetime_added = Column(db.DateTime, auto_now=True)
+
+
+class MediaRecommendationForm(_PrintableForm):
+    class Meta(object):
+        model = MediaRecommendation
+        only = (
+            'title',
+            'credits',
+            'medium',
+            'href',
+            'description',
+        )
+
+
 
 class BlogPostForm(_PrintableForm):
     class Meta(object):

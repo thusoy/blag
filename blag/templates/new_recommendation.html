@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <form method="post" action="{{ url_for('.new_recommendation') }}">
+        {{ form.render() }}
+
+        <input type="submit" value="Add">
+    </form>
+
+{% endblock %}
