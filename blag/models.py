@@ -1,8 +1,8 @@
 from . import db
 from .blocks import render_blocks
 
-from flask import Markup
-from flask.ext.wtf import Form
+from flask import Markup, url_for
+from flask_wtf import Form
 from sqlalchemy_defaults import Column
 from wtforms_alchemy import model_form_factory, ModelFieldList
 from wtforms.fields import FormField, HiddenField

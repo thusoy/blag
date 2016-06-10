@@ -2,7 +2,7 @@ from .. import create_app, db
 from ..auth.models import User
 
 from flask import session
-from flask.ext.login import login_user
+from flask_login import login_user
 from functools import wraps
 from nose.tools import nottest
 import unittest

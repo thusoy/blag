@@ -1,8 +1,8 @@
 from flask import Flask, send_from_directory, request, g, current_app
-from flask.ext.oauthlib.client import OAuth
-from flask.ext.login import LoginManager, current_user
-from flask.ext.principal import Principal, identity_changed, Identity
-from flask.ext.sqlalchemy import SQLAlchemy
+from flask_oauthlib.client import OAuth
+from flask_login import LoginManager, current_user
+from flask_principal import Principal, identity_changed, Identity
+from flask_sqlalchemy import SQLAlchemy
 from jinja2 import FileSystemLoader
 from logging import getLogger
 from os import path

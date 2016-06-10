@@ -1,9 +1,9 @@
 from . import db, create_app
 from .models import BlogPost
 
-from flask.ext.debugtoolbar import DebugToolbarExtension
-from flask.ext.script import Manager
-from flask.ext.migrate import Migrate, MigrateCommand
+from flask_debugtoolbar import DebugToolbarExtension
+from flask_script import Manager
+from flask_migrate import Migrate, MigrateCommand
 from logging import getLogger
 
 app = create_app()

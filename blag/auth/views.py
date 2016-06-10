@@ -2,8 +2,8 @@ from .. import db, oauth
 from .models import User
 
 from flask import Blueprint, request, session, url_for, redirect, current_app
-from flask.ext.login import login_user, logout_user
-from flask.ext.principal import identity_changed, Identity, AnonymousIdentity
+from flask_login import login_user, logout_user
+from flask_principal import identity_changed, Identity, AnonymousIdentity
 
 
 mod = Blueprint('auth', __name__, template_folder='templates')

@@ -1,7 +1,7 @@
 from .models import User
 
-from flask.ext.login import current_user
-from flask.ext.principal import RoleNeed, UserNeed, Permission, identity_changed
+from flask_login import current_user
+from flask_principal import RoleNeed, UserNeed, Permission, identity_changed
 
 
 def load_user(user_id):

@@ -7,8 +7,9 @@ from ..blocks import render_block
 from ..models import BlogPost, BlogPostForm, TagForm
 from ..auth import admin_permission
 
-from flask import Blueprint, render_template, request, flash, redirect, url_for, current_app, Response
-from flask.ext.login import login_required
+from flask import (Blueprint, render_template, request, flash, redirect, url_for,
+    current_app, Response, abort)
+from flask_login import login_required
 from jinja2.filters import do_striptags, do_truncate
 from logging import getLogger
 from os import path
