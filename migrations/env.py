@@ -18,7 +18,6 @@ fileConfig(config.config_file_name)
 from flask import current_app
 config.set_main_option('sqlalchemy.url', current_app.config.get('SQLALCHEMY_DATABASE_URI'))
 target_metadata = current_app.extensions['migrate'].metadata
-print 'Metadata: %s' % target_metadata.sorted_tables
 
 # other values from the config, defined by the needs of env.py,
 # can be acquired:
