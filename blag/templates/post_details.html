@@ -6,7 +6,7 @@
     <meta property="article:published_time" content="{{ post.datetime_added.isoformat() }}">
     <meta property="og:site_name" content="thusoy.com">
     <meta property="og:image" content="{{ url_for('static', filename='img/header.jpg', _external=True) }}">
-    <meta property="og:url" content="{{ url_for('.post_details', post_id=post.id, _external=True) }}">
+    <meta property="og:url" content="{{ post.url(external=True) }}">
     <meta property="og:description" content="{{ description }}">
 {% endblock %}
 

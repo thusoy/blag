@@ -18,6 +18,7 @@ from werkzeug.contrib.atom import AtomFeed
 
 import ujson as json
 import json as _slow_json
+import sqlalchemy as sa
 
 mod = Blueprint('blag', __name__)
 
@@ -45,12 +46,30 @@ def new_post():
     return render_template('new_entry.html', form=form), 200 if request.method == 'GET' else 400
 
 
-@mod.route('/blag/<int:post_id>')
-def post_details(post_id):
+@mod.route('/blag/<int(min=1, max=99):post_id>')
+def post_details_old(post_id):
+    # Redirect the old posts with just id-based lookups to slugs
     post = BlogPost.query.get_or_404(post_id)
+    year = post.datetime_added.year
+    return redirect(post.url())
+
+
+@mod.route('/<int:year>/<slug>')
+def post_details(year, slug):
+    year_filter = sa.extract('year', BlogPost.datetime_added)
+    post = BlogPost.query.filter(year_filter==year, BlogPost.slug==slug).first()
+    if not post:
+        abort(404)
     description = do_truncate(do_striptags(post.rendered_content))
     title = post.title
     return render_template('post_details.html', post=post, description=description, title=title)
+
+
+@mod.route('/<int(min=1000, max=9999):year>')
+def posts_in_year(year):
+    year_filter = sa.extract('year', BlogPost.datetime_added)
+    posts = BlogPost.query.filter(year_filter==year)
+    return render_template('list_posts.html', posts=posts, year=year)
 
 
 @mod.route('/blag/<int:post_id>/edit', methods=('GET', 'POST'))
