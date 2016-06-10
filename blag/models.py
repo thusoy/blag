@@ -4,6 +4,7 @@ from .blocks import render_blocks
 from flask import Markup, url_for
 from flask_wtf import Form
 from sqlalchemy_defaults import Column
+from sqlalchemy import func
 from wtforms_alchemy import model_form_factory, ModelFieldList
 from wtforms.fields import FormField, HiddenField
 
@@ -61,16 +62,19 @@ class BlogPost(db.Model):
 
     rendered_content = Column(
         db.Text,
+        nullable=False,
     )
 
     raw_content = Column(
         db.Text,
         info={'label': 'Article'},
+        nullable=False,
     )
 
     datetime_added = Column(
         db.DateTime,
-        auto_now=True,
+        server_default=func.now(),
+        nullable=False,
     )
 
     tags = db.relationship('Tag', secondary=tags, backref=db.backref('posts', lazy='dynamic'))
