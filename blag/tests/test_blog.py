@@ -64,7 +64,6 @@ class MultiplePostTest(UserTestCase, HTTPTestMixin):
     def test_list_blank_year(self):
         response = self.anon_user.get('/2014')
         data = self.assert200(response)
-        print data
         self.assertTrue('No posts found' in data)
 
 
