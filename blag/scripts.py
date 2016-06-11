@@ -5,9 +5,12 @@ from flask_debugtoolbar import DebugToolbarExtension
 from flask_script import Manager
 from flask_migrate import Migrate, MigrateCommand
 from logging import getLogger
+from os import path
+
+package_dir = path.dirname(path.abspath(__file__))
 
 app = create_app()
-Migrate(app, db)
+Migrate(app, db, directory=path.join(package_dir, 'migrations'))
 manager = Manager(app)
 manager.add_command('db', MigrateCommand)
 
