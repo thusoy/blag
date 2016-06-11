@@ -25,7 +25,7 @@ class BlogTest(UserTestCase, HTTPTestMixin):
 
 
     def test_post_details(self):
-        response = self.anon_user.get('/blag/2015/test-article')
+        response = self.anon_user.get('/2015/test-article')
         data = self.assert200(response)
         self.assertTrue('Test article' in data)
         self.assertTrue('Snip' in data)
@@ -37,7 +37,7 @@ class BlogTest(UserTestCase, HTTPTestMixin):
 
 
     def test_post_details_404(self):
-        response = self.anon_user.get('/blag/2001/random')
+        response = self.anon_user.get('/2001/random')
         self.assert404(response)
 
 
@@ -62,13 +62,14 @@ class MultiplePostTest(UserTestCase, HTTPTestMixin):
 
 
     def test_list_blank_year(self):
-        response = self.anon_user.get('/blag/2014')
+        response = self.anon_user.get('/2014')
         data = self.assert200(response)
+        print data
         self.assertTrue('No posts found' in data)
 
 
     def test_get_2015(self):
-        response = self.anon_user.get('/blag/2015')
+        response = self.anon_user.get('/2015')
         data = self.assert200(response)
         self.assertTrue('Test 2015 article' in data)
         self.assertFalse('Test 2016 article' in data)
