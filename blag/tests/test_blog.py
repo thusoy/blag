@@ -12,7 +12,7 @@ class BlogTest(UserTestCase, HTTPTestMixin):
         with self.app.app_context():
             db.session.add(BlogPost(title='Test article', rendered_content='Snip',
                 raw_content='Snip', slug='test-article',
-                datetime_added=datetime.datetime(2015, 01, 01)))
+                datetime_added=datetime.datetime(2015, 1, 1)))
             db.session.commit()
             self.post_id = BlogPost.query.first().id
 
