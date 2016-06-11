@@ -68,7 +68,7 @@ def post_details(year, slug):
 @mod.route('/<int(min=1000, max=9999):year>')
 def posts_in_year(year):
     year_filter = sa.extract('year', BlogPost.datetime_added)
-    posts = BlogPost.query.filter(year_filter==year)
+    posts = BlogPost.query.filter(year_filter==year).all()
     return render_template('list_posts.html', posts=posts, year=year)
 
 
