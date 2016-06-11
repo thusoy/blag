@@ -52,7 +52,7 @@ class MultiplePostTest(UserTestCase, HTTPTestMixin):
     def setUp(self):
         with self.app.app_context():
             db.session.add(BlogPost(title='Test 2016 article', rendered_content='Snip',
-                raw_content='Snip', datetime_added=datetime.datetime(2016, 01, 01),
+                raw_content='Snip', datetime_added=datetime.datetime(2016, 1, 1),
                 slug='test-2016-article'))
             db.session.add(BlogPost(title='Test 2015 article', rendered_content='Snip',
                 raw_content='Snip', datetime_added=datetime.datetime(2015, 12, 31),
