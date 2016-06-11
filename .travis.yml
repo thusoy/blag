@@ -29,7 +29,9 @@ script:
   - nosetests
 
 after_success:
-  - ./travis/deploy.sh
+  - if [[ $TRAVIS_BRANCH == 'master' ]] && [[ $TRAVIS_PULL_REQUEST == 'false' ]] && [[ $TRAVIS_PYTHON_VERSION == '3.5' ]]; then
+      ./travis/deploy.sh
+    fi
 
 env:
   global:
