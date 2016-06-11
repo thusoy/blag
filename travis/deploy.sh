@@ -4,9 +4,6 @@
 
 set -o errexit #abort if any command fails
 
-# Compute the hash of the static archive
-sha1sum dist/static.tar.gz | cut -f 1 -d " " > dist/static.tar.gz.sha1
-
 deploy_directory=dist
 deploy_branch=production
 
