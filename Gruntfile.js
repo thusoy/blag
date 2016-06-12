@@ -209,7 +209,6 @@ module.exports = function (grunt) {
   ]);
 
   grunt.registerTask('build', [
-    'clean',
     'prep',
     'rev-static',
     'shell:build-python',
