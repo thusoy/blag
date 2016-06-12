@@ -59,7 +59,7 @@ def create_app(**extra_config):
     @app.before_request
     def add_user():
         g.user = current_user
-        if current_user.is_authenticated():
+        if current_user.is_authenticated:
             identity_changed.send(current_app._get_current_object(), identity=Identity(current_user.id))
 
     from . import context_processors

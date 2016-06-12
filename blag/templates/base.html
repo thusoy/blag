@@ -29,7 +29,7 @@
         <a href="/">
             <img class="banner img-responsive" height="315" width="1000" src="{{ url_for('static', filename='img/header.jpg') }}">
         </a>
-        {% if g.user.is_authenticated() %}
+        {% if g.user.is_authenticated %}
             <span class="greeting">Hi there, {{ g.user.first_name }}!</span>
         {% endif %}
         <img class="logo img-circle" src="{{ url_for('static', filename='img/logo2.jpg') }}">

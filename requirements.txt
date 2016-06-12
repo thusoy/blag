@@ -1,71 +1,68 @@
-beautifulsoup4==4.3.2
-birdy==0.2
-celery==3.1.11
-# Recent version needed for the new config.get_namespace introduced in 1.0
-git+https://github.com/mitsuhiko/flask.git@76456dc3b29ee816fac2bf937d973cb978336ed1
-flask-login==0.2.11
-flask-migrate==1.2.0
-flask-oauthlib==0.5.0
-flask-principal==0.4.0
-flask-script==2.0.5
-flask-sqlalchemy==1.0
-flask-wtf==0.9.5
-markdown==2.4.1
-pygments==1.6
-pyyaml==3.11
-sqlalchemy-defaults==0.4.0
-ujson==1.33
-wtforms-alchemy==0.12.5
+beautifulsoup4==4.4.1 --hash=sha256:87d4013d0625d4789a4f56b8d79a04d5ce6db1152bb65f1d39744f7709a366b4
+Flask==0.11.1 --hash=sha256:b4713f2bfb9ebc2966b8a49903ae0d3984781d5c878591cf2f7b484d28756b0e
+birdy==0.2 --hash=sha256:396c65a4401673e97accd41d5adfb9eec7e3d093c693f03ce9fa46300b513be7
+celery==3.1.23 --hash=sha256:1a359c815837f9dbf193a7dbc6addafa34612c077ff70c66e3b16e14eebd2418
+Flask-Login==0.3.2 --hash=sha256:e72eff5c35e5a31db1aeca1db5d2501be702674ea88e8f223b5d2b11644beee6
+Flask-Migrate==1.8.0 --hash=sha256:e85b06a96a25a5d917cff106386a4c1fe853a4bd2d0df31c3332f2a4788d9e5c
+Flask-SQLAlchemy==2.1 --hash=sha256:c5244de44cc85d2267115624d83faef3f9e8f088756788694f305a5d5ad137c5
+Flask-Script==2.0.5 --hash=sha256:cef76eac751396355429a14c38967bb14d4973c53e07dec94af5cc8fb017107f
+Flask-OAuthlib==0.9.3 --hash=sha256:ee60f7e996850c3544821ce9746079917e5b839d38ce4190a63482b0a902e791
+Flask-Principal==0.4.0 --hash=sha256:f5d6134b5caebfdbb86f32d56d18ee44b080876a27269560a96ea35f75c99453
+Flask-WTF==0.12 --hash=sha256:bd99316c97ed1d1cb90b8f0c242c86420a891a6a2058f20717e424bf5b0bb80e
+Markdown==2.6.6 --hash=sha256:022239550fb4a84bcc3b3b42dff9a41efc56d773ef17c4f28016dd8f265c82d0
+Pygments==2.1.3 --hash=sha256:88e4c8a91b2af5962bfa5ea2447ec6dd357018e86e94c7d14bd8cacbc5b55d81
+PyYAML==3.11 --hash=sha256:19bb3ac350ef878dda84a62d37c7d5c17a137386dde9c2ce7249c7a21d7f6ac9
+SQLAlchemy-Defaults==0.4.4 --hash=sha256:e3fd0d6a763dfd4204ae65814bb32f5e47a1967f7c1f609be06c5028f2ce6b83
+ujson==1.35 --hash=sha256:f66073e5506e91d204ab0c614a148d5aa938bdbf104751be66f8ad7a222f5f86
+WTForms-Alchemy==0.16.1 --hash=sha256:905525be624b0ad7e8eb209d17fea32a8c98f311055b8c2657a66896a1d87516
 
-# birdy deps:
-requests==2.3.0
+# WTForms-Alchemy dependencies
+intervals==0.7.1 --hash=sha256:191546a1af0c6a824eed7a689a75831d2d64f4e9070a5679fcbf0b4d10bc933b
+six==1.10.0 --hash=sha256:105f8d68616f8248e24bf0e9372ef04d3cc10104f1980f54d57b2ce73a5ad56a
+infinity==1.4 --hash=sha256:dc4aa138d7e366fc00d2e741e32c78a0fecd16b74f8daeb3f7408b459668005c
+decorator==4.0.10 --hash=sha256:9c6e98edcb33499881b86ede07d9968c81ab7c769e28e9af24075f0a5379f070
+validators==0.10.2 --hash=sha256:1a0feebce823af585aca96841ec3f9f907bab8f3318264d122a1830c3ddb52a6
+WTForms-Components==0.10.0 --hash=sha256:523dcc01bd48199929c1a05e49f662801d0e795dcf52258994a7f08e55529782
+SQLAlchemy-Utils==0.32.7 --hash=sha256:ef4dcddee21114257b8384adc5746556a5d815a2e3aec66beaa78aeaf5e695e7
 
-# flask deps:
-click==1.1
-jinja2==2.7.2
-werkzeug==0.9.4
-itsdangerous==0.24
+# SQLAlchemy-Defaults dependencies
+six==1.10.0 --hash=sha256:105f8d68616f8248e24bf0e9372ef04d3cc10104f1980f54d57b2ce73a5ad56a
 
-# flask-migrate deps:
-alembic==0.6.5
-mako==0.9.1
+# SQLAlchemy-Defaults, WTForms-Alchemy and Flask-SQLAlchemy dependencies
+SQLAlchemy==1.0.13 --hash=sha256:e755fd23b8bd574163d392ae85f41f6cd32eca8fe5bd7b5692de77265bb220cf
 
-# jinja2 deps:
-markupsafe==0.23
+# Flask-WTF and WTForms-Alchemy dependencies
+WTForms==2.1 --hash=sha256:ffdf10bd1fa565b8233380cb77a304cd36fd55c73023e91d4b803c96bc11d46f
 
-# flask-oauthlib deps:
-oauthlib==0.6.1
-requests-oauthlib==0.4.0
+# Flask-Principal dependencies
+blinker==1.4 --hash=sha256:471aee25f3992bd325afa3772f1063dbdbbca947a041b8b89466dc00d606f8b6
 
-# flask-principal deps:
-blinker==1.3
+# Flask-OAuthlib dependencies
+requests-oauthlib==0.6.1 --hash=sha256:905306080ec0cc6b3c65c8101f471fccfdb9994c16dd116524fd3fc0790d46d7
+oauthlib==1.1.2 --hash=sha256:0e83e91d9e77a396dc178eddba0c4abf75e465761804bfcdb20b977284bcb0bb
 
-# flask-sqlalchemy deps:
-sqlalchemy==0.9.4
+# Flask-OAuthlib and birdy dependencies
+requests==2.10.0 --hash=sha256:63f1815788157130cee16a933b2ee184038e975f0017306d723ac326b5525b54
 
-# flask-wtf deps:
-wtforms==1.0.5
+# Flask-Migrate dependencies
+python-editor==1.0 --hash=sha256:4a2b6a945d06e347a8fafe2475f533d05887b193b2e162aff961f63642c8a60e
+Mako==1.0.4 --hash=sha256:fed99dbe4d0ddb27a33ee4910d8708aca9ef1fe854e668387a9ab9a90cbf9059
+alembic==0.8.6 --hash=sha256:53403da066ef90cbc5a3f801f3dd39bbbfbc41b0a84eb8c1c806243b7e2c6466
 
-# celery deps:
-amqp==1.4.5
-anyjson==0.3.3
-billiard==3.3.0.17
-kombu==3.0.18
-pytz==2014.4
+# Flask dependencies
+itsdangerous==0.24 --hash=sha256:cbb3fcf8d3e33df861709ecaf89d9e6629cff0a217bc2848f1b41cd30d360519
+Werkzeug==0.11.10 --hash=sha256:cc64dafbacc716cdd42503cf6c44cb5a35576443d82f29f6829e5c49264aeeee
+Jinja2==2.8 --hash=sha256:bc1ff2ff88dbfacefde4ddde471d1417d3b304e8df103a7a9437d47269201bf4
+MarkupSafe==0.23 --hash=sha256:a4ec1aff59b95a14b45eb2e23761a0179e98319da5a7eb76b56ea8cdc7b871c3
+click==6.6 --hash=sha256:cc6a19da8ebff6e7074f731447ef7e112bd23adf3de5c597cf9989f2fd8defe9
 
-# sqlalchemy-defaults deps:
-six==1.6.1
+# birdy dependencies
+requests-oauthlib==0.6.1 --hash=sha256:905306080ec0cc6b3c65c8101f471fccfdb9994c16dd116524fd3fc0790d46d7
+oauthlib==1.1.2 --hash=sha256:0e83e91d9e77a396dc178eddba0c4abf75e465761804bfcdb20b977284bcb0bb
 
-# wtforms-alchemy deps:
-wtforms-components==0.9.3
-sqlalchemy-utils==0.26.2
-
-# wtforms-components deps:
-validators==0.5.0
-intervals==0.3.0
-
-# validators deps:
-decorator==3.4.0
-
-# intervals deps:
-infinity==1.3
+# celery dependencies
+pytz==2016.4 --hash=sha256:be2ff04e94a2b5454ddcfbebb81ee8e46162734d4c2fcc90c422d16ab51f810b
+amqp==1.4.9 --hash=sha256:2dea4d16d073c902c3b89d9b96620fb6729ac0f7a923bbc777cb4ad827c0c61a
+billiard==3.3.0.23 --hash=sha256:692a2a5a55ee39a42bcb7557930e2541da85df9ea81c6e24827f63b80cd39d0b
+kombu==3.0.35 --hash=sha256:22ab336a17962717a5d9470547e5508d4bcf1b6ec10cd9486868daf4e5edb727
+anyjson==0.3.3 --hash=sha256:37812d863c9ad3e35c0734c42e0bf0320ce8c3bed82cd20ad54cb34d158157ba
