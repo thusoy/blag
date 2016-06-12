@@ -8,7 +8,7 @@ python:
   - "3.5"
 
 before_install:
-  - ./travis/before_script.sh
+  - ./tools/travis-before-script.sh
 
 install:
 
@@ -30,7 +30,7 @@ script:
 
 after_success:
   - if [[ $TRAVIS_BRANCH == 'master' ]] && [[ $TRAVIS_PULL_REQUEST == 'false' ]] && [[ $TRAVIS_PYTHON_VERSION == '3.5' ]]; then
-      ./travis/deploy.sh;
+      ./tools/travis-deploy.sh;
     fi
 
 env:
