@@ -12,7 +12,8 @@ before_install:
 
 install:
 
-  # Python stuff
+  # Get an up-to-date pip to verify hashes
+  - pip install -U pip
   - pip install -r dev-requirements.txt
 
   # Install compass
