@@ -54,11 +54,19 @@
     {%- if debug %}
         <script async src="http://localhost:35729/livereload.js"></script>
     {% endif -%}
+
+    <script>
+        {% include 'inline.js' %}
+        loadCSS("{{ url_for('static', filename='css/styles.css') }}");
+        {%- for async_stylesheet in async_stylesheets %}
+        loadCSS('{{ async_stylesheet }}');
+        {%- endfor %}
+    </script>
+    <noscript>
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+        {%- for async_stylesheet in async_stylesheets %}
+        <link rel="stylesheet" href="{{ async_stylesheet }}">
+        {%- endfor %}
+    </noscript>
 </body>
 </html>
-
-{# The rest of the styles #}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
-
-{% block styles %}
-{% endblock %}

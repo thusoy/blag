@@ -44,7 +44,12 @@ def new_post():
         db.session.add(post)
         flash("New entry saved!", 'success')
         return redirect(url_for('.main'))
-    return render_template('new_entry.html', form=form), 200 if request.method == 'GET' else 400
+    status_code = 200 if request.method == 'GET' else 400
+    context = {
+        'form': form,
+        'async_stylesheets': url_for('static', filename='css/writeEntry.css'),
+    }
+    return render_template('new_entry.html', **context), status_code
 
 
 @mod.route('/blag/<int(min=1, max=99):post_id>')
@@ -89,7 +94,8 @@ def edit_post(year, slug):
         post.render()
         flash('Post modified successfully', 'success')
         return redirect(post.url())
-    return render_template('edit_entry.html', form=form, post=post)
+    return render_template('edit_entry.html', form=form, post=post,
+        async_stylesheets=url_for('static', filename='css/writeEntry.css'))
 
 
 @mod.route('/blag/<int:post_id>', methods=['DELETE'])

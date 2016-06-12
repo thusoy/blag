@@ -67,6 +67,10 @@ module.exports = function (grunt) {
         files: [{
           src: '.tmp/static/css/core.css',
           dest: 'blag/server-assets/core.css',
+        },
+        {
+          src: '.tmp/static/js/inline.min.js',
+          dest: 'blag/server-assets/inline.js',
         }]
       },
       'misc-static': {
@@ -162,8 +166,18 @@ module.exports = function (grunt) {
             'blag/static/js/blocks/sourced-quote.js',
             'blag/static/js/writeEntry.js',
           ],
-        }
+        },
       },
+      inline: {
+        options: {
+          sourceMap: false,
+        },
+        files: {
+          '.tmp/static/js/inline.min.js': [
+            'blag/static/js/inline.js',
+          ],
+        }
+      }
     },
 
     watch: {
@@ -204,8 +218,9 @@ module.exports = function (grunt) {
 
   grunt.registerTask('prep', [
     'clean',
-    'buildStyles',
+    'compass',
     'uglify',
+    'copy:fetch-server-assets',
     'imagemin',
     'copy:misc-static',
   ]);
@@ -218,10 +233,5 @@ module.exports = function (grunt) {
   grunt.registerTask('init-deps', [
     'bower',
     'rename:sirTrevor',
-  ]);
-
-  grunt.registerTask('buildStyles', [
-    'compass',
-    'copy:fetch-server-assets',
   ]);
 };
