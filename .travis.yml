@@ -12,6 +12,8 @@ before_install:
   - ./tools/travis-before-script.sh
 
 install:
+  # Piece of shit to get a correct version of node through nvm
+  - rm -rf ~/.nvm && git clone https://github.com/creationix/nvm.git ~/.nvm && (cd ~/.nvm && git checkout `git describe --abbrev=0 --tags`) && source ~/.nvm/nvm.sh && nvm install $TRAVIS_NODE_VERSION
 
   # Get an up-to-date pip to verify hashes
   - pip install -U pip
