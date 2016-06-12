@@ -1,4 +1,4 @@
-(function ($, window, document) {
+(function (window) {
     'use strict';
 
     /*
@@ -25,8 +25,6 @@
         }
     }
 
-    $(document).ready(function () {
-        cleanUpHFacebookHash();
-    });
+    cleanUpHFacebookHash();
 
-})(jQuery, window, document);
+})(window);

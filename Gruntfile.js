@@ -150,10 +150,10 @@ module.exports = function (grunt) {
       static: {
         files: {
           '.tmp/static/js/main.min.js': [
-            'bower_components/jquery/dist/jquery.js',
             'blag/static/js/main.js',
           ],
           '.tmp/static/js/writePost.min.js': [
+            'bower_components/jquery/dist/jquery.js',
             'bower_components/underscore/underscore.js',
             'bower_components/Eventable/eventable.js',
             'bower_components/sir-trevor-js/sir-trevor.js',
