@@ -15,6 +15,7 @@ from logging import getLogger
 from os import path
 from werkzeug import secure_filename
 from werkzeug.contrib.atom import AtomFeed
+from PIL import Image
 
 import ujson as json
 import json as _slow_json
@@ -103,10 +104,20 @@ def image_upload():
     _logger.info(request.files)
     file = request.files['attachment[file]']
     filename = secure_filename(file.filename)
-    file.save(path.join(current_app.config['UPLOAD_FOLDER'], filename))
+    file_path = path.join(current_app.config['UPLOAD_FOLDER'], filename)
+    file.save(file_path)
+    data = {
+        'path': url_for('images', filename=filename),
+        'url': url_for('images', filename=filename),
+        'name': filename,
+    }
+    try:
+        data['dimensions'] = Image.open(file_path).size
+    except:
+        _logger.exception('Failed to get dimensions from image')
     return Response(json.dumps({
+        'file': data,
         'msg': 'Image upload OK',
-        'imageUrl': filename,
     }), mimetype='application/json')
 
 

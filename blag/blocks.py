@@ -82,7 +82,11 @@ class ImageRenderer(BaseRenderer):
     """)
 
     def parse_data(self, data):
-        return dict(img_url=url_for('images', filename=data['imageUrl']))
+        if 'file' in data:
+            filename = data['file']['name']
+        else:
+            filename = data['imageUrl']
+        return dict(img_url=url_for('images', filename=filename))
 
 
 class VideoRenderer(BaseRenderer):

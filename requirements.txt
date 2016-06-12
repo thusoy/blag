@@ -15,6 +15,7 @@ PyYAML==3.11 --hash=sha256:19bb3ac350ef878dda84a62d37c7d5c17a137386dde9c2ce7249c
 SQLAlchemy-Defaults==0.4.4 --hash=sha256:e3fd0d6a763dfd4204ae65814bb32f5e47a1967f7c1f609be06c5028f2ce6b83
 ujson==1.35 --hash=sha256:f66073e5506e91d204ab0c614a148d5aa938bdbf104751be66f8ad7a222f5f86
 WTForms-Alchemy==0.16.1 --hash=sha256:905525be624b0ad7e8eb209d17fea32a8c98f311055b8c2657a66896a1d87516
+Pillow==3.2.0 --hash=sha256:cc44c54b432b27c59e3d0bc048a5a7581b13944c14c56c94634cfe8d5eabade5
 
 # WTForms-Alchemy dependencies
 intervals==0.7.1 --hash=sha256:191546a1af0c6a824eed7a689a75831d2d64f4e9070a5679fcbf0b4d10bc933b
