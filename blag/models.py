@@ -83,8 +83,11 @@ class BlogPost(db.Model):
         self.rendered_content = render_blocks(json.loads(self.raw_content)['data'])
 
     def url(self, external=False):
-        year = self.datetime_added.year
-        return url_for('blag.post_details', year=year, slug=self.slug, _external=external)
+        return url_for('blag.post_details', year=self.year, slug=self.slug, _external=external)
+
+    @property
+    def year(self):
+        return self.datetime_added.year
 
 
 class _PrintableForm(model_form_factory(Form)):
@@ -111,6 +114,7 @@ class BlogPostForm(_PrintableForm):
             'slug',
             'raw_content',
         ]
+
     def get_categories_query():
         return Tag.query.all()
 

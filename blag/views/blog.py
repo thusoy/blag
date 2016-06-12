@@ -57,13 +57,18 @@ def post_details_old(post_id):
 
 @mod.route('/<int:year>/<slug>')
 def post_details(year, slug):
+    post = post_from_year_and_slug_or_404(year, slug)
+    description = do_truncate(do_striptags(post.rendered_content))
+    title = post.title
+    return render_template('post_details.html', post=post, description=description, title=title)
+
+
+def post_from_year_and_slug_or_404(year, slug):
     year_filter = sa.extract('year', BlogPost.datetime_added)
     post = BlogPost.query.filter(year_filter==year, BlogPost.slug==slug).first()
     if not post:
         abort(404)
-    description = do_truncate(do_striptags(post.rendered_content))
-    title = post.title
-    return render_template('post_details.html', post=post, description=description, title=title)
+    return post
 
 
 @mod.route('/<int(min=1000, max=9999):year>')
@@ -73,17 +78,17 @@ def posts_in_year(year):
     return render_template('list_posts.html', posts=posts, year=year)
 
 
-@mod.route('/blag/<int:post_id>/edit', methods=('GET', 'POST'))
+@mod.route('/<int(min=1000, max=9999):year>/<slug>/edit', methods=('GET', 'POST'))
 @login_required
 @admin_permission.require(403)
-def edit_post(post_id):
-    post = BlogPost.query.get_or_404(post_id)
+def edit_post(year, slug):
+    post = post_from_year_and_slug_or_404(year, slug)
     form = BlogPostForm(obj=post)
     if form.validate_on_submit():
         form.populate_obj(post)
         post.render()
         flash('Post modified successfully', 'success')
-        return redirect(url_for('.post_details', post_id=post.id))
+        return redirect(post.url())
     return render_template('edit_entry.html', form=form, post=post)
 
 

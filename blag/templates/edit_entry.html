@@ -10,7 +10,7 @@
     <section>
         <h1>Edit post</h1>
 
-        <form method="post" action="{{ url_for('.edit_post', post_id=post.id) }}">
+        <form method="post" action="{{ url_for('.edit_post', year=post.year, slug=post.slug) }}">
 
             {{ form.render() }}
 
