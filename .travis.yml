@@ -1,6 +1,4 @@
-language:
-  - python
-  - node_js
+language: python
 
 python:
   - "2.7"
@@ -8,12 +6,15 @@ python:
   - "3.5"
 
 before_install:
-  - ./travis/before_script.sh
+  - ./tools/travis-before-script.sh
 
 install:
+  # Piece of shit to get a correct version of node through nvm
+  - rm -rf ~/.nvm && git clone https://github.com/creationix/nvm.git ~/.nvm && (cd ~/.nvm && git checkout `git describe --abbrev=0 --tags`) && source ~/.nvm/nvm.sh && nvm install $TRAVIS_NODE_VERSION
 
-  # Python stuff
-  - pip install -r dev-requirements.txt
+  # Get an up-to-date pip to verify hashes
+  - pip install -U pip
+  - "pip install -r dev-requirements.txt --no-binary :all: --no-deps --require-hashes"
 
   # Install compass
   - gem update --system
@@ -29,10 +30,13 @@ script:
   - nosetests
 
 after_success:
-  - ./travis/deploy.sh
+  - if [[ $TRAVIS_BRANCH == 'master' ]] && [[ $TRAVIS_PULL_REQUEST == 'false' ]] && [[ $TRAVIS_PYTHON_VERSION == '3.5' ]]; then
+      ./tools/travis-deploy.sh;
+    fi
 
 env:
   global:
+    - TRAVIS_NODE_VERSION="4"
 
     # GitHub access token that grants access to thusoys GitHub account
     - secure: "NFbcA+kQb3eQDqnKXGym40PLo1P/6DKpCotWYx/em0dZhbUK29Ylh/x6ZjnvJbgjCMY2EmKlNLMRXN4ELdPMVmbAhAJjpEyWNRnebatckvXjEBe+K3zBq5r03Otlf8iRF5Zv+kwLK4cyB/0c6bJiiP+ICquMCmJxP6Ot50UGWoI="
