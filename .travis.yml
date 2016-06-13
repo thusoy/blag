@@ -30,7 +30,7 @@ script:
   - nosetests
 
 after_success:
-  - if [[ $TRAVIS_BRANCH == 'master' ]] && [[ $TRAVIS_PULL_REQUEST == 'false' ]] && [[ $TRAVIS_PYTHON_VERSION == '3.5' ]]; then
+  - if [[ $TRAVIS_BRANCH == 'master' ]] && [[ $TRAVIS_PULL_REQUEST == 'false' ]] && [[ $TRAVIS_PYTHON_VERSION == '2.7' ]]; then
       ./tools/travis-deploy.sh;
     fi
 
