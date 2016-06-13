@@ -47,7 +47,9 @@ def new_post():
     status_code = 200 if request.method == 'GET' else 400
     context = {
         'form': form,
-        'async_stylesheets': url_for('static', filename='css/writeEntry.css'),
+        'async_stylesheets': [
+            url_for('static', filename='css/writeEntry.css'),
+        ],
     }
     return render_template('new_entry.html', **context), status_code
 
@@ -94,8 +96,14 @@ def edit_post(year, slug):
         post.render()
         flash('Post modified successfully', 'success')
         return redirect(post.url())
-    return render_template('edit_entry.html', form=form, post=post,
-        async_stylesheets=url_for('static', filename='css/writeEntry.css'))
+    context = {
+        'form': form,
+        'post': post,
+        'async_stylesheets': [
+            url_for('static', filename='css/writeEntry.css'),
+        ],
+    }
+    return render_template('edit_entry.html', **context)
 
 
 @mod.route('/blag/<int:post_id>', methods=['DELETE'])
