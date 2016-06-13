@@ -4,6 +4,7 @@ from __future__ import unicode_literals
 
 from .. import db
 from ..blocks import render_block
+from ..context_processors import _revved_url_for as revved_url_for
 from ..models import BlogPost, BlogPostForm, TagForm
 from ..auth import admin_permission
 
@@ -48,7 +49,7 @@ def new_post():
     context = {
         'form': form,
         'async_stylesheets': [
-            url_for('static', filename='css/writeEntry.css'),
+            revved_url_for('static', filename='css/writeEntry.css'),
         ],
     }
     return render_template('new_entry.html', **context), status_code
@@ -100,7 +101,7 @@ def edit_post(year, slug):
         'form': form,
         'post': post,
         'async_stylesheets': [
-            url_for('static', filename='css/writeEntry.css'),
+            revved_url_for('static', filename='css/writeEntry.css'),
         ],
     }
     return render_template('edit_entry.html', **context)
