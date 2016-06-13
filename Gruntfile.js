@@ -42,13 +42,18 @@ module.exports = function (grunt) {
       ]
     },
 
-    compass: {
+    sass: {
       dist: {
         options: {
           sassDir: 'blag/static/sass/',
           cssDir: '.tmp/static/css/',
           outputStyle: 'compressed',
-          importPath: ["bower_components"],
+          includePaths: ["bower_components"],
+        },
+        files: {
+          './tmp/static/css/core.css': 'blag/static/sass/core.scss',
+          './tmp/static/css/styles.css': 'blag/static/sass/styles.scss',
+          './tmp/static/css/writeEntry.css': 'blag/static/sass/writeEntry.scss',
         }
       }
     },
@@ -217,11 +222,11 @@ module.exports = function (grunt) {
 
   grunt.registerTask('prep', [
     'clean',
-    'compass',
+    'sass',
     'uglify',
     'copy:fetch-server-assets',
     'imagemin',
-    'copy:misc-static',
+    'copy',
   ]);
 
   grunt.registerTask('rev-static', [
