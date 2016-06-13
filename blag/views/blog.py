@@ -270,7 +270,7 @@ def blag_feed():
     for article in articles:
         feed.add(article.title, unicode(article.rendered_content),
                  content_type='html',
-                 url=url_for('.post_details', post_id=article.id, _external=True),
+                 url=article.url(external=True),
                  updated=article.datetime_added,
                  published=article.datetime_added)
     return feed.get_response()

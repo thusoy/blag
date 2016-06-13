@@ -45,6 +45,10 @@ class BlogTest(UserTestCase, HTTPTestMixin):
         response = self.anon_user.get('/styleguide')
         self.assert200(response)
 
+    def test_atom_feed(self):
+        response = self.anon_user.get('/blag.atom')
+        self.assert200(response)
+
 
 
 class MultiplePostTest(UserTestCase, HTTPTestMixin):
