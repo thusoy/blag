@@ -33,6 +33,10 @@
             <span class="greeting">Hi there, {{ g.user.first_name }}!</span>
         {% endif %}
         <img class="logo img-circle" src="{{ url_for('static', filename='img/logo2.jpg') }}">
+
+        <p>
+            I'm an indie web developer writing about security, devoops and self-hosting stuff. Co-founder of <a href="https://megacool.co">Megacool</a>. Self-hosts blog, mail, DNS and ownCloud. Mostly write <a href="https://github.com/thusoy">open-source</a> code.
+        </p>
     </header>
 
     {% for category, msg in get_flashed_messages(with_categories=True) %}
