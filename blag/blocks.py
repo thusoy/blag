@@ -210,7 +210,8 @@ class SourcedQuoteRenderer(BaseRenderer):
 class CodeRenderer(BaseRenderer):
 
     def parse_data(self, data):
-        lexer = get_lexer_by_name(data.get('language', 'bash'))
+        language = data.get('language') or 'bash'
+        lexer = get_lexer_by_name(language)
         formatter = get_formatter_by_name('html')
         return dict(text=pygments.highlight(data['text'], lexer, formatter))
 
