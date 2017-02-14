@@ -16,6 +16,8 @@ SQLAlchemy-Defaults==0.4.4 --hash=sha256:e3fd0d6a763dfd4204ae65814bb32f5e47a1967
 ujson==1.35 --hash=sha256:f66073e5506e91d204ab0c614a148d5aa938bdbf104751be66f8ad7a222f5f86
 WTForms-Alchemy==0.16.1 --hash=sha256:905525be624b0ad7e8eb209d17fea32a8c98f311055b8c2657a66896a1d87516
 Pillow==3.2.0 --hash=sha256:cc44c54b432b27c59e3d0bc048a5a7581b13944c14c56c94634cfe8d5eabade5
+GeoAlchemy2==0.4.0 --hash=sha256:5220da4aca963f56024fadb5fc17ed60d413aba089d07ffc8487388d83a7434a
+
 
 # WTForms-Alchemy dependencies
 intervals==0.7.1 --hash=sha256:191546a1af0c6a824eed7a689a75831d2d64f4e9070a5679fcbf0b4d10bc933b
@@ -29,7 +31,7 @@ SQLAlchemy-Utils==0.32.7 --hash=sha256:ef4dcddee21114257b8384adc5746556a5d815a2e
 # SQLAlchemy-Defaults dependencies
 six==1.10.0 --hash=sha256:105f8d68616f8248e24bf0e9372ef04d3cc10104f1980f54d57b2ce73a5ad56a
 
-# SQLAlchemy-Defaults, WTForms-Alchemy and Flask-SQLAlchemy dependencies
+# SQLAlchemy-Defaults, WTForms-Alchemy, Flask-SQLAlchemy and geoalchemy2 dependencies
 SQLAlchemy==1.0.13 --hash=sha256:e755fd23b8bd574163d392ae85f41f6cd32eca8fe5bd7b5692de77265bb220cf
 
 # Flask-WTF and WTForms-Alchemy dependencies
