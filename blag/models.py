@@ -3,8 +3,9 @@ from .blocks import render_blocks
 
 from flask import Markup, url_for
 from flask_wtf import Form
+from geoalchemy2 import Geometry
 from sqlalchemy_defaults import Column
-from sqlalchemy import func
+from sqlalchemy import func, CheckConstraint
 from wtforms_alchemy import model_form_factory, ModelFieldList
 from wtforms.fields import FormField, HiddenField
 
@@ -88,6 +89,28 @@ class BlogPost(db.Model):
     @property
     def year(self):
         return self.datetime_added.year
+
+
+class HikeDestination(db.Model):
+    id = Column(db.Integer, primary_key=True)
+    name = Column(db.String(100), nullable=False)
+    altitude = Column(db.Integer, nullable=True) # TODO: Require if is_summit
+    high_point_coord = Column(Geometry('POINT'), nullable=False) # TODO: Require if summit
+    is_summit = Column(db.Boolean, nullable=False, server_default='t')
+    created_at = Column(db.DateTime, nullable=False, server_default=func.now())
+
+
+class Hike(db.Model):
+    __lazy_options__ = {}
+    id = Column(db.Integer, primary_key=True)
+    destination_id = Column(db.Integer, db.ForeignKey(HikeDestination.id), nullable=False)
+    datetime = Column(db.DateTime, nullable=False, server_default=func.now())
+    method = Column(db.String(30))
+    notes = Column(db.Text, nullable=False, server_default='')
+    __table_args__ = (
+        CheckConstraint("method in ('ski', 'foot', 'crampons', 'climb', 'via ferrata')"),
+    )
+
 
 
 class _PrintableForm(model_form_factory(Form)):
