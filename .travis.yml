@@ -1,6 +1,7 @@
 language: python
 
-sudo: false
+# Needed for postgres stuff
+sudo: required
 
 services:
     - postgresql
@@ -17,6 +18,9 @@ before_install:
   - ./tools/travis-before-script.sh
 
 install:
+  # Install postgis in test database
+  - psql postgres://postgres@localhost/travis -c "create extension postgis"
+
   # Piece of shit to get a correct version of node through nvm
   - rm -rf ~/.nvm && git clone https://github.com/creationix/nvm.git ~/.nvm && (cd ~/.nvm && git checkout `git describe --abbrev=0 --tags`) && source ~/.nvm/nvm.sh && nvm install $TRAVIS_NODE_VERSION
 
@@ -32,9 +36,6 @@ install:
   # Install grunt-cli and grunt
   - npm install -g grunt-cli
   - npm install
-
-  # Install postgis in test database
-  - psql postgres://postgres@localhost/travis -c "create extension postgis"
 
 script:
   - grunt build
