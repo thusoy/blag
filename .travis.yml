@@ -34,7 +34,7 @@ install:
   - npm install
 
   # Install postgis in test database
-  - psql -U postgres -c "create extension postgis"
+  - psql postgres://postgres@localhost/travis -c "create extension postgis"
 
 script:
   - grunt build
