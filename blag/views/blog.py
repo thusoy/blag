@@ -268,7 +268,7 @@ def blag_feed():
                     logo=url_for('static', filename='img/atom_logo.jpg', _external=True))
     articles = BlogPost.query.order_by(BlogPost.datetime_added.desc()).limit(15).all()
     for article in articles:
-        feed.add(article.title, unicode(article.rendered_content),
+        feed.add(article.title, article.rendered_content,
                  content_type='html',
                  url=article.url(external=True),
                  updated=article.datetime_added,
