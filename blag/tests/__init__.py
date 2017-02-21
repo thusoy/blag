@@ -13,28 +13,6 @@ import tempfile
 PY3 = sys.version_info > (3, 0, 0)
 
 
-def ignore(*exceptions):
-    """ Use as decorator when you want to ignore certain exceptions.
-
-    Example:
-
-        @ignore(OSError)
-        def sketchy():
-            os.remove('does_this_exists.txt')
-    """
-
-    def wrapper(func):
-
-        @wraps(func)
-        def inner(*args, **kwargs):
-            try:
-                func(*args, **kwargs)
-            except exceptions:
-                pass
-        return inner
-    return wrapper
-
-
 class HTTPTestMixin(unittest.TestCase):
     """ Test mixin that proves assert200, assert201, etc helpers. """
 
@@ -83,9 +61,8 @@ class UserTestCase(unittest.TestCase):
 
 
     def pre_set_up(self):
-        self.test_db = tempfile.NamedTemporaryFile(delete=False)
-        self.test_db.close()
-        self.app = create_app(SQLALCHEMY_DATABASE_URI='sqlite:///' + self.test_db.name,
+        db_url = os.environ.get('DATABASE_URL', 'postgres://vagrant:vagrant@10.20.30.50/testdb')
+        self.app = create_app(SQLALCHEMY_DATABASE_URI=db_url,
             WTF_CSRF_ENABLED=False, SECRET_KEY='bogus')
         with self.app.app_context():
             db.create_all()
@@ -100,6 +77,6 @@ class UserTestCase(unittest.TestCase):
         self.post_tear_down()
 
 
-    @ignore(OSError)
     def post_tear_down(self):
-        os.remove(self.test_db.name)
+        with self.app.app_context():
+            db.drop_all()
