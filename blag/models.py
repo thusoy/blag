@@ -99,11 +99,20 @@ class HikeDestination(db.Model):
     is_summit = Column(db.Boolean, nullable=False, server_default='t')
     created_at = Column(db.DateTime, nullable=False, server_default=func.now())
 
+    def to_json(self):
+        geojson = json.loads(db.session.scalar(self.high_point_coord.ST_AsGeoJSON()))
+        return {
+            'name': self.name,
+            'altitude': self.altitude,
+            'coordinates': geojson['coordinates'],
+        }
+
 
 class Hike(db.Model):
     __lazy_options__ = {}
     id = Column(db.Integer, primary_key=True)
     destination_id = Column(db.Integer, db.ForeignKey(HikeDestination.id), nullable=False)
+    destination = db.relationship('HikeDestination', backref=db.backref('hikes'))
     datetime = Column(db.DateTime, nullable=False, server_default=func.now())
     method = Column(db.String(30))
     notes = Column(db.Text, nullable=False, server_default='')

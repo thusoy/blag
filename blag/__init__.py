@@ -47,6 +47,7 @@ def create_app(**extra_config):
     from .views import blog
     from .views import apis
     from .views import misc
+    from .views import lcp
     from .auth.views import mod as auth_mod
 
     # Register blueprints
@@ -54,6 +55,7 @@ def create_app(**extra_config):
     app.register_blueprint(apis.mod)
     app.register_blueprint(auth_mod)
     app.register_blueprint(misc.mod)
+    app.register_blueprint(lcp.mod)
 
     @app.before_request
     def add_user():
