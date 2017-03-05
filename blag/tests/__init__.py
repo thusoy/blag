@@ -66,9 +66,19 @@ class UserTestCase(unittest.TestCase):
             WTF_CSRF_ENABLED=False, SECRET_KEY='bogus')
         with self.app.app_context():
             db.create_all()
-        self.admin_user = self.create_test_client(User(first_name='Bob', last_name='Admin', is_admin=True))
+        self.admin_user = self.create_test_client(User(
+            email='bob@example.com',
+            first_name='Bob',
+            last_name='Admin',
+            is_admin=True,
+            password='password',
+        ))
         self.anon_user = self.app.test_client()
-        self.auth_user = self.create_test_client(User(first_name='Alice', last_name='User'))
+        self.auth_user = self.create_test_client(User(
+            first_name='Alice',
+            last_name='User',
+            password='password',
+        ))
 
 
     def __call__(self, *args, **kwargs):

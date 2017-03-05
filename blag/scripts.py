@@ -1,5 +1,12 @@
+import getpass
+from flask_script import Manager
+from flask_migrate import Migrate, MigrateCommand
+from logging import getLogger
+from os import path
+
 from . import db, create_app
 from .models import BlogPost
+from .auth.models import User
 
 try:
     from flask_debugtoolbar import DebugToolbarExtension
@@ -7,10 +14,6 @@ try:
 except ImportError:
     HAS_DEBUG_TOOLBAR = False
 
-from flask_script import Manager
-from flask_migrate import Migrate, MigrateCommand
-from logging import getLogger
-from os import path
 
 package_dir = path.dirname(path.abspath(__file__))
 
@@ -40,13 +43,25 @@ def devserver():
         DebugToolbarExtension(app)
     app.run(extra_files=[
         'dev_settings.py',
-    ], host="0.0.0.0", port=80)
+    ], host="0.0.0.0", port=8000)
 
 
 @manager.command
 def init_db():
     with app.app_context():
         db.create_all()
+
+
+@manager.command
+def create_admin(email=None):
+    password = getpass.getpass('Password: ')
+    with app.app_context():
+        user = User.query.filter_by(email=email).first()
+        if user:
+            user.set_password_hash(password)
+        else:
+            db.session.add(User(email=email, password=password, is_admin=True))
+        db.session.commit()
 
 
 def main(): # pragma: no cover

@@ -6,7 +6,6 @@ Flask-Login==0.3.2 --hash=sha256:e72eff5c35e5a31db1aeca1db5d2501be702674ea88e8f2
 Flask-Migrate==1.8.0 --hash=sha256:e85b06a96a25a5d917cff106386a4c1fe853a4bd2d0df31c3332f2a4788d9e5c
 Flask-SQLAlchemy==2.1 --hash=sha256:c5244de44cc85d2267115624d83faef3f9e8f088756788694f305a5d5ad137c5
 Flask-Script==2.0.5 --hash=sha256:cef76eac751396355429a14c38967bb14d4973c53e07dec94af5cc8fb017107f
-Flask-OAuthlib==0.9.3 --hash=sha256:ee60f7e996850c3544821ce9746079917e5b839d38ce4190a63482b0a902e791
 Flask-Principal==0.4.0 --hash=sha256:f5d6134b5caebfdbb86f32d56d18ee44b080876a27269560a96ea35f75c99453
 Flask-WTF==0.12 --hash=sha256:bd99316c97ed1d1cb90b8f0c242c86420a891a6a2058f20717e424bf5b0bb80e
 Markdown==2.6.6 --hash=sha256:022239550fb4a84bcc3b3b42dff9a41efc56d773ef17c4f28016dd8f265c82d0
@@ -17,7 +16,7 @@ ujson==1.35 --hash=sha256:f66073e5506e91d204ab0c614a148d5aa938bdbf104751be66f8ad
 WTForms-Alchemy==0.16.1 --hash=sha256:905525be624b0ad7e8eb209d17fea32a8c98f311055b8c2657a66896a1d87516
 Pillow==3.2.0 --hash=sha256:cc44c54b432b27c59e3d0bc048a5a7581b13944c14c56c94634cfe8d5eabade5
 GeoAlchemy2==0.4.0 --hash=sha256:5220da4aca963f56024fadb5fc17ed60d413aba089d07ffc8487388d83a7434a
-
+argon2_cffi==16.3.0 --hash=sha256:99a5246d68fb17c33eddc9e8b21cfcb0de1f8360d0bb0b73be5ede20078de3aa
 
 # WTForms-Alchemy dependencies
 intervals==0.7.1 --hash=sha256:191546a1af0c6a824eed7a689a75831d2d64f4e9070a5679fcbf0b4d10bc933b
@@ -28,7 +27,7 @@ validators==0.10.2 --hash=sha256:1a0feebce823af585aca96841ec3f9f907bab8f3318264d
 WTForms-Components==0.10.0 --hash=sha256:523dcc01bd48199929c1a05e49f662801d0e795dcf52258994a7f08e55529782
 SQLAlchemy-Utils==0.32.7 --hash=sha256:ef4dcddee21114257b8384adc5746556a5d815a2e3aec66beaa78aeaf5e695e7
 
-# SQLAlchemy-Defaults dependencies
+# SQLAlchemy-Defaults and argon2 dependencies
 six==1.10.0 --hash=sha256:105f8d68616f8248e24bf0e9372ef04d3cc10104f1980f54d57b2ce73a5ad56a
 
 # SQLAlchemy-Defaults, WTForms-Alchemy, Flask-SQLAlchemy and geoalchemy2 dependencies
@@ -40,12 +39,10 @@ WTForms==2.1 --hash=sha256:ffdf10bd1fa565b8233380cb77a304cd36fd55c73023e91d4b803
 # Flask-Principal dependencies
 blinker==1.4 --hash=sha256:471aee25f3992bd325afa3772f1063dbdbbca947a041b8b89466dc00d606f8b6
 
-# Flask-OAuthlib dependencies
+# birdy dependencies
+requests==2.10.0 --hash=sha256:63f1815788157130cee16a933b2ee184038e975f0017306d723ac326b5525b54
 requests-oauthlib==0.6.1 --hash=sha256:905306080ec0cc6b3c65c8101f471fccfdb9994c16dd116524fd3fc0790d46d7
 oauthlib==1.1.2 --hash=sha256:0e83e91d9e77a396dc178eddba0c4abf75e465761804bfcdb20b977284bcb0bb
-
-# Flask-OAuthlib and birdy dependencies
-requests==2.10.0 --hash=sha256:63f1815788157130cee16a933b2ee184038e975f0017306d723ac326b5525b54
 
 # Flask-Migrate dependencies
 python-editor==1.0 --hash=sha256:4a2b6a945d06e347a8fafe2475f533d05887b193b2e162aff961f63642c8a60e
@@ -59,13 +56,14 @@ Jinja2==2.8 --hash=sha256:bc1ff2ff88dbfacefde4ddde471d1417d3b304e8df103a7a9437d4
 MarkupSafe==0.23 --hash=sha256:a4ec1aff59b95a14b45eb2e23761a0179e98319da5a7eb76b56ea8cdc7b871c3
 click==6.6 --hash=sha256:cc6a19da8ebff6e7074f731447ef7e112bd23adf3de5c597cf9989f2fd8defe9
 
-# birdy dependencies
-requests-oauthlib==0.6.1 --hash=sha256:905306080ec0cc6b3c65c8101f471fccfdb9994c16dd116524fd3fc0790d46d7
-oauthlib==1.1.2 --hash=sha256:0e83e91d9e77a396dc178eddba0c4abf75e465761804bfcdb20b977284bcb0bb
-
 # celery dependencies
 pytz==2016.4 --hash=sha256:be2ff04e94a2b5454ddcfbebb81ee8e46162734d4c2fcc90c422d16ab51f810b
 amqp==1.4.9 --hash=sha256:2dea4d16d073c902c3b89d9b96620fb6729ac0f7a923bbc777cb4ad827c0c61a
 billiard==3.3.0.23 --hash=sha256:692a2a5a55ee39a42bcb7557930e2541da85df9ea81c6e24827f63b80cd39d0b
 kombu==3.0.35 --hash=sha256:22ab336a17962717a5d9470547e5508d4bcf1b6ec10cd9486868daf4e5edb727
 anyjson==0.3.3 --hash=sha256:37812d863c9ad3e35c0734c42e0bf0320ce8c3bed82cd20ad54cb34d158157ba
+
+# argon2_cffi dependencies
+pycparser==2.17 --hash=sha256:0aac31e917c24cb3357f5a4d5566f2cc91a19ca41862f6c3c22dc60a629673b6
+enum34==1.1.6 --hash=sha256:8ad8c4783bf61ded74527bffb48ed9b54166685e4230386a9ed9b1279e2df5b1
+cffi==1.9.1 --hash=sha256:563e0bd53fda03c151573217b3a49b3abad8813de9dd0632e10090f6190fdaf8
