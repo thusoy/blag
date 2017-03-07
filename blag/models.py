@@ -7,7 +7,7 @@ from geoalchemy2 import Geometry
 from sqlalchemy_defaults import Column
 from sqlalchemy import func, CheckConstraint
 from wtforms_alchemy import model_form_factory, ModelFieldList
-from wtforms.fields import FormField, HiddenField
+from wtforms import FormField, HiddenField, TextField
 
 import ujson as json
 
@@ -95,7 +95,12 @@ class HikeDestination(db.Model):
     id = Column(db.Integer, primary_key=True)
     name = Column(db.String(100), nullable=False)
     altitude = Column(db.Integer, nullable=True) # TODO: Require if is_summit
-    high_point_coord = Column(Geometry('POINT'), nullable=False) # TODO: Require if summit
+    high_point_coord = Column(Geometry('POINT'), nullable=False,
+        info={
+            'form_field_class': TextField,
+            # 'validators': CoordinateValidator(), # TODO: Ensure input is validated and casted to something understandable by PostGIS
+        }
+    ) # TODO: Require if summit
     is_summit = Column(db.Boolean, nullable=False, server_default='t')
     created_at = Column(db.DateTime, nullable=False, server_default=func.now())
 
@@ -112,7 +117,7 @@ class Hike(db.Model):
     __lazy_options__ = {}
     id = Column(db.Integer, primary_key=True)
     destination_id = Column(db.Integer, db.ForeignKey(HikeDestination.id), nullable=False)
-    destination = db.relationship('HikeDestination', backref=db.backref('hikes'))
+    destination = db.relationship(HikeDestination, backref=db.backref('hikes'))
     datetime = Column(db.DateTime, nullable=False, server_default=func.now())
     method = Column(db.String(30))
     notes = Column(db.Text, nullable=False, server_default='')
@@ -133,7 +138,14 @@ class _PrintableForm(model_form_factory(Form)):
                     'value': f._value(),
                 })
             else:
-                fields.append('%s: %s' % (f.label, f()))
+                if isinstance(f, ModelFieldList):
+                    # import pdb; pdb.set_trace()
+                    for form_class in f.unbound_field.args:
+                        fields.append(form_class().render())
+                else:
+                    f.label.text = f.label.text or f.name.replace('_', ' ').title()
+                    fields.append('%s: %s' % (f.label, f()))
+        # TODO: Is this safe with user-submitted data on form edit?
         return Markup('\n'.join(fields))
 
 
@@ -152,3 +164,25 @@ class BlogPostForm(_PrintableForm):
 
     #tags = QuerySelectMultipleField(query_factory=get_categories_query)
     tags = ModelFieldList(FormField(TagForm))
+
+
+class HikeForm(_PrintableForm):
+    class Meta(object):
+        model = Hike
+        only = [
+            # 'destination_id',
+            'method',
+            'datetime',
+        ]
+
+
+class HikeDestinationForm(_PrintableForm):
+    class Meta(object):
+        model = HikeDestination
+        only = [
+            'name',
+            'altitude',
+            'high_point_coord',
+            'is_summit',
+        ]
+    hikes = ModelFieldList(FormField(HikeForm))

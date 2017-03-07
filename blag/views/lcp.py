@@ -6,7 +6,7 @@ from flask_login import login_required
 
 from .. import db
 from ..auth import admin_permission
-from ..models import Hike, HikeDestination
+from ..models import Hike, HikeDestination, HikeDestinationForm, HikeForm
 
 mod = Blueprint('lcp', __name__)
 
@@ -31,11 +31,13 @@ def lcp_destinations():
     name = request.form.get('name') or abort(400)
     altitude = request.form.get('altitude') or abort(400)
     is_summit = 'is_summit' in request.form
-    coordinates = request.form.get('coordinates') or abort(400)
+    coordinates = request.form.get('high_point_coord') or abort(400)
+
     coordinates = coordinates.split(',')
     if not len(coordinates) == 2:
         abort(400)
     coordinates = [float(point) for point in coordinates]
+
 
     destination = HikeDestination(
         name=name,
@@ -43,7 +45,12 @@ def lcp_destinations():
         high_point_coord='POINT(%f %f)' % tuple(coordinates),
         is_summit=is_summit,
     )
+    hike = Hike()
+    hike.destination = destination
+    hform = HikeForm()
+    hform.populate_obj(hike)
     db.session.add(destination)
+    db.session.add(hike)
     return redirect(url_for('.lcp'))
 
 
@@ -51,4 +58,5 @@ def lcp_destinations():
 @login_required
 @admin_permission.require(403)
 def lcp_destination_form():
-    return render_template('lcp_destination.html')
+    form = HikeDestinationForm()
+    return render_template('lcp_destination.html', form=form)
