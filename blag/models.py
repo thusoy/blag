@@ -156,6 +156,8 @@ class _PrintableForm(model_form_factory(Form)):
                         fields.append(form_class().render_selector(f.name))
                 else:
                     f.label.text = f.label.text or f.name.replace('_', ' ').title()
+                    for error in f.errors:
+                        fields.append('<span style="color:red">%s</span>' % error)
                     fields.append('%s: %s' % (f.label, f()))
         # TODO: Is this safe with user-submitted data on form edit?
         return Markup('\n'.join(fields))
