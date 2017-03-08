@@ -32,7 +32,7 @@ class LcpTest(UserTestCase, HTTPTestMixin):
         response = self.admin_user.post('/lcp/destinations', data={
             'name': 'My Peak',
             'altitude': 2048,
-            'coordinates': '32.4,43.2',
+            'high_point_coord': '32.4,43.2',
             'is_summit': True,
         })
         self.assert302(response)
