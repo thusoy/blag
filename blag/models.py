@@ -114,6 +114,10 @@ class HikeDestination(db.Model):
         }
 
 
+    def __str__(self):
+        return '%s (%d)' % (self.name, self.altitude)
+
+
 class Hike(db.Model):
     __lazy_options__ = {}
     METHODS = [
@@ -149,13 +153,25 @@ class _PrintableForm(model_form_factory(Form)):
                 if isinstance(f, ModelFieldList):
                     # import pdb; pdb.set_trace()
                     for form_class in f.unbound_field.args:
-                        fields.append(form_class().render())
+                        fields.append(form_class().render_selector(f.name))
                 else:
                     f.label.text = f.label.text or f.name.replace('_', ' ').title()
                     fields.append('%s: %s' % (f.label, f()))
         # TODO: Is this safe with user-submitted data on form edit?
         return Markup('\n'.join(fields))
 
+
+    def render_selector(self, parent_field_name):
+        alternatives = self.Meta.model.query.all()
+        html = [
+            '<select name="%s">' % parent_field_name,
+        ]
+
+        for alternative in alternatives:
+            html.append('<option value="%s">%s</option>' % (alternative.id, alternative))
+
+        html.append('</select>')
+        return '\n'.join(html)
 
 
 class BlogPostForm(_PrintableForm):
@@ -170,19 +186,6 @@ class BlogPostForm(_PrintableForm):
     def get_categories_query():
         return Tag.query.all()
 
-    #tags = QuerySelectMultipleField(query_factory=get_categories_query)
-    tags = ModelFieldList(FormField(TagForm))
-
-
-class HikeForm(_PrintableForm):
-    class Meta(object):
-        model = Hike
-        only = [
-            # 'destination_id',
-            'method',
-            'datetime',
-        ]
-
 
 class HikeDestinationForm(_PrintableForm):
     class Meta(object):
@@ -193,4 +196,14 @@ class HikeDestinationForm(_PrintableForm):
             'high_point_coord',
             'is_summit',
         ]
-    hikes = ModelFieldList(FormField(HikeForm))
+
+
+class HikeForm(_PrintableForm):
+    class Meta(object):
+        model = Hike
+        only = [
+            # 'destination_id',
+            'method',
+            'date',
+        ]
+    destination_id = ModelFieldList(FormField(HikeDestinationForm))

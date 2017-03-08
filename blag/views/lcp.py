@@ -45,12 +45,7 @@ def lcp_destinations():
         high_point_coord='POINT(%f %f)' % tuple(coordinates),
         is_summit=is_summit,
     )
-    hike = Hike()
-    hike.destination = destination
-    hform = HikeForm()
-    hform.populate_obj(hike)
     db.session.add(destination)
-    db.session.add(hike)
     return redirect(url_for('.lcp'))
 
 
@@ -60,3 +55,17 @@ def lcp_destinations():
 def lcp_destination_form():
     form = HikeDestinationForm()
     return render_template('lcp_destination.html', form=form)
+
+
+@mod.route('/lcp/hikes', methods=['GET', 'POST'])
+@login_required
+@admin_permission.require(403)
+def lcp_hikes():
+    form = HikeForm()
+    if form.validate_on_submit():
+        hike = Hike()
+        hform = HikeForm()
+        hform.populate_obj(hike)
+        db.session.add(hike)
+        return redirect(url_for('.lcp'))
+    return render_template('lcp_hike.html', form=form)
