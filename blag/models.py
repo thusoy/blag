@@ -5,6 +5,7 @@ from flask import Markup, url_for
 from flask_wtf import Form
 from geoalchemy2 import Geometry
 from sqlalchemy_defaults import Column
+from sqlalchemy_utils import ChoiceType
 from sqlalchemy import func, CheckConstraint
 from wtforms_alchemy import model_form_factory, ModelFieldList
 from wtforms import FormField, HiddenField, TextField
@@ -115,16 +116,23 @@ class HikeDestination(db.Model):
 
 class Hike(db.Model):
     __lazy_options__ = {}
+    METHODS = [
+        ('ski', 'Ski'),
+        ('foot', 'Foot'),
+        ('crampons', 'Crampons'),
+        ('climb', 'Climb'),
+        ('via ferrata', 'Via Ferrata'),
+    ]
     id = Column(db.Integer, primary_key=True)
     destination_id = Column(db.Integer, db.ForeignKey(HikeDestination.id), nullable=False)
     destination = db.relationship(HikeDestination, backref=db.backref('hikes'))
-    datetime = Column(db.DateTime, nullable=False, server_default=func.now())
-    method = Column(db.String(30))
+    date = Column(db.Date, nullable=False, server_default=func.now())
+    method = Column(ChoiceType(METHODS), nullable=False)
     notes = Column(db.Text, nullable=False, server_default='')
+    created_at = Column(db.DateTime, nullable=False, server_default=func.now())
     __table_args__ = (
-        CheckConstraint("method in ('ski', 'foot', 'crampons', 'climb', 'via ferrata')"),
+        CheckConstraint("method in (%s)" % ','.join("'%s'" % method[0] for method in METHODS)),
     )
-
 
 
 class _PrintableForm(model_form_factory(Form)):
