@@ -59,6 +59,12 @@ class LcpTest(UserTestCase, HTTPTestMixin):
                 is_summit=False,
             )
             db.session.add(nonpeak)
+            db.session.add(HikeDestination(
+                name='Peak without hikes',
+                altitude=1234,
+                high_point_coord='POINT(12.3 32.1)',
+                is_summit=True,
+            ))
             db.session.add(Hike(
                 destination=peak,
                 method='ski',
