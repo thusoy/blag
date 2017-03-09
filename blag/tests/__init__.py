@@ -35,8 +35,8 @@ class HTTPTestMixin(unittest.TestCase):
 
 class UserTestCase(unittest.TestCase):
     """ Test case with a temp db and three users available: admin_user, anon_user and auth_user,
-    representing unauthenticated users, like random passerbys, authenticated users, which have
-    authenticated with Facebook, but nothing more, and admin users, which is basically me.
+    representing unauthenticated users, like random passerbys; authenticated users that have
+    logged in with a password; and admin users, which is basically me.
 
     More user types might be added later.
     """
