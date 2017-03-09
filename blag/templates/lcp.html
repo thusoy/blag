@@ -1,5 +1,15 @@
 {% extends 'base.html' %}
 
+{% block extra_head %}
+<style>
+    #map {
+        height: 400px;
+        width: 100%;
+        margin-bottom: 50px;
+    }
+</style>
+{% endblock %}
+
 {% block content %}
 
 <p>
@@ -9,5 +19,15 @@
 <p>
     <small>LCP: List of Completed Peaks</small>
 </p>
+
+<div id="map">
+</div>
+
+{% endblock %}
+
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/lcp.min.js') }}"></script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key={{ google_maps_api_key }}&callback=initMap"></script>
 
 {% endblock %}

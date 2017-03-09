@@ -12,7 +12,8 @@ mod = Blueprint('lcp', __name__)
 
 @mod.route('/lcp')
 def lcp():
-    return render_template('lcp.html')
+    return render_template('lcp.html',
+        google_maps_api_key=current_app.config['GOOGLE_MAPS_API_KEY'])
 
 
 @mod.route('/lcp/peaks')
