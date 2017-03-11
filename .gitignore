@@ -24,6 +24,7 @@ __pycache__
 pip-log.txt
 
 # Unit test / coverage reports
+.noseids
 .coverage
 cover
 .tox

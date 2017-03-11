@@ -1,6 +1,6 @@
 #!/bin/sh
 
-TEST_COMMAND="./test --exitfirst --failed-first"
+TEST_COMMAND="./test --stop --failed"
 
 $TEST_COMMAND
 
