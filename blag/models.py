@@ -130,7 +130,7 @@ class Hike(db.Model):
     id = Column(db.Integer, primary_key=True)
     destination_id = Column(db.Integer, db.ForeignKey(HikeDestination.id), nullable=False)
     destination = db.relationship(HikeDestination, backref=db.backref('hikes'))
-    date = Column(db.Date, nullable=False, server_default=func.now())
+    date = Column(db.Date, nullable=True, server_default=func.now())
     method = Column(ChoiceType(METHODS), nullable=False)
     notes = Column(db.Text, nullable=False, server_default='')
     created_at = Column(db.DateTime, nullable=False, server_default=func.now())
