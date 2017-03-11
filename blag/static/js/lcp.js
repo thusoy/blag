@@ -34,8 +34,8 @@
     exports.initMap = function () {
         getJson('/lcp/peaks', function (data) {
             var map = new google.maps.Map(document.getElementById('map'), {
-                zoom: 4,
-                center: {lat: -25.363, lng: 131.044},
+                zoom: 2,
+                center: {lat: 45, lng: 0},
             });
             var loader = createLoader(map);
             for (var i = 0; i < data.peaks.length; i++) {
