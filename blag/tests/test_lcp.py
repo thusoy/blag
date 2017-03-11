@@ -70,6 +70,10 @@ class LcpTest(UserTestCase, HTTPTestMixin):
                 method='ski',
             ))
             db.session.add(Hike(
+                destination=peak,
+                method='foot',
+            ))
+            db.session.add(Hike(
                 destination=nonpeak,
                 method='foot',
             ))
