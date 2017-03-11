@@ -3,6 +3,7 @@ import ujson as json
 from flask import (Blueprint, current_app, Response, request, render_template,
     jsonify, redirect, url_for, abort)
 from flask_login import login_required
+from sqlalchemy.orm import contains_eager
 
 from .. import db
 from ..auth import admin_permission
@@ -18,8 +19,12 @@ def lcp():
 
 @mod.route('/lcp/peaks')
 def lcp_peaks():
-    peaks = HikeDestination.query.filter_by(is_summit=True)
-    serialized = [peak.to_json() for peak in peaks]
+    hikes = Hike.query\
+        .distinct(Hike.destination)\
+        .join(Hike.destination)\
+        .options(contains_eager(Hike.destination))\
+        .filter(HikeDestination.is_summit==True)
+    serialized = [hike.destination.to_json() for hike in hikes]
     return jsonify({
         'peaks': serialized,
     })
