@@ -20,7 +20,7 @@ def lcp():
 @mod.route('/lcp/peaks')
 def lcp_peaks():
     hikes = Hike.query\
-        .distinct(Hike.destination)\
+        .distinct(Hike.destination_id)\
         .join(Hike.destination)\
         .options(contains_eager(Hike.destination))\
         .filter(HikeDestination.is_summit==True)

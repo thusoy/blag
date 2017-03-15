@@ -109,7 +109,6 @@ class HikeDestination(db.Model):
         geojson = json.loads(db.session.scalar(self.high_point_coord.ST_AsGeoJSON()))
         return {
             'name': self.name,
-            'altitude': self.altitude,
             'coordinates': geojson['coordinates'],
         }
 

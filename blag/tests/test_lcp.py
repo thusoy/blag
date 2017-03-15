@@ -45,13 +45,22 @@ class LcpTest(UserTestCase, HTTPTestMixin):
 
     def test_get_lcp(self):
         with self.app.app_context():
-            peak = HikeDestination(
+            peak1 = HikeDestination(
                 name='Peak 1',
                 altitude=2048,
                 high_point_coord='POINT(32.1 12.3)',
                 is_summit=True,
             )
-            db.session.add(peak)
+            db.session.add(peak1)
+
+            peak2 = HikeDestination(
+                name='Peak 2',
+                altitude=4096,
+                high_point_coord='POINT(11.2 22.1)',
+                is_summit=True,
+            )
+            db.session.add(peak2)
+
             nonpeak = HikeDestination(
                 name='Nonpeak',
                 altitude=765,
@@ -66,11 +75,15 @@ class LcpTest(UserTestCase, HTTPTestMixin):
                 is_summit=True,
             ))
             db.session.add(Hike(
-                destination=peak,
+                destination=peak1,
                 method='ski',
             ))
             db.session.add(Hike(
-                destination=peak,
+                destination=peak1,
+                method='foot',
+            ))
+            db.session.add(Hike(
+                destination=peak2,
                 method='foot',
             ))
             db.session.add(Hike(
@@ -81,10 +94,13 @@ class LcpTest(UserTestCase, HTTPTestMixin):
 
         response = self.anon_user.get('/lcp/peaks')
         data = json.loads(self.assert200(response))
+        data['peaks'].sort(key=lambda p: p['name'])
         self.assertEqual(data, {
             'peaks': [{
                 'name': 'Peak 1',
-                'altitude': 2048,
                 'coordinates': [32.1, 12.3],
+            }, {
+                'name': 'Peak 2',
+                'coordinates': [11.2, 22.1],
             }]
         })
