@@ -1,5 +1,14 @@
 language: python
 
+# Needed for postgres stuff
+sudo: required
+
+services:
+    - postgresql
+
+addons:
+    postgresql: "9.5"
+
 python:
   - "2.7"
   - "3.4"
@@ -9,6 +18,9 @@ before_install:
   - ./tools/travis-before-script.sh
 
 install:
+  # Install postgis in test database
+  - psql postgres://postgres@localhost/travis -c "create extension postgis"
+
   # Piece of shit to get a correct version of node through nvm
   - rm -rf ~/.nvm && git clone https://github.com/creationix/nvm.git ~/.nvm && (cd ~/.nvm && git checkout `git describe --abbrev=0 --tags`) && source ~/.nvm/nvm.sh && nvm install $TRAVIS_NODE_VERSION
 
@@ -37,9 +49,10 @@ after_success:
 env:
   global:
     - TRAVIS_NODE_VERSION="4"
+    - DATABASE_URL='postgresql://travis@localhost/travis'
 
     # GitHub access token that grants access to thusoys GitHub account
-    - secure: "NFbcA+kQb3eQDqnKXGym40PLo1P/6DKpCotWYx/em0dZhbUK29Ylh/x6ZjnvJbgjCMY2EmKlNLMRXN4ELdPMVmbAhAJjpEyWNRnebatckvXjEBe+K3zBq5r03Otlf8iRF5Zv+kwLK4cyB/0c6bJiiP+ICquMCmJxP6Ot50UGWoI="
+    - secure: "C25TjyugCENUdPyewhln/jMF+1I1kcKvckzybI4fs7USPzMSAf04HtPHghmHoJfq9FtKg/gZzW253B21wTrISZyRq5vEFXCcmeikVlqjGAy23CzS2vE7c1qgyRQ8x+UQlbAd82Hl+nb9mgE+85az8QRy/5vUGT5fLdCa0s4azGc="
 
 notifications:
   email: false
