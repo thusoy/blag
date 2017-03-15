@@ -22,11 +22,20 @@
 
     function createLoader (map) {
         return function (coord, label) {
-            return new google.maps.Marker({
+            var infowindow = new google.maps.InfoWindow({
+                content: "<span>" + label + "</span>"
+            });
+            var marker = new google.maps.Marker({
                 position: coord,
                 map: map,
-                title: label,
             });
+            google.maps.event.addListener(marker, 'mouseover', function() {
+              infowindow.open(map, marker);
+            });
+            google.maps.event.addListener(marker, 'mouseout', function () {
+              infowindow.close();
+            });
+            return marker;
         };
     }
 
