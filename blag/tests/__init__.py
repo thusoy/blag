@@ -62,8 +62,11 @@ class UserTestCase(unittest.TestCase):
 
     def pre_set_up(self):
         db_url = os.environ.get('DATABASE_URL', 'postgres://vagrant:vagrant@10.20.30.50/testdb?connect_timeout=2')
-        self.app = create_app(SQLALCHEMY_DATABASE_URI=db_url,
-            WTF_CSRF_ENABLED=False, SECRET_KEY='bogus')
+        self.app = create_app(
+            SQLALCHEMY_DATABASE_URI=db_url,
+            WTF_CSRF_ENABLED=False,
+            SECRET_KEY='bogus',
+        )
         with self.app.app_context():
             db.create_all()
         self.admin_user = self.create_test_client(User(
