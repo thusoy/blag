@@ -1,14 +1,14 @@
 """add-hikes
 
 Revision ID: f7888bd46c75
-Revises: 91a7132fe61c
+Revises: 820bb005f2c5
 Create Date: 2017-02-16 07:36:06.108806
 
 """
 
 # revision identifiers, used by Alembic.
 revision = 'f7888bd46c75'
-down_revision = '91a7132fe61c'
+down_revision = 'fc92ba2ffd7f'
 
 from alembic import op
 import sqlalchemy as sa
