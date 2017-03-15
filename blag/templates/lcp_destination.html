@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<p>
+    Add destination:
+</p>
+
+<form method="post" action="{{ url_for('.lcp_destinations') }}">
+    {{ form.render() }}
+    <input type="submit" value="Add destination">
+</form>
+
+{% endblock %}

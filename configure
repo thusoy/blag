@@ -1,0 +1,15 @@
+#!/bin/sh
+
+set -eu
+
+main () {
+    install_python_deps
+    npm install
+}
+
+install_python_deps () {
+    virtualenv venv
+    ./venv/bin/pip install -r dev-requirements.txt --no-binary :all: --no-dependencies
+}
+
+main

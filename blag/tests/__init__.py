@@ -13,28 +13,6 @@ import tempfile
 PY3 = sys.version_info > (3, 0, 0)
 
 
-def ignore(*exceptions):
-    """ Use as decorator when you want to ignore certain exceptions.
-
-    Example:
-
-        @ignore(OSError)
-        def sketchy():
-            os.remove('does_this_exists.txt')
-    """
-
-    def wrapper(func):
-
-        @wraps(func)
-        def inner(*args, **kwargs):
-            try:
-                func(*args, **kwargs)
-            except exceptions:
-                pass
-        return inner
-    return wrapper
-
-
 class HTTPTestMixin(unittest.TestCase):
     """ Test mixin that proves assert200, assert201, etc helpers. """
 
@@ -57,8 +35,8 @@ class HTTPTestMixin(unittest.TestCase):
 
 class UserTestCase(unittest.TestCase):
     """ Test case with a temp db and three users available: admin_user, anon_user and auth_user,
-    representing unauthenticated users, like random passerbys, authenticated users, which have
-    authenticated with Facebook, but nothing more, and admin users, which is basically me.
+    representing unauthenticated users, like random passerbys; authenticated users that have
+    logged in with a password; and admin users, which is basically me.
 
     More user types might be added later.
     """
@@ -83,15 +61,27 @@ class UserTestCase(unittest.TestCase):
 
 
     def pre_set_up(self):
-        self.test_db = tempfile.NamedTemporaryFile(delete=False)
-        self.test_db.close()
-        self.app = create_app(SQLALCHEMY_DATABASE_URI='sqlite:///' + self.test_db.name,
-            WTF_CSRF_ENABLED=False, SECRET_KEY='bogus')
+        db_url = os.environ.get('DATABASE_URL', 'postgres://vagrant:vagrant@10.20.30.50/testdb?connect_timeout=2')
+        self.app = create_app(
+            SQLALCHEMY_DATABASE_URI=db_url,
+            WTF_CSRF_ENABLED=False,
+            SECRET_KEY='bogus',
+        )
         with self.app.app_context():
             db.create_all()
-        self.admin_user = self.create_test_client(User(first_name='Bob', last_name='Admin', is_admin=True))
+        self.admin_user = self.create_test_client(User(
+            email='bob@example.com',
+            first_name='Bob',
+            last_name='Admin',
+            is_admin=True,
+            password='password',
+        ))
         self.anon_user = self.app.test_client()
-        self.auth_user = self.create_test_client(User(first_name='Alice', last_name='User'))
+        self.auth_user = self.create_test_client(User(
+            first_name='Alice',
+            last_name='User',
+            password='password',
+        ))
 
 
     def __call__(self, *args, **kwargs):
@@ -100,6 +90,6 @@ class UserTestCase(unittest.TestCase):
         self.post_tear_down()
 
 
-    @ignore(OSError)
     def post_tear_down(self):
-        os.remove(self.test_db.name)
+        with self.app.app_context():
+            db.drop_all()

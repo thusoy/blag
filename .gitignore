@@ -24,6 +24,7 @@ __pycache__
 pip-log.txt
 
 # Unit test / coverage reports
+.noseids
 .coverage
 cover
 .tox
@@ -51,3 +52,5 @@ bower_components
 # built stuff
 .tmp
 blag/server-assets
+
+.vagrant

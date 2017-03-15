@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block extra_head %}
+<style>
+    #map {
+        height: 600px;
+        width: 100%;
+        margin-bottom: 50px;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+
+<p>
+    I collect peaks, this is my list. Note that my definition of "peak" here is gratuitious, I've included both hills, almost-reached-the-summit adventures, and needles without a name on the map. The point is the joy of discovery and adventure and getting out, it's not a competition. Collecting motivates me to do more and go new places.
+</p>
+
+<p>
+    <small>LCP: List of Completed Peaks, the term used where I first found someone else's list like this</small>
+</p>
+
+<div id="map">
+</div>
+
+{% endblock %}
+
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/lcp.min.js') }}"></script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key={{ google_maps_api_key }}&callback=initMap"></script>
+
+{% endblock %}

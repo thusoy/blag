@@ -156,6 +156,9 @@ module.exports = function (grunt) {
           '.tmp/static/js/main.min.js': [
             'blag/static/js/main.js',
           ],
+          '.tmp/static/js/lcp.min.js': [
+            'blag/static/js/lcp.js',
+          ],
           '.tmp/static/js/writePost.min.js': [
             'bower_components/jquery/dist/jquery.js',
             'bower_components/underscore/underscore.js',

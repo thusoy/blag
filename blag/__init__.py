@@ -1,5 +1,4 @@
 from flask import Flask, send_from_directory, request, g, current_app
-from flask_oauthlib.client import OAuth
 from flask_login import LoginManager, current_user
 from flask_principal import Principal, identity_changed, Identity
 from flask_sqlalchemy import SQLAlchemy
@@ -19,7 +18,6 @@ make_lazy_configured(sqlalchemy.orm.mapper)
 
 db = SQLAlchemy()
 login_manager = LoginManager()
-oauth = OAuth()
 principal = Principal()
 
 _logger = getLogger('blag')
@@ -33,7 +31,6 @@ def create_app(**extra_config):
     db.init_app(app)
     login_manager.init_app(app)
     principal.init_app(app)
-    oauth.init_app(app)
 
     # Set up login stuff
     from .auth import load_user
@@ -50,6 +47,7 @@ def create_app(**extra_config):
     from .views import blog
     from .views import apis
     from .views import misc
+    from .views import lcp
     from .auth.views import mod as auth_mod
 
     # Register blueprints
@@ -57,6 +55,7 @@ def create_app(**extra_config):
     app.register_blueprint(apis.mod)
     app.register_blueprint(auth_mod)
     app.register_blueprint(misc.mod)
+    app.register_blueprint(lcp.mod)
 
     @app.before_request
     def add_user():

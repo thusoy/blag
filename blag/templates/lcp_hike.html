@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<p>
+    Add hike:
+</p>
+
+<form method="post" action="{{ url_for('.lcp_hikes') }}">
+    {{ form.render() }}
+    <input type="submit" value="Add hike">
+</form>
+
+{% endblock %}

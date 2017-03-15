@@ -17,6 +17,8 @@ SQLALCHEMY_COMMIT_ON_TEARDOWN = True
 
 TWITTER_CLIENT_ID = '4lBdgu4J5FmxR2JfGnvA'
 
-FACEBOOK_CONSUMER_ID = '403591906450053'
-
 SQLALCHEMY_TRACK_MODIFICATIONS = False
+
+# There's no point in trying to hide this key as it's sent in the html to every
+# browser anyway. Access is restricted with referer headers.
+GOOGLE_MAPS_API_KEY = 'AIzaSyAGzz-huZj4m5nEEKhf_YkRaONyKA1zqSs'

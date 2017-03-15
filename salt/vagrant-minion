@@ -1,0 +1,14 @@
+id: vagrant
+file_client: local
+
+fileserver_backend:
+ - roots
+ - git
+
+gitfs_remotes:
+ - https://github.com/thusoy/salt-states
+
+gitfs_env_whitelist:
+ - base
+
+gitfs_root: salt
