@@ -52,7 +52,7 @@ env:
     - DATABASE_URL='postgresql://travis@localhost/travis'
 
     # GitHub access token that grants access to thusoys GitHub account
-    - secure: "NFbcA+kQb3eQDqnKXGym40PLo1P/6DKpCotWYx/em0dZhbUK29Ylh/x6ZjnvJbgjCMY2EmKlNLMRXN4ELdPMVmbAhAJjpEyWNRnebatckvXjEBe+K3zBq5r03Otlf8iRF5Zv+kwLK4cyB/0c6bJiiP+ICquMCmJxP6Ot50UGWoI="
+    - secure: "C25TjyugCENUdPyewhln/jMF+1I1kcKvckzybI4fs7USPzMSAf04HtPHghmHoJfq9FtKg/gZzW253B21wTrISZyRq5vEFXCcmeikVlqjGAy23CzS2vE7c1qgyRQ8x+UQlbAd82Hl+nb9mgE+85az8QRy/5vUGT5fLdCa0s4azGc="
 
 notifications:
   email: false
