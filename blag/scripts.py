@@ -53,7 +53,7 @@ def init_db():
 
 
 @manager.command
-def create_admin(email=None):
+def create_admin(email):
     password = getpass.getpass('Password: ')
     with app.app_context():
         user = User.query.filter_by(email=email).first()
