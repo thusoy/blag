@@ -14,11 +14,14 @@ import textwrap
 import ujson as json
 import yaml
 
+from ._flask_porridge import Porridge
+
 make_lazy_configured(sqlalchemy.orm.mapper)
 
 db = SQLAlchemy()
 login_manager = LoginManager()
 principal = Principal()
+porridge = Porridge()
 
 _logger = getLogger('blag')
 
@@ -31,6 +34,7 @@ def create_app(**extra_config):
     db.init_app(app)
     login_manager.init_app(app)
     principal.init_app(app)
+    porridge.init_app(app)
 
     # Set up login stuff
     from .auth import load_user

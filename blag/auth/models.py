@@ -1,12 +1,8 @@
-from argon2 import PasswordHasher
-from argon2.exceptions import Argon2Error
 from flask_login import UserMixin
 from wtforms import TextField, PasswordField
 
 from ..models import _PrintableForm
-from .. import db
-
-password_hasher = PasswordHasher()
+from .. import db, porridge
 
 
 class User(db.Model, UserMixin):
@@ -19,21 +15,19 @@ class User(db.Model, UserMixin):
 
     def __init__(self, password=None, **kwargs):
         if password:
-            kwargs['password_hash'] = password_hasher.hash(password)
+            kwargs['password_hash'] = porridge.boil(password)
         super(User, self).__init__(**kwargs)
 
 
     def set_password_hash(self, password):
-        self.password_hash = password_hasher.hash(password)
+        self.password_hash = porridge.boil(password)
 
 
     def valid_password(self, password):
-        try:
-            password_hasher.verify(self.password_hash, password)
-        except Argon2Error:
-            return False
-        else:
-            return True
+        valid = porridge.verify(password, self.password_hash)
+        if valid and porridge.needs_update(self.password_hash):
+            self.password_hash = porridge.boil(password)
+        return valid
 
 
     def __str__(self):
