@@ -72,6 +72,8 @@ def lcp_hikes():
         hike = Hike()
         hform = HikeForm()
         hform.populate_obj(hike)
+        # The ModelFieldList doesn't properly populate this field
+        hike.destination_id = request.form['destination_id']
         db.session.add(hike)
         return redirect(url_for('.lcp'))
     return render_template('lcp_hike.html', form=form)

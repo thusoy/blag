@@ -203,7 +203,6 @@ class HikeForm(_PrintableForm):
     class Meta(object):
         model = Hike
         only = [
-            # 'destination_id',
             'method',
             'date',
         ]

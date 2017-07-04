@@ -28,7 +28,7 @@ class LcpTest(UserTestCase, HTTPTestMixin):
         self.assert200(response)
 
 
-    def test_add_entry(self):
+    def test_add_destination(self):
         response = self.admin_user.post('/lcp/destinations', data={
             'name': 'My Peak',
             'altitude': 2048,
@@ -41,6 +41,47 @@ class LcpTest(UserTestCase, HTTPTestMixin):
             self.assertEqual(len(destinations), 1)
             self.assertEqual(destinations[0].name, 'My Peak')
             self.assertTrue(destinations[0].is_summit)
+
+
+    def test_get_hike_form(self):
+        with self.app.app_context():
+            destination = HikeDestination(
+                name='Peak 1',
+                altitude=2048,
+                high_point_coord='POINT(12.3 34.5)',
+                is_summit=True,
+            )
+            db.session.add(destination)
+            db.session.commit()
+            destination_id = destination.id
+
+        response = self.admin_user.get('/lcp/hikes')
+        self.assert200(response)
+        self.assertTrue('Peak 1 (2048)' in response.data.decode('utf-8'))
+
+
+    def test_add_hike(self):
+        with self.app.app_context():
+            destination = HikeDestination(
+                name='Peak 1',
+                altitude=2048,
+                high_point_coord='POINT(12.3 34.5)',
+                is_summit=True,
+            )
+            db.session.add(destination)
+            db.session.commit()
+            destination_id = destination.id
+
+        response = self.admin_user.post('/lcp/hikes', data={
+            'destination_id': destination_id,
+            'method': 'foot',
+            'date': '2017-01-02',
+        })
+        self.assert302(response)
+        with self.app.app_context():
+            hikes = Hike.query.all()
+            self.assertEqual(len(hikes), 1)
+            self.assertEqual(hikes[0].destination_id, destination_id)
 
 
     def test_get_lcp(self):
