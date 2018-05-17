@@ -24,3 +24,5 @@ LOG_CONF_PATH = path.abspath('dev_log_conf.yaml')
 TWITTER_CLIENT_SECRET = environ['BLAG_TWITTER_CLIENT_SECRET']
 
 PORRIDGE_SECRETS = 'devkey:devsecret'
+
+THUNDERFOREST_API_KEY = environ['THUNDERFOREST_API_KEY']

@@ -15,6 +15,7 @@
     var zoom = 14;
     var curpos = new Array();
     var position;
+    var apiKey = '{{ thunderforest_api_key }}';
 
     var fromProjection = new OpenLayers.Projection("EPSG:4326");   // Transform from WGS 1984
     var toProjection = new OpenLayers.Projection("EPSG:900913"); // to Spherical Mercator Projection
@@ -22,12 +23,15 @@
 
     OpenLayers.Layer.OSM.HikeMap = OpenLayers.Class(OpenLayers.Layer.OSM, {
       initialize: function(name, options) {
-        var url = [
+        var urls = [
           "http://a.tile.thunderforest.com/outdoors/${z}/${x}/${y}.png",
           "http://b.tile.thunderforest.com/outdoors/${z}/${x}/${y}.png",
           "http://c.tile.thunderforest.com/outdoors/${z}/${x}/${y}.png",
         ];
-        var newArguments = [name, url, options];
+        for (var i = 0; i < urls.length; i++) {
+            urls[i] += '?apikey=' + apiKey;
+        }
+        var newArguments = [name, urls, options];
         OpenLayers.Layer.OSM.prototype.initialize.apply(this, newArguments);
       },
     });
@@ -45,14 +49,14 @@
       click.activate();
     };
 
-    OpenLayers.Control.Click = OpenLayers.Class(OpenLayers.Control, {               
+    OpenLayers.Control.Click = OpenLayers.Class(OpenLayers.Control, {
       defaultHandlerOptions: {
         'single': true,
         'double': false,
         'pixelTolerance': 0,
         'stopSingle': false,
         'stopDouble': false
-      }, 
+      },
 
       initialize: function(options) {
         this.handlerOptions = OpenLayers.Util.extend({}, this.defaultHandlerOptions);

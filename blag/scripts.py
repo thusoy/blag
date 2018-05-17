@@ -1,4 +1,5 @@
 import getpass
+from flask import render_template
 from flask_script import Manager
 from flask_migrate import Migrate, MigrateCommand
 from logging import getLogger
@@ -41,6 +42,13 @@ def rerender_blogposts(id=None):
 def devserver():
     if HAS_DEBUG_TOOLBAR:
         DebugToolbarExtension(app)
+    @app.route('/map')
+    def map():
+        '''Dev-only route'''
+        return render_template('map.html', **{
+            'thunderforest_api_key': app.config['THUNDERFOREST_API_KEY'],
+        })
+
     app.run(extra_files=[
         'dev_settings.py',
     ], host="0.0.0.0", port=8000)
