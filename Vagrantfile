@@ -27,7 +27,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     config.vm.network "private_network", ip: "10.20.30.50"
 
     config.vm.provision "shell",
-        inline: "apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install python-git -y"
+        inline: "apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install python-git libssl1.0.0 -y"
 
     config.vm.provision :salt do |salt|
         salt.minion_config = "salt/vagrant-minion"
