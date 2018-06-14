@@ -18,7 +18,7 @@ COPY blag /app/blag
 COPY requirements.txt /app
 COPY .tmp/static /app/static
 
-RUN pip install -r requirements.txt --no-dependencies --no-binary :all:
+RUN pip install --no-cache-dir -r requirements.txt --no-dependencies --no-binary :all:
 
 RUN pip install gunicorn
 
