@@ -50,10 +50,10 @@ install:
 script:
   - grunt build
   - nosetests
+  - ./build.sh
 
 after_success:
   - if [[ $TRAVIS_BRANCH == 'master' ]] && [[ $TRAVIS_PULL_REQUEST == 'false' ]] && [[ $TRAVIS_PYTHON_VERSION == '2.7' ]]; then
-      ./build.sh
       ./tools/travis-deploy.sh;
     fi
 
