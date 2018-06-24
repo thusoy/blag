@@ -45,7 +45,7 @@ install:
   - tar xf docker2aci-v0.17.2.tar.gz
   - mkdir -p ~/.local/bin
   - export PATH=$PATH:~/.local/bin
-  - mv docker2aci-v017.2/docker2aci ~/.local/bin
+  - mv docker2aci-v0.17.2/docker2aci ~/.local/bin
 
 script:
   - grunt build
