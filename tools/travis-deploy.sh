@@ -13,7 +13,7 @@ main () {
 
 
 pull_notes () {
-    git pull origin "refs/notes/*:refs/notes/*"
+    git fetch origin "refs/notes/*:refs/notes/*"
 }
 
 
