@@ -63,6 +63,9 @@ env:
   global:
     - TRAVIS_NODE_VERSION="4"
     - DATABASE_URL='postgresql://travis@localhost/travis'
+    - AWS_ACCESS_KEY_ID=AKIAJ7ZW32MME267FR5A
+    # AWS_SECRET_ACCESS_KEY:
+    - secret: "Pkk4GuGOzdlOAIFzHHHjaYoOC3xktyKWze5UKDZB6RNcJuc+/dXDn4WvKj+YR1uT2TSMSpNp3KqaRXrVRA+kLpJM1j313zkVg1MpuDU0IjMjbjPuf0tyPUbsExtgJDNLgBLnRoDNELo535WSWKblwo1JsmNvxGJCBqgW+Ni8nI4="
 
 notifications:
   email: false
