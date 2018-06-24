@@ -48,6 +48,7 @@ install:
   - mv docker2aci-v0.17.2/docker2aci ~/.local/bin
 
 script:
+  - set -e
   - grunt build
   - nosetests
   - ./build.sh
