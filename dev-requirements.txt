@@ -2,7 +2,6 @@
 
 Flask-DebugToolbar==0.10.0 --hash=sha256:d10cb2f58c9cc40e8bb8eb7e086cf3a5c18a7d00dab4a1561fe91e3cea92faf3
 nose==1.3.7 --hash=sha256:f1bffef9cbc82628f6e7d7b40d7e255aefaa1adb6a1b1d26c69a8b79e6208a98
-psycopg2==2.6.1 --hash=sha256:6acf9abbbe757ef75dc2ecd9d91ba749547941abaffbe69ff2086a9e37d4904c
 watchdog==0.8.3 --hash=sha256:7e65882adb7746039b6f3876ee174952f8eaaa34491ba34333ddf1fe35de4162
 
 # watchdog deps

@@ -1,6 +1,6 @@
 language: python
 
-# Needed for postgres stuff
+# Needed for postgres and docker stuff
 sudo: required
 
 services:
@@ -8,6 +8,9 @@ services:
 
 addons:
     postgresql: "9.5"
+    apt:
+        packages:
+            - postgresql-9.5-postgis-2.3
 
 python:
   - "2.7"
@@ -24,8 +27,13 @@ install:
   # Piece of shit to get a correct version of node through nvm
   - rm -rf ~/.nvm && git clone https://github.com/creationix/nvm.git ~/.nvm && (cd ~/.nvm && git checkout `git describe --abbrev=0 --tags`) && source ~/.nvm/nvm.sh && nvm install $TRAVIS_NODE_VERSION
 
+  # Install grunt-cli and grunt (first, since brittle as hell)
+  - npm install -g grunt-cli
+  - npm install
+
+
   # Get an up-to-date pip to verify hashes
-  - pip install -U pip
+  - pip install -U pip awscli
   - "pip install -r dev-requirements.txt --no-binary :all: --no-deps --require-hashes"
 
   # Install compass
@@ -33,13 +41,18 @@ install:
   - gem install sass -v 3.2.13
   - gem install compass
 
-  # Install grunt-cli and grunt
-  - npm install -g grunt-cli
-  - npm install
+  # Install docker2aci to build ACI images
+  - wget https://github.com/appc/docker2aci/releases/download/v0.17.2/docker2aci-v0.17.2.tar.gz
+  - tar xf docker2aci-v0.17.2.tar.gz
+  - mkdir -p ~/.local/bin
+  - export PATH=$PATH:~/.local/bin
+  - mv docker2aci-v0.17.2/docker2aci ~/.local/bin
 
 script:
+  - set -e
   - grunt build
   - nosetests
+  - ./build.sh
 
 after_success:
   - if [[ $TRAVIS_BRANCH == 'master' ]] && [[ $TRAVIS_PULL_REQUEST == 'false' ]] && [[ $TRAVIS_PYTHON_VERSION == '2.7' ]]; then
@@ -50,13 +63,11 @@ env:
   global:
     - TRAVIS_NODE_VERSION="4"
     - DATABASE_URL='postgresql://travis@localhost/travis'
-
-    # GitHub access token that grants access to thusoys GitHub account
-    - secure: "C25TjyugCENUdPyewhln/jMF+1I1kcKvckzybI4fs7USPzMSAf04HtPHghmHoJfq9FtKg/gZzW253B21wTrISZyRq5vEFXCcmeikVlqjGAy23CzS2vE7c1qgyRQ8x+UQlbAd82Hl+nb9mgE+85az8QRy/5vUGT5fLdCa0s4azGc="
+    - AWS_ACCESS_KEY_ID=AKIAJ7ZW32MME267FR5A
+    # AWS_SECRET_ACCESS_KEY:
+    - secure: "Pkk4GuGOzdlOAIFzHHHjaYoOC3xktyKWze5UKDZB6RNcJuc+/dXDn4WvKj+YR1uT2TSMSpNp3KqaRXrVRA+kLpJM1j313zkVg1MpuDU0IjMjbjPuf0tyPUbsExtgJDNLgBLnRoDNELo535WSWKblwo1JsmNvxGJCBqgW+Ni8nI4="
+    # DEPLOY_KEY_SECRET:
+    - secure: "BFa6Juu4DewL4p9crPI3uQo9Ob4P0+ASa4T2Ly3VcMIAKXs+DfFlpdH3OzxpAj/g+d1Y2i6jGgtRu97TDGxAVITM1HeCXZDXGoVbSdMvTWtQVYQWPhSfnfRASptrRXudSZXjxRCr33o/NqlYCSD6B7sR9nQDBmL1hlA+QfwOds0="
 
 notifications:
   email: false
-
-branches:
-  except:
-    - production
