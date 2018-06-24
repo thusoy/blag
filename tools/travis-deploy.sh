@@ -7,8 +7,8 @@ version_tag=$(git rev-parse --short=20 HEAD)
 main () {
     pull_notes
     add_git_note
-    upload_artifact
-    push_git_notes
+    # upload_artifact
+    # push_git_notes
 }
 
 
