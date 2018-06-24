@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+
+set -eu
+
+openssl aes-256-cbc -d -in <(cat <<EOF | base64 -d
+U2FsdGVkX19iTNgni43epSCf1fW73HTn0NjsT6IPXLRC5ddtLriyzQ5pnS1ygOuRfraBRhj8fTm6
+w9Pz1yP0O6eHS6CnAwxzh8Qg15AaJI3RpC5h1gCZOZXEtDh34Lf3uH/RniHaWYiPbk8SUES4IoeD
+UBkPL2yOm8Cv1KCysiB0jzpYkkJ6Pcs+3z8EcGY8hE6oFEXCBnsvmHEwd/EKeKaWKwnr5xILQkKv
+NS1Dg7Q5FqSR8gIYs8s1X95pQvDqloR/wUC3jdgEG2fhAcQuLh4SdzPkJSjrsq6WZQQa0fXqFJk2
+DdVeL4L72RrQyQsWxNyErIWTAc53Wcuee9AuSng3rFSgwZdwZRExRa1iKfKSPgvUwgMHgD0DlQqe
+mFX8Cs5FzqVxkJ5s4s5zTELynC50xN7wB5/hC0CsHHrJQkrxacxgoSvFVKjA7IT52tLzROLrd1To
+iRm698plLxm+67lWE/g1YaYBjeF8bBiJufLIGzeV/C6JdWFwhfhifVmD5uVUQIRxON5L2Hz4kNSl
+6b23Hmdiy6YVR0OsVXK1QxI=
+EOF
+) -out ~/.ssh/id_ed25519 -k "$DEPLOY_KEY_SECRET"
+
+chmod 400 ~/.ssh/id_ed25519
