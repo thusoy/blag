@@ -64,10 +64,6 @@ env:
     - TRAVIS_NODE_VERSION="4"
     - DATABASE_URL='postgresql://travis@localhost/travis'
     - AWS_ACCESS_KEY_ID=AKIAJ7ZW32MME267FR5A
-    # AWS_SECRET_ACCESS_KEY:
-    - secure: "Pkk4GuGOzdlOAIFzHHHjaYoOC3xktyKWze5UKDZB6RNcJuc+/dXDn4WvKj+YR1uT2TSMSpNp3KqaRXrVRA+kLpJM1j313zkVg1MpuDU0IjMjbjPuf0tyPUbsExtgJDNLgBLnRoDNELo535WSWKblwo1JsmNvxGJCBqgW+Ni8nI4="
-    # DEPLOY_KEY_SECRET:
-    - secure: "BFa6Juu4DewL4p9crPI3uQo9Ob4P0+ASa4T2Ly3VcMIAKXs+DfFlpdH3OzxpAj/g+d1Y2i6jGgtRu97TDGxAVITM1HeCXZDXGoVbSdMvTWtQVYQWPhSfnfRASptrRXudSZXjxRCr33o/NqlYCSD6B7sR9nQDBmL1hlA+QfwOds0="
 
 notifications:
   email: false
