@@ -24,6 +24,10 @@ install:
   # Install postgis in test database
   - psql postgres://postgres@localhost/travis -c "create extension postgis"
 
+  # Install grunt-cli and grunt (first, since brittle as hell)
+  - npm install -g grunt-cli
+  - npm install
+
   # Piece of shit to get a correct version of node through nvm
   - rm -rf ~/.nvm && git clone https://github.com/creationix/nvm.git ~/.nvm && (cd ~/.nvm && git checkout `git describe --abbrev=0 --tags`) && source ~/.nvm/nvm.sh && nvm install $TRAVIS_NODE_VERSION
 
@@ -35,10 +39,6 @@ install:
   - gem update --system
   - gem install sass -v 3.2.13
   - gem install compass
-
-  # Install grunt-cli and grunt
-  - npm install -g grunt-cli
-  - npm install
 
   # Install docker2aci to build ACI images
   - wget https://github.com/appc/docker2aci/releases/download/v0.17.2/docker2aci-v0.17.2.tar.gz
