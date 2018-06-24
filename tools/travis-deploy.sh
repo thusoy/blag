@@ -5,10 +5,10 @@ set -eu
 version_tag=$(git rev-parse --short=20 HEAD)
 
 main () {
-    # pull_notes
+    pull_notes
     add_git_note
     upload_artifact
-    # push_git_notes
+    push_git_notes
 }
 
 
