@@ -14,6 +14,7 @@ main () {
 
 pull_notes () {
     git fetch origin "refs/notes/*:refs/notes/*"
+    git notes merge artifacts
 }
 
 
