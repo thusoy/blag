@@ -112,6 +112,11 @@ def _configure_app(app, **extra_config):
         elif val.lower() in ('f', 'false'):
             val = False
 
+        try:
+            val = int(val)
+        except:
+            pass
+
         print('Setting %s = %s' % (key, val))
         app.config[key] = val
 
