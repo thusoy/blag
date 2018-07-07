@@ -3,7 +3,12 @@
 Flask-DebugToolbar==0.10.0 --hash=sha256:d10cb2f58c9cc40e8bb8eb7e086cf3a5c18a7d00dab4a1561fe91e3cea92faf3
 nose==1.3.7 --hash=sha256:f1bffef9cbc82628f6e7d7b40d7e255aefaa1adb6a1b1d26c69a8b79e6208a98
 watchdog==0.8.3 --hash=sha256:7e65882adb7746039b6f3876ee174952f8eaaa34491ba34333ddf1fe35de4162
+mock==2.0.0 --hash=sha256:b158b6df76edd239b8208d481dc46b6afd45a846b7812ff0ce58971cf5bc8bba
 
 # watchdog deps
 pathtools==0.1.2 --hash=sha256:7c35c5421a39bb82e58018febd90e3b6e5db34c5443aaaf742b3f33d4655f1c0
 argh==0.26.2 --hash=sha256:e9535b8c84dc9571a48999094fda7f33e63c3f1b74f3e5f3ac0105a58405bb65
+
+# mock deps
+funcsigs==1.0.2 --hash=sha256:a7bb0f2cf3a3fd1ab2732cb49eba4252c2af4240442415b4abce3b87022a8f50
+pbr==4.1.0 --hash=sha256:e0f23b61ec42473723b2fec2f33fb12558ff221ee551962f01dd4de9053c2055
