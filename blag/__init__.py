@@ -101,6 +101,20 @@ def _configure_app(app, **extra_config):
     core_settings = path.join(path.abspath(path.dirname(__file__)), 'settings.py')
     app.config.from_pyfile(core_settings)
 
+    # Load from envvars (needed for Heroku-like environments)
+    for key, val in os.environ.items():
+        if not key.startswith('BLAG_'):
+            continue
+
+        key = key[len('BLAG_'):]
+        if val.lower() in ('t', 'true'):
+            val = True
+        elif val.lower() in ('f', 'false'):
+            val = False
+
+        print('Setting %s = %s' % (key, val))
+        app.config[key] = val
+
     # Load stuff from local config:
     config_from_environ = os.environ.get('BLAG_CONFIG_FILE')
     if config_from_environ:
