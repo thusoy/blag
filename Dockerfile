@@ -28,8 +28,6 @@ RUN useradd --create-home --home-dir /app gunicorn
 
 USER gunicorn
 
-ENV BLAG_CONFIG_FILE=/app/config.py
-
 EXPOSE 5000
 
 ENTRYPOINT ["gunicorn"]
