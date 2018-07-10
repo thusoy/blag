@@ -117,7 +117,6 @@ def _configure_app(app, **extra_config):
         except:
             pass
 
-        print('Setting %s = %s' % (key, val))
         app.config[key] = val
 
     # Load stuff from local config:
