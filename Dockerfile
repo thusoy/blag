@@ -25,7 +25,7 @@ RUN /app/venv/bin/pip install --no-cache-dir -r prod-requirements.txt --no-depen
 
 RUN apt-get purge gcc -y && apt-get autoremove -y
 
-RUN useradd --create-home --home-dir /app gunicorn
+RUN useradd --home-dir /app gunicorn
 
 USER gunicorn
 
