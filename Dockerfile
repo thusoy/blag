@@ -33,4 +33,4 @@ EXPOSE 5000
 
 ENTRYPOINT ["/app/venv/bin/gunicorn"]
 
-CMD ["blag:create_app()","-b", "0.0.0.0:5000"]
+CMD ["blag:create_app()","-b", "127.0.0.1:5000"]
