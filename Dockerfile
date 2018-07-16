@@ -6,6 +6,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
   gcc \
   python-dev \
   python-pip \
+  python-virtualenv \
   python-setuptools \
   libpq-dev \
   libjpeg-dev \
@@ -15,12 +16,12 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
   && rm -rf /var/lib/apt/lists/*
 
 COPY blag /app/blag
-COPY requirements.txt /app
+COPY setup.py requirements.txt prod-requirements.txt /app/
 COPY .tmp/static /app/static
 
-RUN pip install --no-cache-dir -r requirements.txt --no-dependencies --no-binary :all:
+RUN python -m virtualenv /app/venv
 
-RUN pip install gunicorn
+RUN /app/venv/bin/pip install --no-cache-dir -r prod-requirements.txt --no-dependencies --no-binary :all:
 
 RUN apt-get purge gcc -y && apt-get autoremove -y
 
@@ -30,6 +31,6 @@ USER gunicorn
 
 EXPOSE 5000
 
-ENTRYPOINT ["gunicorn"]
+ENTRYPOINT ["/app/venv/bin/gunicorn"]
 
 CMD ["blag:create_app()","-b", "0.0.0.0:5000"]
