@@ -131,7 +131,7 @@ def _configure_app(app, **extra_config):
         print('No filerevs found, continuing without')
         app.config['FILEREVS'] = {}
 
-    app.static_folder = app.config['STATIC_FILES']
+    app.static_folder = app.config.get('STATIC_FILES')
 
 
 def _init_logging(app):
