@@ -133,17 +133,6 @@ module.exports = function (grunt) {
       server: {
         command: 'python manage.py devserver',
       },
-      'build-python': {
-        command: 'python setup.py sdist --formats gztar'
-      },
-      'build-static': {
-        command: [
-          'mkdir -p dist',
-          'cd .tmp/static',
-          'tar czf ../../dist/static.tar.gz *',
-          'sha256sum ../../dist/static.tar.gz | cut -d" " -f1 > ../../dist/static.tar.gz.sha256',
-        ].join(' && '),
-      }
     },
 
     uglify: {
@@ -214,8 +203,6 @@ module.exports = function (grunt) {
   grunt.registerTask('build', [
     'prep',
     'rev-static',
-    'shell:build-python',
-    'shell:build-static',
   ]);
 
   grunt.registerTask('prep', [
