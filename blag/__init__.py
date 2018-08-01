@@ -86,13 +86,6 @@ def create_app(**extra_config):
     def images(filename):
         return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
 
-    if app.config['DEBUG']:
-        # remove the default static url mapping
-        for rule in app.url_map.iter_rules(endpoint='static'):
-            del app.url_map._rules[app.url_map._rules.index(rule)]
-        @app.route('/static/<path:filename>')
-        def devstatic(filename):
-            return send_from_directory(app.config['STATIC_FILES'], filename)
     return app
 
 
@@ -137,6 +130,8 @@ def _configure_app(app, **extra_config):
     except IOError:
         print('No filerevs found, continuing without')
         app.config['FILEREVS'] = {}
+
+    app.static_folder = app.config['STATIC_FILES']
 
 
 def _init_logging(app):
