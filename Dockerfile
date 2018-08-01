@@ -15,9 +15,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
   libffi-dev \
   && rm -rf /var/lib/apt/lists/*
 
-COPY blag /app/blag
 COPY setup.py requirements.txt prod-requirements.txt /app/
-COPY .tmp/static /app/static
 
 RUN python -m virtualenv /app/venv
 
@@ -26,6 +24,9 @@ RUN /app/venv/bin/pip install --no-cache-dir -r prod-requirements.txt --no-depen
 RUN apt-get purge gcc -y && apt-get autoremove -y
 
 RUN useradd --home-dir /app gunicorn
+
+COPY blag /app/blag
+COPY .tmp/static /app/static
 
 USER gunicorn
 
