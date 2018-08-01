@@ -27,6 +27,7 @@ RUN useradd --home-dir /app gunicorn
 
 COPY blag /app/blag
 COPY .tmp/static /app/static
+ENV BLAG_STATIC_FILES=/app/static
 
 USER gunicorn
 
