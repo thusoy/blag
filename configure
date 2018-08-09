@@ -5,11 +5,29 @@ set -eu
 main () {
     install_python_deps
     npm install
+    add_notes_ref
 }
 
 install_python_deps () {
     virtualenv venv
     ./venv/bin/pip install -r dev-requirements.txt --no-binary :all: --no-dependencies
+}
+
+
+add_notes_ref () {
+    # configure git to fetch notes by default
+    local fetch_notes='+refs/notes/*:refs/notes/*'
+    set +e
+    grep -qF "$fetch_notes" .git/config
+    has_notes=$?
+    set -e
+    if [ "$has_notes" -ne 0 ]; then
+        awk "/\[remote \"origin\"\]/ {
+            print \$0 \"\n\tfetch = $fetch_notes\";
+            next
+        }1" .git/config > .tmp-git-config
+        mv .tmp-git-config .git/config
+    fi
 }
 
 main
