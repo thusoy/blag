@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
 set -eu
 
@@ -30,4 +30,7 @@ add_notes_ref () {
     fi
 }
 
-main
+
+if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
+    main
+fi

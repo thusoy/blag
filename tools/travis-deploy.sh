@@ -13,7 +13,10 @@ main () {
 
 
 pull_notes () {
-    git pull origin "refs/notes/*:refs/notes/*"
+    # Notes are not pulled automatically by Travis, thus we have to pull them
+    # ourselves to ensure we've got the latest before we start adding some.
+    # The notes ref was added by ./configure, so a fetch is enough.
+    git fetch origin
 }
 
 

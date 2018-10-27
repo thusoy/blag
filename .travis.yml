@@ -31,7 +31,6 @@ install:
   - npm install -g grunt-cli
   - npm install
 
-
   # Get an up-to-date pip to verify hashes
   - pip install -U pip awscli
   - "pip install -r dev-requirements.txt --no-binary :all: --no-deps --require-hashes"
@@ -47,6 +46,8 @@ install:
   - mkdir -p ~/.local/bin
   - export PATH=$PATH:~/.local/bin
   - mv docker2aci-v0.17.2/docker2aci ~/.local/bin
+
+  - . ./configure && add_notes_ref
 
 script:
   - set -e
