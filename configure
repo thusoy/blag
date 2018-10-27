@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
 
-set -eu
 
 main () {
     install_python_deps
@@ -32,5 +31,6 @@ add_notes_ref () {
 
 
 if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
+    set -eu
     main
 fi
