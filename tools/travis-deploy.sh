@@ -30,7 +30,7 @@ EOF
 
 
 push_git_notes () {
-    GIT_SSH="ssh -i ~/.ssh/id_ed25519" git push git@github.com:thusoy/blag refs/notes/*
+    GIT_SSH_COMMAND="ssh -i ~/.ssh/id_ed25519" git push git@github.com:thusoy/blag refs/notes/*
 }
 
 
