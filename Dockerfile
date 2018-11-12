@@ -1,13 +1,11 @@
-FROM debian:stretch
+FROM debian:stretch as build
 
 WORKDIR /app
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
   gcc \
-  python-dev \
-  python-pip \
-  python-virtualenv \
-  python-setuptools \
+  python3-dev \
+  python3-virtualenv \
   libpq-dev \
   libjpeg-dev \
   libwebp-dev \
@@ -17,18 +15,39 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
 COPY setup.py requirements.txt prod-requirements.txt /app/
 
-RUN python -m virtualenv /app/venv
+RUN python3 -m virtualenv /app/venv -p $(which python3)
 
 RUN /app/venv/bin/pip install --no-cache-dir -r prod-requirements.txt --no-dependencies --no-binary :all:
 
-RUN apt-get purge gcc -y && apt-get autoremove -y
+COPY setup.py .
+RUN /app/venv/bin/pip install wheel
+RUN /app/venv/bin/pip wheel --no-cache-dir -r requirements.txt --no-dependencies --no-binary :all:
+RUN /app/venv/bin/python setup.py bdist_wheel
 
-RUN useradd --home-dir /app gunicorn
 
+# Build the minimal image that should be distributed
+FROM debian:stretch-slim as prod
+
+WORKDIR /app
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    python3 \
+    python3-virtualenv \
+    libpq5 \
+    libjpeg62-turbo \
+    && rm -rf /var/lib/apt/lists/*
+
+COPY --from=build /app/*.whl ./
+COPY --from=build /app/dist/* .
 COPY blag /app/blag
 COPY .tmp/static /app/static
 ENV BLAG_STATIC_FILES=/app/static
 
+RUN python3 -m virtualenv /app/venv -p $(which python3)
+RUN /app/venv/bin/pip install *.whl gunicorn
+RUN apt-get purge python3-virtualenv -y && apt-get autoremove -y
+
+RUN useradd --create-home --home-dir /app gunicorn
 USER gunicorn
 
 EXPOSE 5000
