@@ -47,9 +47,15 @@ WTForms==2.1 --hash=sha256:ffdf10bd1fa565b8233380cb77a304cd36fd55c73023e91d4b803
 blinker==1.4 --hash=sha256:471aee25f3992bd325afa3772f1063dbdbbca947a041b8b89466dc00d606f8b6
 
 # birdy dependencies
-requests==2.10.0 --hash=sha256:63f1815788157130cee16a933b2ee184038e975f0017306d723ac326b5525b54
+requests==2.20.1 --hash=sha256:ea881206e59f41dbd0bd445437d792e43906703fff75ca8ff43ccdb11f33f263
 requests-oauthlib==0.6.1 --hash=sha256:905306080ec0cc6b3c65c8101f471fccfdb9994c16dd116524fd3fc0790d46d7
 oauthlib==1.1.2 --hash=sha256:0e83e91d9e77a396dc178eddba0c4abf75e465761804bfcdb20b977284bcb0bb
+
+# requests dependencies
+idna==2.7 --hash=sha256:684a38a6f903c1d71d6d5fac066b58d7768af4de2b832e426ec79c30daa94a16
+certifi==2018.10.15 --hash=sha256:6d58c986d22b038c8c0df30d639f23a3e6d172a05c3583e766f4c0b785c0986a
+chardet==3.0.4 --hash=sha256:84ab92ed1c4d4f16916e05906b6b75a6c0fb5db821cc65e70cbd64a3e2a5eaae
+urllib3==1.24.1 --hash=sha256:de9529817c93f27c8ccbfead6985011db27bd0ddfcdb2d86f3f663385c6a9c22
 
 # Flask-Migrate dependencies
 python-editor==1.0 --hash=sha256:4a2b6a945d06e347a8fafe2475f533d05887b193b2e162aff961f63642c8a60e
