@@ -66,7 +66,7 @@ def post_details_old(post_id):
 @mod.route('/<int:year>/<slug>')
 def post_details(year, slug):
     post = post_from_year_and_slug_or_404(year, slug)
-    description = do_truncate(do_striptags(post.rendered_content))
+    description = do_truncate(current_app.jinja_env, do_striptags(post.rendered_content))
     title = post.title
     return render_template('post_details.html', post=post, description=description, title=title)
 

@@ -1,5 +1,5 @@
 beautifulsoup4==4.4.1 --hash=sha256:87d4013d0625d4789a4f56b8d79a04d5ce6db1152bb65f1d39744f7709a366b4
-Flask==0.11.1 --hash=sha256:b4713f2bfb9ebc2966b8a49903ae0d3984781d5c878591cf2f7b484d28756b0e
+Flask==1.0.2 --hash=sha256:2271c0070dbcb5275fad4a82e29f23ab92682dc45f9dfbc22c02ba9b9322ce48
 birdy==0.2 --hash=sha256:396c65a4401673e97accd41d5adfb9eec7e3d093c693f03ce9fa46300b513be7
 celery==3.1.23 --hash=sha256:1a359c815837f9dbf193a7dbc6addafa34612c077ff70c66e3b16e14eebd2418
 Flask-Login==0.3.2 --hash=sha256:e72eff5c35e5a31db1aeca1db5d2501be702674ea88e8f223b5d2b11644beee6
@@ -63,11 +63,11 @@ Mako==1.0.4 --hash=sha256:fed99dbe4d0ddb27a33ee4910d8708aca9ef1fe854e668387a9ab9
 alembic==0.8.6 --hash=sha256:53403da066ef90cbc5a3f801f3dd39bbbfbc41b0a84eb8c1c806243b7e2c6466
 
 # Flask dependencies
-itsdangerous==0.24 --hash=sha256:cbb3fcf8d3e33df861709ecaf89d9e6629cff0a217bc2848f1b41cd30d360519
-Werkzeug==0.11.10 --hash=sha256:cc64dafbacc716cdd42503cf6c44cb5a35576443d82f29f6829e5c49264aeeee
-Jinja2==2.8 --hash=sha256:bc1ff2ff88dbfacefde4ddde471d1417d3b304e8df103a7a9437d47269201bf4
-MarkupSafe==0.23 --hash=sha256:a4ec1aff59b95a14b45eb2e23761a0179e98319da5a7eb76b56ea8cdc7b871c3
-click==6.6 --hash=sha256:cc6a19da8ebff6e7074f731447ef7e112bd23adf3de5c597cf9989f2fd8defe9
+Jinja2==2.10 --hash=sha256:f84be1bb0040caca4cea721fcbbbbd61f9be9464ca236387158b0feea01914a4
+itsdangerous==1.1.0 --hash=sha256:321b033d07f2a4136d3ec762eac9f16a10ccd60f53c0c91af90217ace7ba1f19
+MarkupSafe==1.1.0 --hash=sha256:4e97332c9ce444b0c2c38dd22ddc61c743eb208d916e4265a2a3b575bdccb1d3
+Click==7.0 --hash=sha256:5b94b49521f6456670fdb30cd82a4eca9412788a93fa6dd6df72c94d5a8ff2d7
+Werkzeug==0.14.1 --hash=sha256:c3fd7a7d41976d9f44db327260e263132466836cef6f91512889ed60ad26557c
 
 # celery dependencies
 # pytz zip, tarball and bz2 hashes, respectively
