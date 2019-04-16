@@ -13,8 +13,6 @@ addons:
             - postgresql-9.5-postgis-2.3
 
 python:
-  - "2.7"
-  - "3.4"
   - "3.5"
 
 before_install:
@@ -56,7 +54,7 @@ script:
   - ./build.sh
 
 after_success:
-  - if [[ $TRAVIS_BRANCH == 'master' ]] && [[ $TRAVIS_PULL_REQUEST == 'false' ]] && [[ $TRAVIS_PYTHON_VERSION == '2.7' ]]; then
+  - if [[ $TRAVIS_BRANCH == 'master' ]] && [[ $TRAVIS_PULL_REQUEST == 'false' ]] && [[ $TRAVIS_PYTHON_VERSION == '3.5' ]]; then
       ./tools/travis-deploy.sh;
     fi
 
