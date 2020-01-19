@@ -13,7 +13,7 @@ def login():
     form = LoginForm()
     if form.validate_on_submit():
         user = User.query.filter_by(email=form.email.data).first()
-        if not user.valid_password(form.password.data):
+        if not user or not user.valid_password(form.password.data):
             abort(401)
 
         login_user(user)
