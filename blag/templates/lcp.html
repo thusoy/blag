@@ -28,6 +28,6 @@
 
 {% block scripts %}
 <script src="{{ url_for('static', filename='js/lcp.min.js') }}"></script>
-<script async defer src="https://maps.googleapis.com/maps/api/js?key={{ google_maps_api_key }}&callback=initMap"></script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key={{ google_maps_api_key }}&callback=initMap&libraries=visualization"></script>
 
 {% endblock %}

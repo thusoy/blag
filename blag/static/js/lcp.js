@@ -2,24 +2,6 @@
 (function (exports) {
     'use strict';
 
-    function getJson(url, callback) {
-        var xhr = new XMLHttpRequest();
-        xhr.open('GET', url);
-        xhr.setRequestHeader('accept', 'application/json');
-        xhr.send(null);
-        xhr.onreadystatechange = function () {
-            if (xhr.readyState === XMLHttpRequest.DONE) {
-                if (xhr.status >= 200 && xhr.status < 300) {
-                    callback(JSON.parse(xhr.responseText));
-                } else {
-                    // An error occurred during the request.
-                    console.error('Error: ' + xhr.status, xhr.responseText);
-                }
-            }
-        };
-    }
-
-
     function createLoader (map) {
         return function (coord, label) {
             var infowindow = new google.maps.InfoWindow({
@@ -45,17 +27,29 @@
             var map = new google.maps.Map(document.getElementById('map'), {
                 zoom: 2,
                 center: {lat: 45, lng: 0},
+                mapTypeId: 'satellite',
             });
-            var loader = createLoader(map);
-            for (var i = 0; i < data.peaks.length; i++) {
-                var peak = data.peaks[i];
-                var coordinates = {
-                    lat: peak.coordinates[0],
-                    lng: peak.coordinates[1],
-                };
-                loader(coordinates, peak.name);
-            }
+            // var loader = createLoader(map);
+            // for (var i = 0; i < data.peaks.length; i++) {
+            //     var peak = data.peaks[i];
+            //     var coordinates = {
+            //         lat: peak.coordinates[0],
+            //         lng: peak.coordinates[1],
+            //     };
+            //     loader(coordinates, peak.name);
+            // }
+            var heatmap = new google.maps.visualization.HeatmapLayer({
+                data: data,
+                radius: 10,
+                opacity: 1,
+            });
+            heatmap.setMap(map);
         });
     };
-
+    function getJson(url, callback) {
+      callback([
+          {location: new google.maps.LatLng(61.524010, 105.318756), weight: 30310},
+          {location: new google.maps.LatLng(7.289574, 81.674355), weight: 150},
+      ]);
+    }
 })(window);
