@@ -24,7 +24,7 @@ package_data = [
 package_data.extend(migration_files)
 
 setup(
-    name='thusoy-blag',
+    name='blag',
     version='0.1.0',
     author='Tarjei Husøy',
     author_email='tarjei@roms.no',

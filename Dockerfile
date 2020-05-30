@@ -41,10 +41,11 @@ COPY --from=build /app/*.whl ./
 COPY --from=build /app/dist/* .
 COPY blag /app/blag
 COPY .tmp/static /app/static
+COPY setup.py /app/
 ENV BLAG_STATIC_FILES=/app/static
 
 RUN python3 -m virtualenv /app/venv -p $(which python3)
-RUN /app/venv/bin/pip install *.whl gunicorn
+RUN /app/venv/bin/pip install *.whl gunicorn .
 RUN apt-get purge python3-virtualenv -y && apt-get autoremove -y
 
 RUN useradd --create-home --home-dir /app gunicorn
