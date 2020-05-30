@@ -27,7 +27,7 @@ setup(
     name='blag',
     version='0.1.0',
     author='Tarjei Husøy',
-    author_email='tarjei@roms.no',
+    author_email='git@thusoy.com',
     url='https://github.com/thusoy/blag',
     description='Somewhere to ramble',
     packages=find_packages(),
