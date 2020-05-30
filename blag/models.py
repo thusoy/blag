@@ -52,12 +52,12 @@ class BlogPost(db.Model):
     )
 
     title = Column(
-        db.String(40),
+        db.Text,
         info={'label': 'Title'},
     )
 
     slug = Column(
-        db.String(40),
+        db.Text,
         info={'label': 'Slug'},
         nullable=False,
     )
