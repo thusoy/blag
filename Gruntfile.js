@@ -131,7 +131,7 @@ module.exports = function (grunt) {
         stderr: true,
       },
       server: {
-        command: 'python manage.py devserver',
+        command: './manage.py devserver',
       },
     },
 
