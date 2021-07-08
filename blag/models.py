@@ -125,6 +125,8 @@ class Hike(db.Model):
         ('crampons', 'Crampons'),
         ('climb', 'Climb'),
         ('via ferrata', 'Via Ferrata'),
+        ('bike', 'Bike'),
+        ('kayak', 'Kayak'),
     ]
     id = Column(db.Integer, primary_key=True)
     destination_id = Column(db.Integer, db.ForeignKey(HikeDestination.id), nullable=False)
