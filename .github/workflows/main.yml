@@ -1,0 +1,91 @@
+name: Blag tests
+
+on: [push]
+
+env:
+    DATABASE_URL: 'postgresql://test@127.0.0.1/test'
+    AWS_ACCESS_KEY_ID: AKIAJ7ZW32MME267FR5A
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:9.5
+        env:
+          POSTGRES_USER: test
+          POSTGRES_PASSWORD: test
+          POSTGRES_DB: test
+        ports:
+          # Expose the db port to the host
+          - 5432:5432
+
+        options: --health-cmd "pg_isready" --health-interval 5s --health-timeout 5s --health-retries 10
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Install python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.5'
+
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '12'
+
+      - name: Cache venv
+        uses: actions/cache@v2
+        with:
+          path: venv
+          key: ${{ runner.os }}-venv-${{ hashFiles('*requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-venv-
+
+      - name: Cache node modules
+        uses: actions/cache@v2
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node_modules-${{ hashFiles('package.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node_modules-
+
+      - name: Install postgis
+        run: psql postgres://test@127.0.0.1/test -c "create extension postgis"
+
+      - name: npm install
+        run: |
+            npm install -g grunt-cli
+            npm install
+
+      - name: pip install
+        run: |
+            pip install -U pip awscli
+            pip install -r dev-requirements.txt --no-binary :all: --no-deps --require-hashes
+
+      - name: gem install
+        run: |
+            gem update --system
+            gem install sass -v 3.2.13
+            gem install compass
+
+      - name: Install docker2aci
+        run: |
+            wget https://github.com/appc/docker2aci/releases/download/v0.17.2/docker2aci-v0.17.2.tar.gz
+            tar xf docker2aci-v0.17.2.tar.gz
+            mkdir -p ~/.local/bin
+            export PATH=$PATH:~/.local/bin
+            mv docker2aci-v0.17.2/docker2aci ~/.local/bin
+
+      - name: Add notes ref
+        run: . ./configure && add_notes_ref
+
+      - name: Build
+        run: grunt build
+
+      - name: Test
+        run: nosetests
+
+      - name: Release
+        if: github.ref == 'refs/heads/master'
+        run: |
+            ./build.sh
