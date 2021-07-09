@@ -49,9 +49,6 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-node_modules-
 
-      - name: Install postgis
-        run: psql postgres://test:test@127.0.0.1/test -c "create extension postgis"
-
       - name: npm install
         run: |
             npm install -g grunt-cli
